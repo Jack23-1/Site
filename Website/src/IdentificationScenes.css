@@ -1,0 +1,65 @@
+.identification-player {
+  overflow: hidden;
+  border: 1px solid #e1e8f0;
+  border-radius: 20px;
+  background: #f4f7fb;
+  box-shadow: 0 12px 32px #102b4810;
+}
+.identification-stage {
+  display: grid;
+  overflow: hidden;
+  isolation: isolate;
+}
+.identification-frame {
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms ease, transform 900ms cubic-bezier(.22, 1, .36, 1), filter 700ms ease;
+}
+.identification-frame.is-next {
+  transform: translateX(7%) scale(1.035);
+  filter: blur(6px);
+}
+.identification-frame.is-past {
+  transform: translateX(-9%) scale(.96);
+  filter: blur(8px);
+}
+.identification-frame.is-active {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+}
+.identification-frame img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 42vw, 540px);
+  object-fit: contain;
+}
+.identification-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 24px;
+  background: white;
+}
+.identification-count { color: #173658; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.identification-count span { color: #768496; font-weight: 400; }
+.identification-steps { display: flex; gap: 8px; }
+.identification-steps button { display: grid; align-items: center; width: 40px; min-height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; }
+.identification-steps button span { height: 4px; border-radius: 4px; background: #e1e8f0; transition: background 300ms; }
+.identification-steps button.is-reached span { background: #1765ac; }
+.identification-steps button[aria-current] span { background: #dfac32; }
+.identification-play { min-height: 44px; padding: 8px 14px; border: 1px solid #dce5ee; border-radius: 30px; background: #f4f7fb; color: #173658; font-size: 13px; font-weight: 600; cursor: pointer; }
+.identification-controls button:focus-visible { outline: 3px solid #1765ac; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .identification-controls { flex-wrap: wrap; gap: 4px 12px; padding: 10px 16px; }
+  .identification-steps { order: 3; width: 100%; }
+  .identification-steps button { flex: 1; }
+  .identification-frame img { height: clamp(240px, 75vw, 400px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .identification-frame { transition: none; transform: none !important; filter: none !important; }
+}
