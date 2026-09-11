@@ -11,16 +11,25 @@ const scenes = [scene1, scene2, scene3, scene4, scene5];
 export default function IdentificationScenes() {
   const root = useRef(null);
   const [active, setActive] = useState(0);
+  const [complete, setComplete] = useState(false);
+  const [replay, setReplay] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(() => !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [pageVisible, setPageVisible] = useState(!document.hidden);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.35 });
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+      if (entry.isIntersecting) setStarted(true);
+    }, { threshold: 0.35 });
     observer.observe(root.current);
     const onVisibility = () => setPageVisible(!document.hidden);
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onPreference = () => { if (preference.matches) setPlaying(false); };
+    const onPreference = () => {
+      if (preference.matches) { setPlaying(false); setComplete(true); setActive(scenes.length - 1); }
+    };
+    onPreference();
     document.addEventListener("visibilitychange", onVisibility);
     preference.addEventListener("change", onPreference);
     return () => {
@@ -30,23 +39,27 @@ export default function IdentificationScenes() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!visible || !pageVisible || !playing || active === scenes.length - 1) return;
-    const timer = window.setTimeout(() => setActive(index => index + 1), 5000);
-    return () => window.clearTimeout(timer);
-  }, [active, visible, pageVisible, playing]);
-
   const select = index => {
     setPlaying(false);
     setActive(index);
+    setComplete(true);
   };
-  const last = active === scenes.length - 1;
+  const last = active === scenes.length - 1 && complete;
+  const running = visible && pageVisible && playing;
+
 
   return (
-    <div className="identification-player" ref={root} role="region" aria-roledescription="carrousel" aria-label="Les cinq scènes de l’identification">
-      <div className="identification-stage">
+    <div className="identification-player" ref={root} role="region" aria-label="Les cinq scènes de l’identification">
+      <div className="identification-stage" tabIndex={0} role="group" aria-label="Scènes dans l’ordre, défilement horizontal sur petit écran">
         {scenes.map((src, index) => (
-          <div key={src} className={`identification-frame ${index === active ? "is-active" : index < active ? "is-past" : "is-next"}`} aria-hidden={index !== active}>
+          <div key={`${src}-${replay}`} style={{ "--slot": index, animationPlayState: running ? "running" : "paused" }}
+            className={`identification-frame ${index < active || (complete && index === active) ? "is-settled" : started && index === active ? "is-entering" : "is-next"}`}
+            aria-hidden={!started || index > active}
+            onAnimationEnd={event => {
+              if (event.target !== event.currentTarget || index !== active) return;
+              if (index < scenes.length - 1) setActive(value => value + 1);
+              else setComplete(true);
+            }}>
             <img src={src} alt={`Comment se faire identifier — scène ${index + 1}`} />
           </div>
         ))}
@@ -55,12 +68,16 @@ export default function IdentificationScenes() {
         <span className="identification-count">Scène {active + 1} <span>/ {scenes.length}</span></span>
         <div className="identification-steps" aria-label="Choisir une scène">
           {scenes.map((_, index) => (
-            <button key={index} type="button" onClick={() => select(index)} aria-label={`Afficher la scène ${index + 1}`} aria-current={active === index ? "step" : undefined} className={index <= active ? "is-reached" : ""}><span /></button>
+            <button key={index} type="button" onClick={() => select(index)} aria-label={`Afficher les scènes 1 à ${index + 1}`} aria-current={active === index ? "step" : undefined} className={index <= active ? "is-reached" : ""}><span /></button>
           ))}
         </div>
         <button type="button" className="identification-play" onClick={() => {
-          if (last) { setActive(0); setPlaying(true); }
-          else setPlaying(value => !value);
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setActive(scenes.length - 1); setComplete(true); return; }
+          if (last) { setActive(0); setComplete(false); setReplay(value => value + 1); setPlaying(true); }
+          else {
+            if (complete) { setActive(value => Math.min(value + 1, scenes.length - 1)); setComplete(false); }
+            setPlaying(value => !value);
+          }
         }}>{last ? "Revoir les scènes ↺" : playing ? "Pause Ⅱ" : "Continuer ▷"}</button>
       </div>
     </div>

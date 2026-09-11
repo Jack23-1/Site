@@ -6,36 +6,63 @@
   box-shadow: 0 12px 32px #102b4810;
 }
 .identification-stage {
-  display: grid;
+  --row-top: 250px;
+  --card-height: clamp(150px, 18vw, 260px);
+  position: relative;
+  height: calc(var(--row-top) + var(--card-height) + 24px);
+  margin: 0 20px;
   overflow: hidden;
   isolation: isolate;
+  perspective: 1200px;
 }
 .identification-frame {
-  grid-area: 1 / 1;
-  min-width: 0;
+  position: absolute;
+  left: calc(var(--slot) * 20%);
+  top: var(--row-top);
+  width: 20%;
+  padding: 0 6px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 700ms ease, transform 900ms cubic-bezier(.22, 1, .36, 1), filter 700ms ease;
+  transform-origin: center bottom;
+  backface-visibility: hidden;
 }
-.identification-frame.is-next {
-  transform: translateX(7%) scale(1.035);
-  filter: blur(6px);
+.identification-frame.is-next { visibility: hidden; }
+.identification-frame.is-settled { opacity: 1; }
+.identification-frame.is-entering {
+  z-index: 2;
+  animation: identification-arrive 3200ms both;
 }
-.identification-frame.is-past {
-  transform: translateX(-9%) scale(.96);
-  filter: blur(8px);
-}
-.identification-frame.is-active {
-  z-index: 1;
-  opacity: 1;
-  transform: translateX(0) scale(1);
-  filter: blur(0);
+/* 800 ms rising from below, 1000 ms still at the centre, 1400 ms settling. */
+@keyframes identification-arrive {
+  0% {
+    left: 50%; top: 100%; width: 42%; opacity: 0;
+    transform: translateX(-50%) rotateX(18deg);
+    animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  }
+  25% {
+    left: 50%; top: 12px; width: 42%; opacity: 1;
+    transform: translateX(-50%) rotateX(0deg);
+  }
+  56.25% {
+    left: 50%; top: 12px; width: 42%; opacity: 1;
+    transform: translateX(-50%) rotateX(0deg);
+    animation-timing-function: cubic-bezier(.45, 0, .2, 1);
+  }
+  100% {
+    left: calc(var(--slot) * 20%); top: var(--row-top); width: 20%; opacity: 1;
+    transform: translateX(0) rotateX(0deg);
+  }
 }
 .identification-frame img {
   display: block;
   width: 100%;
-  height: clamp(260px, 42vw, 540px);
+  height: var(--card-height);
   object-fit: contain;
+  border-radius: 10px;
+}
+.identification-stage:focus-visible { outline: 3px solid #1765ac; outline-offset: -3px; }
+@media (max-width: 600px) {
+  .identification-stage { --row-top: 190px; --card-height: 160px; margin: 0 8px; }
+  .identification-frame { padding: 0 2px; }
 }
 .identification-controls {
   display: flex;
@@ -58,8 +85,8 @@
   .identification-controls { flex-wrap: wrap; gap: 4px 12px; padding: 10px 16px; }
   .identification-steps { order: 3; width: 100%; }
   .identification-steps button { flex: 1; }
-  .identification-frame img { height: clamp(240px, 75vw, 400px); }
+
 }
 @media (prefers-reduced-motion: reduce) {
-  .identification-frame { transition: none; transform: none !important; filter: none !important; }
+  .identification-frame.is-entering { animation: none; opacity: 1; }
 }

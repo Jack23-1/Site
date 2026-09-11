@@ -137,7 +137,7 @@ header {
 }
 .site-footer .footer-brand {
   width: fit-content;
-  background: #fff;
+  background: transparent;
   padding: 8px 12px;
   border-radius: 8px;
 }
