@@ -50,7 +50,7 @@ export default function IdentificationScenes() {
 
   return (
     <div className="identification-player" ref={root} role="region" aria-label="Les cinq scènes de l’identification">
-      <div className="identification-stage" tabIndex={0} role="group" aria-label="Scènes dans l’ordre, défilement horizontal sur petit écran">
+      <div className={`identification-stage${last ? " is-complete" : ""}`} tabIndex={0} role="group" aria-label="Scènes dans l’ordre">
         {scenes.map((src, index) => (
           <div key={`${src}-${replay}`} style={{ "--slot": index, animationPlayState: running ? "running" : "paused" }}
             className={`identification-frame ${index < active || (complete && index === active) ? "is-settled" : started && index === active ? "is-entering" : "is-next"}`}

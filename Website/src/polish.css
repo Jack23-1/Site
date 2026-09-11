@@ -339,7 +339,7 @@ dialog::backdrop {
 header {
   position: sticky;
   top: 0;
-  background: hsl(0, 0%, 100%);
+  background: linear-gradient(110deg, #fffbea 0%, #fffdf5 45%, #ffffff 100%);
   backdrop-filter: blur(16px);
   box-shadow: 0 4px 22px #08295f09;
 }
@@ -1075,4 +1075,18 @@ header::after {
   .leader-card.is-primary .leader-avatar {
     width: min(72vw, 220px);
   }
+}
+.stat .animated-number {
+  display: grid;
+  font-variant-numeric: tabular-nums;
+}
+.stat .animated-number > span {
+  grid-area: 1 / 1;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+.stat .animated-number .number-reserve {
+  visibility: hidden;
 }

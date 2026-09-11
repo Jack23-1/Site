@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import AnimatedNumber from "./AnimatedNumber";
+import IdentityCard from "./IdentityCard";
 import "./App.css";
 import ProvinceMap from "./ProvinceMap";
 import Footer from "./Footer";
@@ -514,14 +516,14 @@ export default function App() {
             <div className="stat">
               <Icon name="people" size={49} />
               <div>
-                <strong>34,2 millions</strong>
+                <AnimatedNumber value={34.2} decimals={1} suffix=" millions" />
                 <span>de personnes enregistrées</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="building" size={47} />
               <div>
-                <strong>523</strong>
+                <AnimatedNumber value={523} delay={120} />
                 <span>
                   centres d’enrôlement
                   <br />
@@ -532,7 +534,7 @@ export default function App() {
             <div className="stat">
               <Icon name="card" size={46} />
               <div>
-                <strong>98%</strong>
+                <AnimatedNumber value={98} suffix="%" delay={240} />
                 <span>
                   de demandes traitées
                   <br />
@@ -543,7 +545,7 @@ export default function App() {
             <div className="stat">
               <Icon name="chart" size={45} />
               <div>
-                <strong>26 provinces</strong>
+                <AnimatedNumber value={26} suffix=" provinces" delay={360} />
                 <span>couvertes</span>
               </div>
             </div>
@@ -596,6 +598,7 @@ export default function App() {
           </div>
         </section>
         <ProvinceMap />
+        <IdentityCard />
         <section className="management" aria-labelledby="management-title">
           <div className="container">
             <div className="management-heading">
