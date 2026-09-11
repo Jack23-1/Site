@@ -16,7 +16,7 @@ npm run lint
 npm run build
 ```
 
-La recherche filtre les services et les titres des actualités. Les cartes ouvrent des fenêtres de présentation. Le suivi de demande et l’espace agent ne sont pas connectés à un serveur. Les coordonnées et documents officiels restent à renseigner.
+Les cartes ouvrent des fenêtres de présentation. Le suivi de demande et l’espace agent ne sont pas connectés à un serveur. Les coordonnées et documents officiels restent à renseigner.
 
 Les photographies générées se trouvent dans `public/images/` ; les prompts exacts figurent dans `IMAGE-PROMPTS.md`. Le logo original fourni dans `src/assets/logoonip.png` est utilisé dans l’en-tête et le footer. La police Chakra Petch (400, 500, 600 et 700) est hébergée localement dans `public/fonts/`, avec Arial en secours. Sa licence OFL est incluse.
 
@@ -41,3 +41,5 @@ Les 26 noms sont affichés sur le SVG. Le clic, Entrée/Espace ou le sélecteur 
 Le footer compact comprend X, YouTube et Facebook. Les liens pointent provisoirement vers les plateformes ; les comptes officiels restent à renseigner.
 
 Le bandeau supérieur a été retiré. Les animations d’apparition au défilement et les transitions de survol respectent `prefers-reduced-motion`. Le contenu reste visible si les animations ne peuvent pas être exécutées.
+
+La recherche a été retirée de l’en-tête. La séparation verticale entre le logo et le nom complet reprend les couleurs bleu, jaune et rouge.
