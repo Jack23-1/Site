@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 export default function useReveal() {
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const elements = [...document.querySelectorAll('#actualites .section-heading, #actualites .news-card, .coverage-copy, .coverage-map-panel, .footer-main')]
+    const elements = [...document.querySelectorAll('#actualites .section-heading, #actualites .news-card, .coverage-copy, .coverage-map-panel, .management-heading, .leader-card, .footer-main')]
     if (!('IntersectionObserver' in window)) return
     const observer = new IntersectionObserver(entries => {
       entries.forEach(({ target, isIntersecting }) => {
@@ -21,7 +21,7 @@ export default function useReveal() {
     }
     if (!preference.matches) elements.forEach((element, index) => {
       element.classList.add('scroll-reveal')
-      element.classList.add('puzzle-reveal')
+      if (!element.classList.contains('coverage-map-panel')) element.classList.add('puzzle-reveal')
       element.style.setProperty('--reveal-delay', `${index % 5 * 130}ms`)
       observer.observe(element)
     })

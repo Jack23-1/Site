@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import './App.css'
 import ProvinceMap from './ProvinceMap'
@@ -6,6 +6,9 @@ import Footer from './Footer'
 import './responsive.css'
 import './polish.css'
 import onipLogo from './assets/logoonip.png'
+import dgPhoto from './assets/DG.png'
+import dgaTechniquePhoto from './assets/Dga 2.png'
+import dgaFinancePhoto from './assets/Dga 3.png'
 import useReveal from './useReveal'
 
 function Icon({ name, size = 24, ...props }) {
@@ -45,14 +48,26 @@ const slides = [
   { title: <>Une identité pour tous,<br/>un avenir commun</>, text: <>Découvrez les centres d’enrôlement<br className="desktop-break"/> et préparez votre visite.</>, image: 'center' },
   { title: <>Votre identité,<br/>notre engagement</>, text: <>Une identification au service de l’inclusion<br className="desktop-break"/> et du développement.</>, image: 'hero' },
 ]
+const leaders = [
+  { rank: '02', role: 'Directeur général adjoint', shortRole: 'DGA', name: 'SOMANZA KOKIYOLO', photo: dgaTechniquePhoto, scope: 'Chargé des Techniques et Opérations' },
+  { rank: '01', role: 'Directeur Général', shortRole: 'DG', name: 'MUKOLO BASENGENZI Marcellin', photo: dgPhoto, scope: '', primary: true },
+  { rank: '03', role: 'Directeur général adjoint', shortRole: 'DGA', name: 'KABALI HAMULI Eugénie', photo: dgaFinancePhoto, scope: 'Chargée de l’Administration et Finances' },
+]
 export default function App() {
   useReveal()
   const [slide, setSlide] = useState(0)
+  const [leavingSlide, setLeavingSlide] = useState(null)
+  const [heroPaused, setHeroPaused] = useState(false)
   const [modal, setModal] = useState(null)
   const [menu, setMenu] = useState(false)
   const [notice, setNotice] = useState('')
   const [accessible, setAccessible] = useState(false)
   const open = (content) => { setNotice(''); setModal(content); setMenu(false) }
+  const goToSlide = useCallback(next => {
+    if (next === slide) return
+    setLeavingSlide(slide)
+    setSlide(next)
+  }, [slide])
   useEffect(() => {
     if (!modal) return
     const previous = document.activeElement
@@ -60,14 +75,29 @@ export default function App() {
     dialog.showModal()
     return () => { dialog.close(); previous?.focus() }
   }, [modal])
+  useEffect(() => {
+    if (heroPaused || modal || menu) return
+    const timer = window.setInterval(() => goToSlide((slide + 1) % slides.length), 6000)
+    return () => window.clearInterval(timer)
+  }, [goToSlide, heroPaused, modal, menu, slide])
+  useEffect(() => {
+    if (leavingSlide === null) return
+    const timer = window.setTimeout(() => setLeavingSlide(null), 2700)
+    return () => window.clearTimeout(timer)
+  }, [leavingSlide])
   return <div className={accessible ? 'site high-contrast' : 'site'}>
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <header><div className="container header-inner"><a className="brand" href="#" aria-label="ONIP — Accueil"><img className="official-logo" src={onipLogo} alt="ONIP" width="2480" height="1155"/><span className="brand-name">OFFICE NATIONAL<br/>D’IDENTIFICATION<br/>DE LA POPULATION</span></a><button className="menu-toggle" onClick={() => setMenu(!menu)} aria-label="Ouvrir le menu" aria-expanded={menu}><Icon name="menu"/></button><nav className={menu ? 'navigation is-open' : 'navigation'} aria-label="Navigation principale"><a className="active" href="#" onClick={() => setMenu(false)}>Accueil</a><button onClick={() => open({ title: 'L’ONIP', body: 'L’Office National d’Identification de la Population accompagne l’identification des citoyens en République Démocratique du Congo. Une identité fiable, inclusive et accessible à tous.' })}>L’ONIP</button><a href="#services" onClick={() => setMenu(false)}>Nos services</a><a href="#actualites" onClick={() => setMenu(false)}>Actualités</a><button onClick={() => open({ title: 'Documents', body: 'Les formulaires et documents officiels seront disponibles dans cet espace après leur publication.' })}>Documents</button><button className="mobile-contact" onClick={() => open(services[3])}>Contact</button></nav><div className="header-actions"><button className="header-contact" onClick={() => open(services[3])}>Contact</button><button className="agent-button" onClick={() => open({ title: 'Préenrôlement', body: 'Le préenrôlement en ligne vous permettra de préparer votre demande avant de vous rendre dans un centre. Ce service sera disponible prochainement.' })}><Icon name="user" size={21}/>Préenrôlement</button></div></div></header>
-    <main id="contenu"><section className={`hero slide-${slide}`} aria-label="À la une" style={{ backgroundImage: `url(/images/${slides[slide].image}.png)` }}><div className="hero-shade"/><Fingerprint className="hero-fingerprint"/><div className="container hero-inner"><div className="hero-copy" key={slide}><h1>{slides[slide].title}</h1><div className="tricolor hero-line"/><p>{slides[slide].text}</p><div className="motto">IDENTIFIER AUJOURD’HUI<br/>POUR UN MEILLEUR DEMAIN</div></div></div><button className="carousel-arrow previous" onClick={() => setSlide((slide + 3) % 4)} aria-label="Diapositive précédente"><Icon name="arrow"/></button><button className="carousel-arrow next" onClick={() => setSlide((slide + 1) % 4)} aria-label="Diapositive suivante"><Icon name="arrow"/></button><div className="carousel-dots">{slides.map((_, i) => <button key={i} className={i === slide ? 'selected' : ''} onClick={() => setSlide(i)} aria-label={`Afficher la diapositive ${i + 1}`} aria-pressed={i === slide}/>)}</div></section>
+    <main id="contenu"><section className={`hero slide-${slide}`} aria-label="À la une" onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onFocus={() => setHeroPaused(true)} onBlur={() => setHeroPaused(false)}>
+      <div className="hero-media" aria-hidden="true">
+        {slides.map(({ image }, index) => <img key={`${image}-${index}`} className={`hero-slide-bg ${index === slide ? 'is-active' : ''} ${index === leavingSlide ? 'is-leaving' : ''}`} src={`/images/${image}.png`} alt=""/>)}
+        {slides.map(({ image }, index) => <img key={`print-${image}-${index}`} className={`hero-print-bg ${index === slide ? 'is-entering' : ''} ${index === leavingSlide ? 'is-exiting' : ''}`} src={`/images/${image}.png`} alt=""/>)}
+      </div><div className="hero-shade"/><Fingerprint className="hero-fingerprint"/><div className="container hero-inner"><div className="hero-copy" key={slide}><h1>{slides[slide].title}</h1><div className="tricolor hero-line"/><p>{slides[slide].text}</p><div className="motto">IDENTIFIER AUJOURD’HUI<br/>POUR UN MEILLEUR DEMAIN</div></div></div><div className="carousel-dots">{slides.map((_, i) => <button key={i} className={i === slide ? 'selected' : ''} onClick={() => goToSlide(i)} aria-label={`Afficher la diapositive ${i + 1}`} aria-pressed={i === slide}/>)}</div></section>
     <section id="services" className="container services" aria-label="Vos démarches">{services.map(service => <button className="service-card" key={service.title} onClick={() => open(service)}><span className="service-icon"><Icon name={service.icon} size={37}/></span><span className="service-copy"><strong>{service.title}</strong><span>{service.description}</span></span><Icon name="arrow" className="service-arrow" size={22}/></button>)}</section>
     <section className="statistics"><div className="container statistics-inner"><div className="statistics-intro"><h2>Nos chiffres clés</h2><div className="tricolor"/><p>Des avancées concrètes pour une identité<br/>au service de tous les Congolais.</p></div><div className="stat"><Icon name="people" size={49}/><div><strong>34,2 millions</strong><span>de personnes enregistrées</span></div></div><div className="stat"><Icon name="building" size={47}/><div><strong>523</strong><span>centres d’enrôlement<br/>sur toute la RDC</span></div></div><div className="stat"><Icon name="card" size={46}/><div><strong>98%</strong><span>de demandes traitées<br/>dans les délais</span></div></div><div className="stat"><Icon name="chart" size={45}/><div><strong>26 provinces</strong><span>couvertes</span></div></div></div></section>
     <section id="actualites" className="container news"><div className="section-heading"><div><h2>Dernières actualités</h2><div className="tricolor"/></div><button onClick={() => open({ title: 'Toutes les actualités', articles: true })}>Voir toutes les actualités <span>→</span></button></div><div className="news-grid">{articles.map(article => <button className="news-card" key={article.title} onClick={() => open(article)}><img src={`/images/${article.image}.png`} alt={article.image === 'outreach' ? 'Équipe d’enrôlement auprès des habitants' : article.image === 'center' ? 'Centre d’enrôlement' : 'Illustration d’une carte d’identité'} loading="lazy"/><div className="news-copy"><div className="news-meta"><span>{article.category}</span><time>{article.date}</time></div><h3>{article.title}</h3><span className="read-more">Lire l’article <span>→</span></span></div></button>)}</div></section>
     <ProvinceMap/>
+    <section className="management" aria-labelledby="management-title"><div className="container"><div className="management-heading"><span>Gouvernance</span><h2 id="management-title">Comité de gestion</h2><div className="tricolor"/><p>Une direction engagée pour une identification fiable, inclusive et accessible.</p></div><div className="leaders-grid">{leaders.map((leader, index) => <article className={`leader-card ${leader.primary ? 'is-primary' : ''}`} key={`${leader.role}-${index}`} style={{ '--leader-delay': `${index * 120}ms` }}><div className="leader-rank">{leader.rank}</div><div className={`leader-avatar ${leader.photo ? 'has-photo' : ''}`} aria-hidden="true">{leader.photo ? <img src={leader.photo} alt=""/> : <><span>{leader.shortRole}</span><Icon name="user" size={58}/></>}</div><div className="leader-info"><span>{leader.role}</span><h3>{leader.name}</h3>{leader.scope && <p>{leader.scope}</p>}</div></article>)}</div></div></section>
     </main><Footer onService={index => open(services[index])} onAbout={() => open({ title: 'L’ONIP', body: 'L’Office National d’Identification de la Population accompagne l’identification des citoyens en République Démocratique du Congo. Une identité fiable, inclusive et accessible à tous.' })} onAccessibility={() => setAccessible(!accessible)} accessible={accessible}/>
     {modal && <dialog onCancel={() => setModal(null)} onClick={e => { if (e.target === e.currentTarget) setModal(null) }}><div className="dialog-content"><button className="close-modal" aria-label="Fermer" onClick={() => setModal(null)} autoFocus>×</button>{modal.image && <img className="article-image" src={`/images/${modal.image}.png`} alt=""/>}<h2>{modal.title}</h2><div className="tricolor"/><p>{modal.body}</p>{modal.title === 'Suivre ma demande' && <form className="tracking" onSubmit={e => { e.preventDefault(); setNotice('Le suivi en ligne n’est pas encore connecté au service officiel. Aucune demande n’a été transmise.') }}><label htmlFor="reference">Numéro de récépissé</label><input id="reference" required placeholder="Votre numéro de demande"/><button className="agent-button">Consulter ma demande</button><p role="status">{notice}</p></form>}{modal.articles && <div className="result-list">{articles.map(article => <button key={article.title} onClick={() => open(article)}>{article.title}<Icon name="arrow" size={18}/></button>)}</div>}</div></dialog>}
   </div>
