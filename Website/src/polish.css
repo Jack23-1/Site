@@ -484,6 +484,126 @@ header::after {
   background: linear-gradient(to bottom, #08295f12, transparent);
   pointer-events: none;
 }
+/* Stronger header typography to match the footer's presence. */
+.header-inner {
+  min-height: 102px;
+}
+.brand {
+  gap: 18px;
+}
+.brand .official-logo {
+  width: clamp(158px, 12vw, 204px);
+}
+.brand-name {
+  padding-left: 16px;
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.25;
+  font-weight: 900;
+  color: #062d55;
+}
+.brand-name::before {
+  width: 3px;
+  background: linear-gradient(to bottom, #0085ca 0 33.333%, #f9d534 33.333% 66.666%, #ce233b 66.666%);
+}
+.navigation {
+  gap: clamp(18px, 1.55vw, 30px);
+  font-size: clamp(15px, 1vw, 17px);
+  font-weight: 800;
+  color: #092f5a;
+}
+.navigation > a,
+.navigation > button {
+  padding: 36px 0;
+}
+.navigation .active {
+  color: #004f9d;
+  font-weight: 900;
+}
+.navigation .active:after {
+  bottom: 22px;
+  height: 4px;
+  background: #0385dd;
+}
+.header-contact {
+  min-height: 52px;
+  color: #08295f;
+  font-size: 16px;
+  font-weight: 900;
+}
+.header-actions > .agent-button {
+  min-height: 52px;
+  padding: 13px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 900;
+}
+@media (max-width: 1350px) {
+  .header-inner {
+    min-height: 94px;
+    gap: 18px;
+  }
+  .brand {
+    gap: 12px;
+  }
+  .brand .official-logo {
+    width: 140px;
+  }
+  .brand-name {
+    padding-left: 12px;
+    font-size: 12px;
+  }
+  .navigation {
+    gap: 15px;
+    font-size: 14px;
+  }
+  .header-contact,
+  .header-actions > .agent-button {
+    font-size: 14px;
+  }
+  .header-actions > .agent-button {
+    padding: 12px 15px;
+  }
+}
+@media (max-width: 900px) {
+  .header-inner {
+    min-height: 82px;
+  }
+  .brand .official-logo {
+    width: 128px;
+  }
+  .brand-name {
+    font-size: 11px;
+  }
+  .navigation {
+    background: linear-gradient(110deg, #fffbea 0%, #fffdf5 45%, #ffffff 100%);
+  }
+  .navigation > a,
+  .navigation > button {
+    min-height: 54px;
+    padding: 15px 14px;
+    font-size: 17px;
+    font-weight: 900;
+    color: #092f5a;
+  }
+}
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 78px;
+  }
+  .brand .official-logo {
+    width: 104px;
+  }
+  .brand-name {
+    padding-left: 9px;
+    font-size: 9px;
+    line-height: 1.35;
+  }
+  .header-actions > .agent-button {
+    min-height: 42px;
+    font-size: 0;
+    padding: 10px;
+  }
+}
 /* Progressive puzzle assembly from the news section onward. */
 .puzzle-reveal {
   opacity: 0;
