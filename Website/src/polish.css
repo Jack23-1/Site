@@ -138,12 +138,12 @@ header {
 .site-footer .footer-brand {
   width: fit-content;
   background: transparent;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 0;
+  border-radius: 0;
 }
 .footer-official-logo {
   display: block;
-  width: 113px;
+  width: clamp(148px, 16vw, 210px);
   height: auto;
   object-fit: contain;
 }
@@ -271,10 +271,10 @@ dialog::backdrop {
     height: 40px;
   }
   .site-footer .footer-brand {
-    padding: 6px 8px;
+    padding: 0;
   }
   .footer-official-logo {
-    width: 99px;
+    width: 148px;
   }
 }
 @media (max-width: 360px) {

@@ -32,6 +32,30 @@ function HeritagePattern() {
 
 // Nine material illustrations sit behind the original face: ten planes in total.
 const layers = ["film", "foil", "national", "heritage", "portrait", "data", "core", "reverse", "finish"];
+const layerNotes = [
+  { id: "face", title: "1. Couche de protection", text: "Film transparent ultra-résistant contre l’usure, les rayures et la falsification." },
+  { id: "film", title: "2. Hologramme sécurisé", text: "Élément optique changeant de couleur selon l’angle de vue." },
+  { id: "foil", title: "3. Données personnelles", text: "Nom, prénom, date, lieu de naissance, nationalité et numéro d’identification." },
+  { id: "national", title: "4. Photo sécurisée", text: "Portrait intégré avec des techniques d’impression de haute sécurité." },
+  { id: "heritage", title: "5. Motifs de sécurité", text: "Motifs guillochés, microtextes et trames difficiles à reproduire." },
+  { id: "portrait", title: "6. Puce électronique", text: "Zone illustrant le support des données biométriques et personnelles." },
+  { id: "data", title: "7. Données biométriques", text: "Empreintes digitales et autres données stockées de manière sécurisée." },
+  { id: "core", title: "8. Fond sécurisé", text: "Encres spéciales et éléments visibles selon les contrôles lumineux." },
+  { id: "reverse", title: "9. Support principal", text: "Base robuste en polycarbonate conçue pour durer." },
+  { id: "finish", title: "10. Couche arrière", text: "Film arrière avec impressions et repères de vérification." },
+];
+const layerArrowPaths = {
+  face: { path: "M70 114 C82 148 60 157 80 183 C100 207 132 176 162 174", end: [162, 174] },
+  film: { path: "M213 106 C230 137 204 151 229 175 C245 190 263 189 282 190", end: [282, 190] },
+  foil: { path: "M355 116 C337 144 379 158 365 184 C358 197 348 201 346 207", end: [346, 207] },
+  national: { path: "M492 106 C470 138 516 160 480 191 C461 207 439 212 428 222", end: [428, 222] },
+  heritage: { path: "M628 116 C604 145 662 166 607 202 C566 230 524 221 504 236", end: [504, 236] },
+  portrait: { path: "M158 402 C165 372 195 383 218 354 C253 310 505 291 562 273", end: [562, 273] },
+  data: { path: "M314 404 C322 372 352 382 382 350 C421 309 590 309 648 286", end: [648, 286] },
+  core: { path: "M474 402 C482 373 510 381 540 349 C574 312 690 317 736 300", end: [736, 300] },
+  reverse: { path: "M630 404 C634 374 665 382 697 350 C730 317 790 330 816 312", end: [816, 312] },
+  finish: { path: "M786 402 C788 373 820 379 847 351 C873 325 903 341 916 328", end: [916, 328] },
+};
 
 function LayerArtwork({ kind }) {
   return (
@@ -52,6 +76,39 @@ function LayerArtwork({ kind }) {
   );
 }
 LayerArtwork.propTypes = { kind: PropTypes.string.isRequired };
+
+function LayerAnnotations({ visible }) {
+  return (
+    <span className="identity-layer-annotations" aria-hidden={!visible}>
+      <svg className="identity-layer-arrows" viewBox="0 0 1000 520" preserveAspectRatio="none">
+        {layerNotes.map((note, index) => (
+          <g key={note.id} className="identity-layer-connector-group" style={{ "--arrow-delay": `${520 + index * 55}ms` }}>
+            <path
+              className="identity-layer-connector"
+              d={layerArrowPaths[note.id].path}
+              pathLength="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle
+              className="identity-layer-dot"
+              cx={layerArrowPaths[note.id].end[0]}
+              cy={layerArrowPaths[note.id].end[1]}
+              r="3"
+            />
+          </g>
+        ))}
+      </svg>
+      {layerNotes.map((note, index) => (
+        <span key={note.id} className={`identity-layer-note note-${note.id}`} style={{ "--note-delay": `${610 + index * 50}ms` }}>
+          <b>{note.title}</b>
+          <small>{note.text}</small>
+        </span>
+      ))}
+    </span>
+  );
+}
+LayerAnnotations.propTypes = { visible: PropTypes.bool.isRequired };
 
 export default function IdentityCard() {
   const [flipped, setFlipped] = useState(false);
@@ -121,6 +178,7 @@ export default function IdentityCard() {
                 </span>
               ))}
             </span>
+            <LayerAnnotations visible={expanded} />
           </button>
         </div>
       </div>
