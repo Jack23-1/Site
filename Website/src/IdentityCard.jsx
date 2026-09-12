@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import onipLogo from "./assets/logoonip.png";
 import specimenPortrait from "./assets/portrait-specimen.png";
+import rectoCard from "./assets/recto.png";
+import versoCard from "./assets/verso.png";
 import "./IdentityCard.css";
 
 function CongoFlag() {
@@ -42,6 +44,7 @@ function LayerArtwork({ kind }) {
           kind === "foil" ? <span className="identity-material-foil">CD</span> :
           kind === "data" ? <span className="identity-material-data">BAKOLE<br />BAKOLE<br />Jacques</span> :
           kind === "reverse" ? <span className="identity-material-mrz">DÉMO<br />««««<br />««««</span> :
+          kind === "core" ? <svg className="identity-material-circuit" viewBox="0 0 100 160" fill="none" aria-hidden="true"><g stroke="currentColor" strokeWidth="3"><rect x="9" y="9" width="82" height="142" rx="16" /><rect x="17" y="17" width="66" height="126" rx="12" /><rect x="25" y="25" width="50" height="110" rx="8" /><path d="M25 75h24m-24 10h24M49 65h26M49 95h26" /><rect x="36" y="61" width="28" height="38" rx="4" /></g></svg> :
           <span className={`identity-material-pattern pattern-${kind}`} />}
       </span>
       <span className="identity-material-footer">SPÉCIMEN — NON VALABLE</span>
@@ -62,9 +65,9 @@ export default function IdentityCard() {
       const width = element.getBoundingClientRect().width;
       const cardWidth = Math.min(380, width);
       // Keep the same physical card size; only the distance between planes changes.
-      const step = Math.min(68, Math.max(42, (width - cardWidth - 12) / layers.length));
+      const step = Math.min(64, Math.max(48, (width - cardWidth - 40) / layers.length));
       element.style.setProperty("--layer-step", `${step}px`);
-
+      element.style.setProperty("--stack-extra", `${layers.length * step + 140}px`);
     };
     resize();
     const observer = new ResizeObserver(resize);
@@ -90,7 +93,7 @@ export default function IdentityCard() {
   return (
     <section className="identity-showcase" aria-label="Carte d’identité de démonstration">
       <div className="container identity-layout">
-        <div ref={preview} className={`identity-preview${expanded ? " is-expanded" : ""}`}>
+        <div ref={preview} className={`identity-preview${expanded ? " is-expanded" : ""}`} style={{ "--layer-count": layers.length }}>
           <button type="button" className={`identity-card-button${flipped ? " is-flipped" : ""}`} onClick={handleClick} onDoubleClick={toggleLayers}
             onKeyDown={event => {
               if (event.key === "Enter" && event.shiftKey) { event.preventDefault(); toggleLayers(); }
@@ -100,28 +103,11 @@ export default function IdentityCard() {
             aria-expanded={expanded}>
             <span className="identity-normal-view">
             <span className="identity-card-rotor">
-              <span className="identity-face identity-front" aria-hidden={flipped}>
-                <HeritagePattern />
-                <span className="identity-card-heading"><CongoFlag /><span>RÉPUBLIQUE DÉMOCRATIQUE DU CONGO<small>CARTE D’IDENTITÉ · SPÉCIMEN</small></span><img src={onipLogo} alt="ONIP" /></span>
-                <span className="identity-card-body">
-                  <span className="identity-portrait"><img src={specimenPortrait} alt="Portrait généré d’un homme fictif atteint d’albinisme" loading="lazy" /><small>PORTRAIT FICTIF</small></span>
-                  <span className="identity-fields"><span><small>Nom / Surname</small><b>BAKOLE</b></span><span><small>Post-nom / Other name</small><b>BAKOLE</b></span><span><small>Prénom / Given name</small><b>Jacques</b></span><span className="identity-field-pair"><span><small>Nationalité</small><b>Congolaise</b></span><span><small>Référence</small><b>DÉMO</b></span></span></span>
-                  <span className="identity-foil" aria-label="Effet irisé décoratif"><span>CD</span><small>SPÉCIMEN</small></span>
-                </span>
-                <span className="identity-specimen">SPÉCIMEN — NON VALABLE</span>
-                <span className="identity-card-bottom">Office National d’Identification de la Population<span>RDC · DÉMONSTRATION</span></span>
+              <span className="identity-face identity-front identity-card-image-face" aria-hidden={flipped}>
+                <img className="identity-real-card-image" src={rectoCard} alt="Recto de la carte nationale d'identité" draggable="false" />
               </span>
-              <span className="identity-face identity-back" aria-hidden={!flipped}>
-                <HeritagePattern />
-                <span className="identity-card-heading"><CongoFlag /><span>OFFICE NATIONAL D’IDENTIFICATION<small>DE LA POPULATION</small></span><img src={onipLogo} alt="ONIP" /></span>
-                <span className="identity-back-content"><span className="identity-back-mark" aria-hidden="true">CD</span><span><b>Un pays, mille richesses.</b><small>BAKOLE BAKOLE Jacques</small><span className="identity-back-note">Fleuve · Forêts · Patrimoine minéral<br />Peuple · Unité · Travail</span></span></span>
-                <span className="identity-specimen">SPÉCIMEN — NON VALABLE</span>
-                <span className="identity-demo-zone" aria-label="Zone MRZ illustrative non lisible par machine">
-                  <span className="identity-mrz-label">MRZ FICTIVE · NON ENCODÉE</span>
-                  <span>{"DEMO«SPECIMEN«NON«VALABLE««««««"}</span>
-                  <span>{"EXEMPLE«SANS«DONNEES«OFFICIELLES"}</span>
-                  <span>{"BAKOLE«BAKOLE«JACQUES«DEMO«««««"}</span>
-                </span>
+              <span className="identity-face identity-back identity-card-image-face" aria-hidden={!flipped}>
+                <img className="identity-real-card-image" src={versoCard} alt="Verso de la carte nationale d'identité" draggable="false" />
               </span>
             </span>
             </span>
