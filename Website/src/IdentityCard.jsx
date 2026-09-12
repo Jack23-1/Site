@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import onipLogo from "./assets/logoonip.png";
 import specimenPortrait from "./assets/portrait-specimen.png";
 import "./IdentityCard.css";
@@ -27,24 +28,49 @@ function HeritagePattern() {
   );
 }
 
-const cardLayers = [
-  { title: "Film de protection", detail: "Surface transparente · illustration", kind: "film" },
-  { title: "Finition irisée", detail: "Reflets décoratifs", kind: "iridescent" },
-  { title: "Identité nationale", detail: "Drapeau & logo ONIP", kind: "national" },
-  { title: "Motifs du patrimoine", detail: "Fleuve, forêts et minerais", kind: "heritage" },
-  { title: "Portrait", detail: "Photographie fictive", kind: "portrait" },
-  { title: "Données visuelles", detail: "BAKOLE BAKOLE Jacques", kind: "data" },
-  { title: "Support de la carte", detail: "Structure illustrative", kind: "core" },
-  { title: "Éléments du verso", detail: "Identité & devise", kind: "reverse" },
-  { title: "Zone MRZ fictive", detail: "Démonstration non encodée", kind: "mrz" },
-  { title: "Protection du verso", detail: "Maquette pédagogique · non valable", kind: "back-film" },
-];
+// Nine material illustrations sit behind the original face: ten planes in total.
+const layers = ["film", "foil", "national", "heritage", "portrait", "data", "core", "reverse", "finish"];
+
+function LayerArtwork({ kind }) {
+  return (
+    <>
+      <HeritagePattern />
+      <span className="identity-material-heading"><img src={onipLogo} alt="" /><span>ONIP · SPÉCIMEN</span></span>
+      <span className="identity-material-detail">
+        {kind === "portrait" ? <img className="identity-material-portrait" src={specimenPortrait} alt="" /> :
+          kind === "national" ? <CongoFlag /> :
+          kind === "foil" ? <span className="identity-material-foil">CD</span> :
+          kind === "data" ? <span className="identity-material-data">BAKOLE<br />BAKOLE<br />Jacques</span> :
+          kind === "reverse" ? <span className="identity-material-mrz">DÉMO<br />««««<br />««««</span> :
+          <span className={`identity-material-pattern pattern-${kind}`} />}
+      </span>
+      <span className="identity-material-footer">SPÉCIMEN — NON VALABLE</span>
+    </>
+  );
+}
+LayerArtwork.propTypes = { kind: PropTypes.string.isRequired };
 
 export default function IdentityCard() {
   const [flipped, setFlipped] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const preview = useRef(null);
   const clickTimer = useRef(null);
   useEffect(() => () => window.clearTimeout(clickTimer.current), []);
+  useEffect(() => {
+    const element = preview.current;
+    const resize = () => {
+      const width = element.getBoundingClientRect().width;
+      const cardWidth = Math.min(380, width);
+      // Keep the same physical card size; only the distance between planes changes.
+      const step = Math.min(68, Math.max(42, (width - cardWidth - 12) / layers.length));
+      element.style.setProperty("--layer-step", `${step}px`);
+
+    };
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   const toggleLayers = () => {
     window.clearTimeout(clickTimer.current);
@@ -64,14 +90,15 @@ export default function IdentityCard() {
   return (
     <section className="identity-showcase" aria-label="Carte d’identité de démonstration">
       <div className="container identity-layout">
-        <div className={`identity-preview${expanded ? " is-expanded" : ""}`}>
+        <div ref={preview} className={`identity-preview${expanded ? " is-expanded" : ""}`}>
           <button type="button" className={`identity-card-button${flipped ? " is-flipped" : ""}`} onClick={handleClick} onDoubleClick={toggleLayers}
             onKeyDown={event => {
               if (event.key === "Enter" && event.shiftKey) { event.preventDefault(); toggleLayers(); }
               if (event.key === "Escape") { window.clearTimeout(clickTimer.current); setExpanded(false); }
             }}
             aria-label={expanded ? "Vue pédagogique en 10 couches. Double-cliquer ou appuyer sur Entrée pour refermer." : "Carte spécimen. Cliquer pour retourner. Double-cliquer ou Majuscule + Entrée pour découvrir les 10 couches illustratives."}
-            aria-expanded={expanded} aria-describedby={expanded ? "identity-layer-description" : undefined}>
+            aria-expanded={expanded}>
+            <span className="identity-normal-view">
             <span className="identity-card-rotor">
               <span className="identity-face identity-front" aria-hidden={flipped}>
                 <HeritagePattern />
@@ -97,25 +124,18 @@ export default function IdentityCard() {
                 </span>
               </span>
             </span>
-            <span className="identity-layers" aria-hidden={!expanded}>
-              {cardLayers.map((layer, index) => (
-                <span key={layer.kind} className={`identity-layer layer-${layer.kind}`} style={{ "--layer-index": index }}>
-                  <span className="identity-layer-number">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="identity-layer-caption"><b>{layer.title}</b><small>{layer.detail}</small></span>
-                  <span className="identity-layer-art" aria-hidden="true">
-                    {layer.kind === "national" ? <><CongoFlag /><img src={onipLogo} alt="" /></> :
-                      layer.kind === "portrait" ? <img className="layer-photo" src={specimenPortrait} alt="" /> :
-                      layer.kind === "heritage" ? <HeritagePattern /> :
-                      layer.kind === "data" ? <span className="layer-data-lines">BAKOLE<br />BAKOLE Jacques</span> :
-                      layer.kind === "mrz" ? <span className="layer-mrz-lines">DEMO«SPECIMEN<br />NON«VALABLE««</span> :
-                      layer.kind === "reverse" ? <span className="layer-reverse-mark">CD</span> :
-                      <span className="layer-material" />}
-                  </span>
+            </span>
+            <span className="identity-material-stack" aria-hidden="true">
+              {layers.map((kind, index) => (
+                <span key={kind} className={`identity-material-plane material-${kind}`} style={{
+                  "--layer": index + 1,
+                  zIndex: layers.length - index,
+                }}>
+                  <LayerArtwork kind={kind} />
                 </span>
               ))}
             </span>
           </button>
-          {expanded && <span id="identity-layer-description" className="identity-layer-description">Composition visuelle illustrative, sans reproduction de la structure technique d’un document officiel.</span>}
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 .identity-showcase { padding: 32px 0; background: radial-gradient(ellipse at 75% 45%, #e5f0fb 0%, transparent 58%), #fbfcfe; overflow: hidden; }
 .identity-layout { display: flex; justify-content: flex-start; }
-.identity-preview { width: 100%; max-width: 380px; min-width: 0; }
+.identity-preview { width: 100%; min-width: 0; }
 .identity-card-button { display: block; width: 100%; max-width: 380px; margin: 0; aspect-ratio: 85.6 / 53.98; border: 0; padding: 0; background: transparent; perspective: 1600px; cursor: pointer; text-align: left; color: #153757; container-type: inline-size; border-radius: 20px; -webkit-tap-highlight-color: transparent; }
 .identity-card-button:focus-visible { outline: 3px solid #177cc2; outline-offset: 9px; }
 .identity-card-rotor { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1100ms cubic-bezier(.22, .75, .2, 1); }
@@ -39,59 +39,72 @@
 @media (max-width: 700px) { .identity-showcase { padding: 28px 0; } }
 @media (prefers-reduced-motion: reduce) { .identity-card-rotor { transition: none; } }
 
-/* A flat vertical decomposition: no perspective or rotation on the layers. */
+/* Shared geometry keeps every material aligned with the original card. */
 .identity-preview {
-  --layer-step: 90px;
   position: relative;
-  padding-bottom: 0;
-  transition: padding-bottom 1200ms cubic-bezier(.22, 1, .36, 1);
+  padding: 0 0 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  transition: padding-bottom 1400ms cubic-bezier(.22, 1, .36, 1), padding-top 1400ms cubic-bezier(.22, 1, .36, 1);
 }
-.identity-preview.is-expanded { padding-bottom: calc(9 * var(--layer-step)); }
-.identity-card-button { touch-action: manipulation; }
-.identity-card-rotor { opacity: 1; transition: transform 1100ms cubic-bezier(.22, .75, .2, 1), opacity 400ms ease; }
-.is-expanded .identity-card-rotor { opacity: 0; pointer-events: none; }
-.identity-layers { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 400ms ease; }
-.is-expanded .identity-layers { opacity: 1; pointer-events: auto; }
-.identity-layer {
+.identity-preview.is-expanded { padding-top: 24px; padding-bottom: 90px; }
+.identity-card-button {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+  touch-action: manipulation;
+  user-select: none;
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+.identity-normal-view {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transform: rotateY(0deg) rotateX(0deg);
+  transition: transform 1500ms cubic-bezier(.22, 1, .36, 1);
+}
+.is-expanded .identity-normal-view { transform: rotateY(-32deg) rotateX(14deg); }
+.identity-material-stack { position: absolute; inset: 0; pointer-events: none; transform-style: preserve-3d; }
+.identity-material-plane {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 18px 16px;
-  border: 1px solid #ccd9e3;
-  border-radius: 16px;
-  background: linear-gradient(125deg, #fffffff5, #edf3f8f5);
-  box-shadow: 0 2px 5px #17344b05;
-  transform: translateY(0);
-  z-index: calc(10 - var(--layer-index));
-  transition: transform 1200ms cubic-bezier(.22, 1, .36, 1), box-shadow 1200ms ease;
+  display: block;
+  overflow: hidden;
+  border: 1px solid #a9c2d2;
+  border-radius: 3cqw;
+  background: linear-gradient(120deg, #fffdf0, #edf6fb 55%, #d5e7f3);
+  box-shadow: 1px 1px 0 #8aa8ba;
+  transform-origin: left center;
+  transform: translate3d(0, 0, -1px) rotateY(0deg) rotateX(0deg);
+  transition: transform 1500ms cubic-bezier(.22, 1, .36, 1), box-shadow 1500ms ease;
 }
-.is-expanded .identity-layer {
-  transform: translateY(calc(var(--layer-index) * var(--layer-step)));
-  box-shadow: 0 -3px 18px #2547620a, 0 16px 35px #17344b0c;
+.is-expanded .identity-material-plane {
+  transform: translate3d(calc(var(--layer) * var(--layer-step, 42px)), calc(var(--layer) * 7px), calc(var(--layer) * -18px)) rotateY(-32deg) rotateX(14deg);
+  box-shadow: -8px 12px 22px #183d5833, 3px 1px 0 #8ba8ba, inset -2px 0 0 #ffffffb0;
+  pointer-events: auto;
 }
-.identity-layer-number { flex-shrink: 0; color: #8c9ba8; font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: .08em; padding-top: 3px; }
-.identity-layer-caption { position: relative; z-index: 1; min-width: 0; }
-.identity-layer-caption b { display: block; color: #28475f; font-size: 13px; font-weight: 600; letter-spacing: -.02em; }
-.identity-layer-caption small { display: block; color: #7b8d9b; font-size: 10px; line-height: 1.5; margin-top: 5px; }
-.identity-layer-art { margin-left: auto; flex: 0 0 60px; height: 46px; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; }
-.identity-layer-art > img { width: 34px; height: auto; }
-.identity-layer-art .identity-flag { width: 28px; height: 21px; flex-basis: 28px; }
-.identity-layer-art .layer-photo { width: 34px; height: 44px; object-fit: cover; border-radius: 5px; }
-.identity-layer-art .identity-heritage { opacity: .65; }
-.layer-material { display: block; width: 44px; height: 32px; border: 1px solid #c1d2de; border-radius: 7px; background: linear-gradient(130deg, #ffffff30, #dce8f399, #fff); }
-.layer-iridescent .layer-material { background: conic-gradient(from 20deg, #d8eef1, #f4e6b6, #d9cde9, #ceebdb, #d8eef1); border-color: #ffffff90; }
-.layer-core .layer-material { background: #f6f6f2; box-shadow: 0 2px 0 #c6d3da, 0 4px 0 #e6edf1, 0 6px 0 #bdcdd7; }
-.layer-data-lines, .layer-mrz-lines { font-family: monospace; font-size: 7px; color: #7693a7; line-height: 1.8; }
-.layer-reverse-mark { color: #7e9dae; font-size: 26px; font-weight: 700; }
-.identity-layer-description { position: absolute; bottom: 14px; left: 20px; right: 20px; color: #83929d; font-size: 10px; line-height: 1.6; pointer-events: none; }
-@media (max-width: 420px) {
-  .identity-layer { padding: 16px 12px; gap: 8px; }
-  .identity-layer-art { flex-basis: 42px; }
-  .identity-layer-caption b { font-size: 12px; }
-  .identity-layer-caption small { font-size: 9px; }
-}
+.identity-material-plane::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 65%, #ffffff60 78%, transparent 90%); pointer-events: none; }
+.identity-material-plane .identity-heritage { opacity: .35; }
+.identity-material-heading { position: absolute; top: 4cqw; left: 4cqw; right: 3cqw; display: flex; align-items: center; justify-content: space-between; }
+.identity-material-heading img { width: 15cqw; }
+.identity-material-heading > span { writing-mode: vertical-rl; position: absolute; right: 0; top: 0; font-size: 1.5cqw; letter-spacing: .14em; color: #3e6c89; }
+.identity-material-detail { position: absolute; top: 17cqw; right: 2cqw; width: 15cqw; bottom: 8cqw; display: flex; align-items: center; justify-content: center; }
+.identity-material-portrait { width: 14cqw; height: 20cqw; object-fit: cover; border-radius: 1cqw; opacity: .85; }
+.identity-material-foil { display: grid; place-items: center; width: 9cqw; height: 15cqw; border-radius: 4cqw; background: conic-gradient(#bcdfdf, #eed99c, #bbcae6, #e0bbd9, #bcdfdf); color: #447589; font-size: 3cqw; }
+.identity-material-data, .identity-material-mrz { font-family: monospace; font-size: 2cqw; line-height: 1.9; color: #315e7c; }
+.identity-material-footer { position: absolute; bottom: 3cqw; right: 3cqw; color: #896d44; font-size: 1.3cqw; }
+.identity-material-pattern { width: 8cqw; height: 24cqw; border: 1px solid #6d9db577; border-radius: 50%; background: repeating-radial-gradient(ellipse, transparent 0 4px, #6598b53b 5px 6px); }
+.material-foil { background: linear-gradient(120deg, #e4eff2, #f4e8c8 65%, #cadbe7); }
+.material-heritage, .material-reverse { background: linear-gradient(120deg, #f6f6e6, #d4e6e5); }
+.material-core { background: linear-gradient(110deg, #dae6ee, #a9c5d6); }
+.material-finish { background: linear-gradient(120deg, #eef4f7, #d5e4ee); }
 @media (prefers-reduced-motion: reduce) {
-  .identity-preview, .identity-layer, .identity-layers, .identity-card-rotor { transition: none; }
+  .identity-preview, .identity-material-plane, .identity-normal-view { transition: none; }
 }
