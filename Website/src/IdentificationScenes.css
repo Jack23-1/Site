@@ -6,7 +6,7 @@
   box-shadow: 0 12px 32px #102b4810;
 }
 .identification-stage {
-  --row-top: 250px;
+  --row-top: 24px;
   --card-height: clamp(150px, 18vw, 260px);
   position: relative;
   height: calc(var(--row-top) + var(--card-height) + 24px);
@@ -24,9 +24,9 @@
 }
 .identification-frame {
   position: absolute;
-  left: calc(var(--slot) * 20%);
-  top: var(--row-top);
-  width: 20%;
+  left: var(--settled-left, calc(var(--slot) * 20%));
+  top: var(--settled-top, var(--row-top));
+  width: var(--settled-width, 20%);
   padding: 0 6px;
   opacity: 0;
   transform-origin: center bottom;
@@ -56,7 +56,7 @@
     animation-timing-function: cubic-bezier(.45, 0, .2, 1);
   }
   100% {
-    left: calc(var(--slot) * 20%); top: var(--row-top); width: 20%; opacity: 1;
+    left: var(--settled-left, calc(var(--slot) * 20%)); top: var(--settled-top, var(--row-top)); width: var(--settled-width, 20%); opacity: 1;
     transform: translateX(0) rotateX(0deg);
   }
 }
@@ -69,8 +69,40 @@
 }
 .identification-stage:focus-visible { outline: 3px solid #1765ac; outline-offset: -3px; }
 @media (max-width: 600px) {
-  .identification-stage { --row-top: 190px; --card-height: 160px; margin: 0 8px; }
-  .identification-frame { padding: 0 2px; }
+  .identification-stage {
+    --row-top: 24px;
+    --card-height: 160px;
+    --mobile-row-gap: 6px;
+    height: calc(var(--row-top) + var(--card-height) + var(--card-height) + var(--card-height) + var(--mobile-row-gap) + var(--mobile-row-gap) + 24px);
+    margin: 0 8px;
+  }
+  .identification-stage.is-complete {
+    height: calc(var(--card-height) + var(--card-height) + var(--card-height) + var(--mobile-row-gap) + var(--mobile-row-gap) + 48px);
+  }
+  .identification-frame {
+    --settled-width: 42%;
+    padding: 0 4px;
+  }
+  .identification-frame:nth-child(1) {
+    --settled-left: 4%;
+    --settled-top: var(--row-top);
+  }
+  .identification-frame:nth-child(2) {
+    --settled-left: 50%;
+    --settled-top: var(--row-top);
+  }
+  .identification-frame:nth-child(3) {
+    --settled-left: 4%;
+    --settled-top: calc(var(--row-top) + var(--card-height) + var(--mobile-row-gap));
+  }
+  .identification-frame:nth-child(4) {
+    --settled-left: 50%;
+    --settled-top: calc(var(--row-top) + var(--card-height) + var(--mobile-row-gap));
+  }
+  .identification-frame:nth-child(5) {
+    --settled-left: 29%;
+    --settled-top: calc(var(--row-top) + var(--card-height) + var(--mobile-row-gap) + var(--card-height) + var(--mobile-row-gap));
+  }
 }
 .identification-controls {
   display: flex;

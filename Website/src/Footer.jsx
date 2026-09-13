@@ -4,18 +4,18 @@ import onipLogo from './assets/logoonip.png'
 
 const socialLinks = [
   {
-    label: 'X (plateforme, compte ONIP à venir)',
-    href: 'https://x.com/',
+    label: 'X officiel de l’ONIP RDC',
+    href: 'https://x.com/ONIP_RDC',
     path: 'M18.9 2H22l-6.8 7.8L23 22h-6.3l-5-7.6L5.1 22H2l8.3-9.5L1 2h6.5l4.6 7L18.9 2Zm-1.1 18h1.7L6.6 4H4.8L17.8 20Z',
   },
   {
-    label: 'YouTube (plateforme, chaîne ONIP à venir)',
-    href: 'https://www.youtube.com/',
+    label: 'Chaîne YouTube officielle de l’ONIP',
+    href: 'https://youtube.com/@onip243?si=LI5tkGTEFnESUy6P',
     path: 'M23 7s-.2-2-1-2.8C21.1 3.3 20 3.3 19.5 3.2 16 3 12 3 12 3s-4 0-7.5.2C4 3.3 2.9 3.3 2 4.2 1.2 5 1 7 1 7s-.2 2.2-.2 4.5v1C.8 14.8 1 17 1 17s.2 2 1 2.8c.9.9 2.1.9 2.6 1C6.5 21 12 21 12 21s4 0 7.5-.2c.5-.1 1.6-.1 2.5-1 .8-.8 1-2.8 1-2.8s.2-2.2.2-4.5v-1C23.2 9.2 23 7 23 7ZM10 16V8l7 4-7 4Z',
   },
   {
-    label: 'Facebook (plateforme, page ONIP à venir)',
-    href: 'https://www.facebook.com/',
+    label: 'Page Facebook officielle de l’ONIP',
+    href: 'https://www.facebook.com/share/1Dmq3YbWfm/?mibextid=wwXIfr',
     path: 'M14 22v-9h3l.5-4H14V7c0-1.2.3-2 2-2h2V1.4A23 23 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v9Z',
   },
 ]
@@ -71,7 +71,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
                 </a>
               ))}
             </div>
-            <small>Comptes officiels à venir</small>
+            <small>Suivez les canaux officiels de l’ONIP</small>
           </section>
         </div>
 
