@@ -45,7 +45,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
             <h3>Vos démarches</h3>
             <button onClick={() => onService(0)}>Trouver un centre</button>
             <button onClick={() => onService(1)}>Suivre ma demande</button>
-            <button onClick={() => onService(2)}>Conditions d’enrôlement</button>
+            <button onClick={() => onService(2)}>Conditions D’identification</button>
             <a href="#services">Tous nos services</a>
           </nav>
 

@@ -355,7 +355,7 @@ export default function App() {
               Actualités
             </a>
             <a href="#services" onClick={() => setMenu(false)}>
-              Service
+              Services
             </a>
             <button
               onClick={() => {
@@ -366,7 +366,7 @@ export default function App() {
                 });
               }}
             >
-              Document
+              Documents
             </button>
             <button
               onClick={() => {
