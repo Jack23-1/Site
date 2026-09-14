@@ -34,7 +34,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
           </section>
 
           <nav className="footer-column" aria-label="L’Etablissement ">
-            <h3>L’Etablissement </h3>
+           
             <button onClick={onAbout}>À propos de l’ONIP</button>
             <a href="#actualites">Nos actualités</a>
             <a href="#couverture">Notre présence en RDC</a>
