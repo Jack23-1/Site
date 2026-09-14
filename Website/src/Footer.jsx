@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import './Footer.css'
-import onipLogo from './assets/logoonip.png'
+import logofooter from './assets/logofooter.png'
 
 const socialLinks = [
   {
@@ -27,20 +27,14 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
         <div className="footer-main">
           <section className="footer-brand-block" aria-label="ONIP">
             <a href="#" className="footer-brand" aria-label="ONIP — Retour à l’accueil">
-              <img className="footer-official-logo" src={onipLogo} alt="ONIP" width="2480" height="1155" />
+              <img className="footer-official-logo" src={logofooter} alt="ONIP" width="2480" height="1155" />
             </a>
-            <p className="footer-title">Office National d’Identification de la Population</p>
-            <p className="footer-description">
-              Une identité fiable, inclusive et accessible pour chaque citoyen en République Démocratique du Congo.
-            </p>
-            <span className="footer-country">
-              <span aria-hidden="true">🇨🇩</span>
-              Peuple · Unité · Travail
-            </span>
+            
+           
           </section>
 
-          <nav className="footer-column" aria-label="L’institution">
-            <h3>L’institution</h3>
+          <nav className="footer-column" aria-label="L’Etablissement ">
+            <h3>L’Etablissement </h3>
             <button onClick={onAbout}>À propos de l’ONIP</button>
             <a href="#actualites">Nos actualités</a>
             <a href="#couverture">Notre présence en RDC</a>

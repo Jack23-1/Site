@@ -506,8 +506,8 @@ header::after {
   background: linear-gradient(to bottom, #0085ca 0 33.333%, #f9d534 33.333% 66.666%, #ce233b 66.666%);
 }
 .navigation {
-  gap: clamp(18px, 1.55vw, 30px);
-  font-size: clamp(15px, 1vw, 17px);
+  gap: clamp(12px, 1.1vw, 22px);
+  font-size: clamp(14px, 0.95vw, 16px);
   font-weight: 800;
   color: #092f5a;
 }
@@ -553,8 +553,8 @@ header::after {
     font-size: 12px;
   }
   .navigation {
-    gap: 15px;
-    font-size: 14px;
+    gap: 11px;
+    font-size: 13px;
   }
   .header-contact,
   .header-actions > .agent-button {
@@ -987,12 +987,147 @@ header::after {
   font-size: 14px;
   line-height: 1.65;
 }
+.management-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 480px);
+  align-items: center;
+  justify-content: start;
+  gap: clamp(28px, 5vw, 70px);
+}
 .leaders-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 420px);
+  justify-content: center;
   gap: clamp(24px, 4vw, 64px);
   align-items: stretch;
   padding-top: 28px;
+}
+.management-showcase .leaders-grid {
+  padding-top: 0;
+  justify-content: start;
+  transform: translateX(clamp(-64px, -4vw, -28px));
+}
+.director-quote {
+  position: relative;
+  padding: clamp(22px, 3vw, 34px) clamp(16px, 2.8vw, 32px);
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 16% 20%, #fff6bf80 0 13%, transparent 30%),
+    radial-gradient(circle at 82% 80%, #d7b56b2e 0 12%, transparent 30%),
+    repeating-linear-gradient(
+      92deg,
+      #f8edc7 0 7px,
+      #f3e2ad 7px 8px,
+      #fbf1cf 8px 15px
+    );
+  box-shadow:
+    inset 0 0 0 1px #d6b5695e,
+    inset 0 16px 34px #ffffff75,
+    inset 0 -18px 32px #b8892921;
+  overflow: hidden;
+  clip-path: polygon(
+    1.4% 3%,
+    8% 1.2%,
+    17% 2.8%,
+    29% 1%,
+    42% 2.4%,
+    55% 1.2%,
+    69% 2.8%,
+    83% 1.1%,
+    98.6% 3%,
+    97.4% 16%,
+    99% 29%,
+    97.8% 43%,
+    99% 58%,
+    97.5% 73%,
+    98.6% 96.5%,
+    84% 98%,
+    70% 96.8%,
+    56% 98.6%,
+    43% 97%,
+    30% 98.4%,
+    17% 96.7%,
+    7% 98.6%,
+    1.2% 96%,
+    2.2% 78%,
+    0.9% 61%,
+    2.1% 45%,
+    0.9% 28%,
+    2.1% 14%
+  );
+}
+.director-quote::before {
+  content: "“";
+  position: absolute;
+  top: -24px;
+  right: 22px;
+  color: #936d1d21;
+  font-family: Georgia, serif;
+  font-size: 132px;
+  line-height: 1;
+  pointer-events: none;
+}
+.director-quote::after {
+  content: "";
+  position: absolute;
+  left: clamp(26px, 4vw, 46px);
+  right: clamp(26px, 4vw, 46px);
+  top: 18px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ed1c24, #35b7e3 55%, #fff200);
+  opacity: 0.7;
+}
+.director-quote > span {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #7a5115;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.director-quote > span::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  border-radius: 999px;
+  background: #b98421;
+}
+.director-quote blockquote {
+  position: relative;
+  z-index: 1;
+  margin: 18px 0 20px;
+  color: #4a3213;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(20px, 2.35vw, 30px);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+}
+.director-quote p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #5b3a12;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.director-quote small {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 7px;
+  color: #8b6a31;
+  font-size: 12px;
+  font-weight: 600;
 }
 .leader-card {
   position: relative;
@@ -1048,16 +1183,6 @@ header::after {
   border-radius: 50%;
   background: #0071c91f;
   filter: blur(24px);
-}
-.leader-rank {
-  position: absolute;
-  left: 18px;
-  top: 18px;
-  z-index: 2;
-  color: #0a5da81f;
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1;
 }
 .leader-avatar {
   position: relative;
@@ -1237,10 +1362,18 @@ header::after {
   .management {
     padding: 42px 0 48px;
   }
+  .management-showcase {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
   .leaders-grid {
     gap: 18px;
     align-items: stretch;
     padding-top: 0;
+  }
+  .management-showcase .leaders-grid {
+    justify-content: center;
+    transform: none;
   }
   .leader-card,
   .leader-card.is-primary,
@@ -1263,6 +1396,12 @@ header::after {
   .leader-info h3 {
     font-size: 19px;
   }
+  .director-quote {
+    padding: 24px 22px;
+  }
+  .director-quote blockquote {
+    font-size: clamp(20px, 5vw, 28px);
+  }
 }
 @media (max-width: 680px) {
   .leaders-grid {
@@ -1274,6 +1413,15 @@ header::after {
   .leader-avatar,
   .leader-card.is-primary .leader-avatar {
     width: min(62vw, 210px);
+  }
+  .director-quote {
+    padding: 22px 18px;
+  }
+  .director-quote blockquote {
+    font-size: 20px;
+  }
+  .director-quote p {
+    font-size: 14px;
   }
 }
 .stat .animated-number {

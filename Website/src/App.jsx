@@ -9,8 +9,6 @@ import "./responsive.css";
 import "./polish.css";
 import onipLogo from "./assets/logoonip.png";
 import dgPhoto from "./assets/DG.png";
-import dgaTechniquePhoto from "./assets/Dga 2.png";
-import dgaFinancePhoto from "./assets/Dga 3.png";
 import IdentificationScenes from "./IdentificationScenes";
 import useReveal from "./useReveal";
 
@@ -251,29 +249,12 @@ const slides = [
 ];
 const leaders = [
   {
-    rank: "01",
     role: "Directeur Général",
     shortRole: "DG",
-    name: "MUKOLO BASENGENZI Marcellin",
+    name: "MUKOLO BASENGEZI Marcellin",
     photo: dgPhoto,
     scope: "",
     primary: true,
-  },
-  {
-    rank: "02",
-    role: "Directeur général adjoint",
-    shortRole: "DGA",
-    name: "SOMANZA KOKIYOLO",
-    photo: dgaTechniquePhoto,
-    scope: "Chargé des Techniques et Opérations",
-  },
-  {
-    rank: "03",
-    role: "Directeur général adjoint",
-    shortRole: "DGA",
-    name: "KABALI HAMULI Eugénie",
-    photo: dgaFinancePhoto,
-    scope: "Chargée de l’Administration et Finances",
   },
 ];
 export default function App() {
@@ -360,56 +341,65 @@ export default function App() {
               Accueil
             </a>
             <button
-              onClick={() =>
+              onClick={() => {
+                setMenu(false);
                 open({
-                  title: "L’ONIP",
+                  title: "À propos",
                   body: "L’Office National d’Identification de la Population accompagne l’identification des citoyens en République Démocratique du Congo. Une identité fiable, inclusive et accessible à tous.",
-                })
-              }
+                });
+              }}
             >
-              L’ONIP
+              À propos
             </button>
-            <a href="#services" onClick={() => setMenu(false)}>
-              Nos services
-            </a>
             <a href="#actualites" onClick={() => setMenu(false)}>
               Actualités
             </a>
+            <a href="#services" onClick={() => setMenu(false)}>
+              Service
+            </a>
             <button
-              onClick={() =>
+              onClick={() => {
+                setMenu(false);
                 open({
-                  title: "Documents",
+                  title: "Document",
                   body: "Les formulaires et documents officiels seront disponibles dans cet espace après leur publication.",
-                })
-              }
+                });
+              }}
             >
-              Documents
+              Document
             </button>
             <button
-              className="mobile-contact"
-              onClick={() => open(services[3])}
+              onClick={() => {
+                setMenu(false);
+                open({
+                  title: "Galerie",
+                  body: "La galerie officielle présentera les images des activités, des centres d’enrôlement et des moments institutionnels de l’ONIP.",
+                });
+              }}
             >
-              Contact
+              Galerie
+            </button>
+            <button
+              onClick={() => {
+                setMenu(false);
+                open(services[3]);
+              }}
+            >
+              Contacts
             </button>
           </nav>
           <div className="header-actions">
             <button
-              className="header-contact"
-              onClick={() => open(services[3])}
-            >
-              Contact
-            </button>
-            <button
               className="agent-button"
               onClick={() =>
                 open({
-                  title: "Préenrôlement",
-                  body: "Le préenrôlement en ligne vous permettra de préparer votre demande avant de vous rendre dans un centre. Ce service sera disponible prochainement.",
+                  title: "Pré Enregistrement",
+                  body: "Le Pre Enregistrement en ligne vous permettra de préparer votre demande avant de vous rendre dans un centre. Ce service sera disponible prochainement.",
                 })
               }
             >
               <Icon name="user" size={21} />
-              Préenrôlement
+              Pre Enregistrement
             </button>
           </div>
         </div>
@@ -467,90 +457,6 @@ export default function App() {
             ))}
           </div>
         </section>
-        <section
-          id="how-to-identify"
-          className="container how-to-identify"
-          aria-label="Comment se faire identifier"
-        >
-          <div className="section-heading">
-            <div>
-              <h2>Comment se faire identifier</h2>
-              <div className="tricolor" />
-            </div>
-          </div>
-          <IdentificationScenes />
-        </section>
-        <section
-          id="services"
-          className="container services"
-          aria-label="Vos démarches"
-        >
-          {services.map((service) => (
-            <button
-              className="service-card"
-              key={service.title}
-              onClick={() => open(service)}
-            >
-              <span className="service-icon">
-                <Icon name={service.icon} size={37} />
-              </span>
-              <span className="service-copy">
-                <strong>{service.title}</strong>
-                <span>{service.description}</span>
-              </span>
-              <Icon name="arrow" className="service-arrow" size={22} />
-            </button>
-          ))}
-        </section>
-        <section className="statistics">
-          <div className="container statistics-inner">
-            <div className="statistics-intro">
-              <h2>Nos chiffres clés</h2>
-              <div className="tricolor" />
-              <p>
-                Des avancées concrètes pour une identité
-                <br />
-                au service de tous les Congolais.
-              </p>
-            </div>
-            <div className="stat">
-              <Icon name="people" size={49} />
-              <div>
-                <AnimatedNumber value={34.2} decimals={1} suffix=" millions" />
-                <span>de personnes enregistrées</span>
-              </div>
-            </div>
-            <div className="stat">
-              <Icon name="building" size={47} />
-              <div>
-                <AnimatedNumber value={523} delay={120} />
-                <span>
-                  centres d’enrôlement
-                  <br />
-                  sur toute la RDC
-                </span>
-              </div>
-            </div>
-            <div className="stat">
-              <Icon name="card" size={46} />
-              <div>
-                <AnimatedNumber value={98} suffix="%" delay={240} />
-                <span>
-                  de demandes traitées
-                  <br />
-                  dans les délais
-                </span>
-              </div>
-            </div>
-            <div className="stat">
-              <Icon name="chart" size={45} />
-              <div>
-                <AnimatedNumber value={26} suffix=" provinces" delay={360} />
-                <span>couvertes</span>
-              </div>
-            </div>
-          </div>
-        </section>
         <section id="actualites" className="container news">
           <div className="section-heading">
             <div>
@@ -597,47 +503,133 @@ export default function App() {
             ))}
           </div>
         </section>
+        <section
+          id="how-to-identify"
+          className="container how-to-identify"
+          aria-label="Comment se faire identifier"
+        >
+          <div className="section-heading">
+            <div>
+              <h2>Comment se faire identifier</h2>
+              <div className="tricolor" />
+            </div>
+          </div>
+          <IdentificationScenes />
+        </section>
+        <section
+          id="services"
+          className="container services"
+          aria-label="Vos démarches"
+        >
+          {services.map((service) => (
+            <button
+              className="service-card"
+              key={service.title}
+              onClick={() => open(service)}
+            >
+              <span className="service-icon">
+                <Icon name={service.icon} size={37} />
+              </span>
+              <span className="service-copy">
+                <strong>{service.title}</strong>
+                <span>{service.description}</span>
+              </span>
+              <Icon name="arrow" className="service-arrow" size={22} />
+            </button>
+          ))}
+        </section>
+        <section className="statistics">
+          <div className="container statistics-inner">
+            <div className="statistics-intro">
+              <h2>Nos chiffres clés</h2>
+              <div className="tricolor" />
+              <p>
+                Des avancées concrètes pour une identité
+                <br />
+                au service de tous les Congolais.
+              </p>
+            </div>ƒ
+            <div className="stat">
+              <Icon name="people" size={49} />
+              <div>
+                <AnimatedNumber value={34.2} decimals={1} suffix=" millions" />
+                <span>de personnes enregistrées</span>
+              </div>
+            </div>
+            <div className="stat">
+              <Icon name="building" size={47} />
+              <div>
+                <AnimatedNumber value={523} delay={120} />
+                <span>
+                  centres d’enrôlement
+                  <br />
+                  sur toute la RDC
+                </span>
+              </div>
+            </div>
+            <div className="stat">
+              <Icon name="card" size={46} />
+              <div>
+                <AnimatedNumber value={98} suffix="%" delay={240} />
+                <span>
+                  de demandes traitées
+                  <br />
+                  dans les délais
+                </span>
+              </div>
+            </div>
+            <div className="stat">
+              <Icon name="chart" size={45} />
+              <div>
+                <AnimatedNumber value={26} suffix=" provinces" delay={360} />
+                <span>couvertes</span>
+              </div>
+            </div>
+          </div>
+        </section>
         <ProvinceMap />
         <IdentityCard />
         <section className="management" aria-labelledby="management-title">
           <div className="container">
-            <div className="management-heading">
-              <span>Gouvernance</span>
-              <h2 id="management-title">Comité de gestion</h2>
-              <div className="tricolor" />
-              <p>
-                Une direction engagée pour une identification fiable, inclusive
-                et accessible.
-              </p>
-            </div>
-            <div className="leaders-grid">
-              {leaders.map((leader, index) => (
-                <article
-                  className={`leader-card ${leader.primary ? "is-primary" : ""}`}
-                  key={`${leader.role}-${index}`}
-                  style={{ "--leader-delay": `${index * 120}ms` }}
-                >
-                  <div className="leader-rank">{leader.rank}</div>
-                  <div
-                    className={`leader-avatar ${leader.photo ? "has-photo" : ""}`}
-                    aria-hidden="true"
+            <div className="management-showcase">
+              <div className="leaders-grid">
+                {leaders.map((leader, index) => (
+                  <article
+                    className={`leader-card ${leader.primary ? "is-primary" : ""}`}
+                    key={`${leader.role}-${index}`}
+                    style={{ "--leader-delay": `${index * 120}ms` }}
                   >
-                    {leader.photo ? (
-                      <img src={leader.photo} alt="" />
-                    ) : (
-                      <>
-                        <span>{leader.shortRole}</span>
-                        <Icon name="user" size={58} />
-                      </>
-                    )}
-                  </div>
-                  <div className="leader-info">
-                    <span>{leader.role}</span>
-                    <h3>{leader.name}</h3>
-                    {leader.scope && <p>{leader.scope}</p>}
-                  </div>
-                </article>
-              ))}
+                    <div
+                      className={`leader-avatar ${leader.photo ? "has-photo" : ""}`}
+                      aria-hidden="true"
+                    >
+                      {leader.photo ? (
+                        <img src={leader.photo} alt="" />
+                      ) : (
+                        <>
+                          <span>{leader.shortRole}</span>
+                          <Icon name="user" size={58} />
+                        </>
+                      )}
+                    </div>
+                    <div className="leader-info">
+                      <span>{leader.role}</span>
+                      <h3>{leader.name}</h3>
+                      {leader.scope && <p>{leader.scope}</p>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <aside className="director-quote" aria-label="Mot du Directeur Général">
+                <span>Mot du Directeur Général</span>
+                <blockquote>
+                  « Identifier chaque citoyen, c’est lui garantir une existence
+                  administrative, protéger ses droits et ouvrir la voie à des
+                  services publics plus justes, fiables et accessibles. »
+                </blockquote>
+                <p>MUKOLO BASENGEZI Marcellin</p>
+                <small>Directeur Général de l’ONIP</small>
+              </aside>
             </div>
           </div>
         </section>
