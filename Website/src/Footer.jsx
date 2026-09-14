@@ -37,7 +37,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
            
             <button onClick={onAbout}>À propos de l’ONIP</button>
             <a href="#actualites">Nos actualités</a>
-            <a href="#couverture">Notre présence en RDC</a>
+            <a href="#couverture">Nos Bureaux en RDC</a>
             <a href="#contenu">Accueil</a>
           </nav>
 
@@ -45,7 +45,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
             <h3>Vos démarches</h3>
             <button onClick={() => onService(0)}>Trouver un centre</button>
             
-            <button onClick={() => onService(2)}>Conditions D’identification</button>
+            <button onClick={() => onService(2)}>Conditions d’identification</button>
             <a href="#services">Tous nos services</a>
           </nav>
 

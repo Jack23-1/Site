@@ -399,7 +399,7 @@ export default function App() {
               }
             >
               <Icon name="user" size={21} />
-              Pre Enregistrement
+              Pré-Enregistrement
             </button>
           </div>
         </div>
