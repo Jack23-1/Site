@@ -1,7 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import AnimatedNumber from "./AnimatedNumber";
 import IdentityCard from "./IdentityCard";
+import Apropos from "./pages/Apropos";
+import Actualites from "./pages/Actualites";
+import Services from "./pages/Services";
+import Documents from "./pages/Documents";
+import Galerie from "./pages/Galerie";
+import Contacts from "./pages/Contacts";
 import "./App.css";
 import ProvinceMap from "./ProvinceMap";
 import Footer from "./Footer";
@@ -257,8 +263,24 @@ const leaders = [
     primary: true,
   },
 ];
+
+const pageRoutes = new Set([
+  "/apropos",
+  "/actualites",
+  "/services",
+  "/documents",
+  "/galerie",
+  "/contacts",
+]);
+
+const getPagePath = () => {
+  if (typeof window === "undefined") return "/";
+  return pageRoutes.has(window.location.pathname) ? window.location.pathname : "/";
+};
+
 export default function App() {
   useReveal();
+  const navigationRef = useRef(null);
   const [slide, setSlide] = useState(0);
   const [leavingSlide, setLeavingSlide] = useState(null);
   const [heroPaused, setHeroPaused] = useState(false);
@@ -266,6 +288,26 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [notice, setNotice] = useState("");
   const [accessible, setAccessible] = useState(false);
+  const [pagePath, setPagePath] = useState(getPagePath);
+  const [navMarker, setNavMarker] = useState({
+    left: 0,
+    top: 0,
+    visible: false,
+  });
+  const navigate = useCallback((path = "/", hash = "") => {
+    const nextUrl = `${path}${hash ? `#${hash}` : ""}`;
+    setPagePath(path);
+    setMenu(false);
+    setModal(null);
+    window.history.pushState({}, "", nextUrl);
+    window.setTimeout(() => {
+      if (hash) {
+        document.getElementById(hash)?.scrollIntoView({ block: "start" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 0);
+  }, []);
   const open = (content) => {
     setNotice("");
     setModal(content);
@@ -280,6 +322,11 @@ export default function App() {
     [slide],
   );
   useEffect(() => {
+    const onPopState = () => setPagePath(getPagePath());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+  useEffect(() => {
     if (!modal) return;
     const previous = document.activeElement;
     const dialog = document.querySelector("dialog");
@@ -290,18 +337,60 @@ export default function App() {
     };
   }, [modal]);
   useEffect(() => {
-    if (heroPaused || modal || menu) return;
+    if (pagePath !== "/" || heroPaused || modal || menu) return;
     const timer = window.setInterval(
       () => goToSlide((slide + 1) % slides.length),
       6000,
     );
     return () => window.clearInterval(timer);
-  }, [goToSlide, heroPaused, modal, menu, slide]);
+  }, [goToSlide, heroPaused, modal, menu, pagePath, slide]);
   useEffect(() => {
     if (leavingSlide === null) return;
     const timer = window.setTimeout(() => setLeavingSlide(null), 2700);
     return () => window.clearTimeout(timer);
   }, [leavingSlide]);
+  useEffect(() => {
+    const updateNavMarker = () => {
+      const navigation = navigationRef.current;
+      if (!navigation) return;
+
+      const isMobile = window.matchMedia("(max-width: 900px)").matches;
+      const activeItem = navigation.querySelector(".active");
+
+      if (!activeItem || isMobile) {
+        setNavMarker((current) => ({ ...current, visible: false }));
+        return;
+      }
+
+      const navigationRect = navigation.getBoundingClientRect();
+      const activeRect = activeItem.getBoundingClientRect();
+      const markerHeight = 25;
+      const markerBottom = 7;
+      const markerCenter =
+        activeRect.left - navigationRect.left + activeRect.width / 2;
+
+      setNavMarker({
+        left: markerCenter,
+        top: activeRect.bottom - navigationRect.top - markerHeight - markerBottom,
+        visible: true,
+      });
+    };
+
+    const frame = window.requestAnimationFrame(updateNavMarker);
+    window.addEventListener("resize", updateNavMarker);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateNavMarker);
+    };
+  }, [menu, pagePath]);
+  const pageViews = {
+    "/apropos": <Apropos />,
+    "/actualites": <Actualites />,
+    "/services": <Services />,
+    "/documents": <Documents />,
+    "/galerie": <Galerie />,
+    "/contacts": <Contacts />,
+  };
   return (
     <div className={accessible ? "site high-contrast" : "site"}>
       <a className="skip-link" href="#contenu">
@@ -309,7 +398,15 @@ export default function App() {
       </a>
       <header>
         <div className="container header-inner">
-          <a className="brand" href="#" aria-label="ONIP — Accueil">
+          <a
+            className="brand"
+            href="/"
+            aria-label="ONIP — Accueil"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/");
+            }}
+          >
             <img
               className="official-logo"
               src={onipLogo}
@@ -334,59 +431,86 @@ export default function App() {
             <Icon name="menu" />
           </button>
           <nav
+            ref={navigationRef}
             className={menu ? "navigation is-open" : "navigation"}
             aria-label="Navigation principale"
+            style={{
+              "--nav-fingerprint-left": `${navMarker.left}px`,
+              "--nav-fingerprint-top": `${navMarker.top}px`,
+              "--nav-fingerprint-opacity": navMarker.visible ? 1 : 0,
+            }}
           >
-            <a className="active" href="#" onClick={() => setMenu(false)}>
+            <a
+              className={pagePath === "/" ? "active" : ""}
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/");
+              }}
+            >
               Accueil
             </a>
-            <button
-              onClick={() => {
-                setMenu(false);
-                open({
-                  title: "À propos",
-                  body: "L’Office National d’Identification de la Population accompagne l’identification des citoyens en République Démocratique du Congo. Une identité fiable, inclusive et accessible à tous.",
-                });
+            <a
+              className={pagePath === "/apropos" ? "active" : ""}
+              href="/apropos"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/apropos");
               }}
             >
               À propos
-            </button>
-            <a href="#actualites" onClick={() => setMenu(false)}>
+            </a>
+            <a
+              className={pagePath === "/actualites" ? "active" : ""}
+              href="/actualites"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/actualites");
+              }}
+            >
               Actualités
             </a>
-            <a href="#services" onClick={() => setMenu(false)}>
+            <a
+              className={pagePath === "/services" ? "active" : ""}
+              href="/services"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/services");
+              }}
+            >
               Services
             </a>
-            <button
-              onClick={() => {
-                setMenu(false);
-                open({
-                  title: "Document",
-                  body: "Les formulaires et documents officiels seront disponibles dans cet espace après leur publication.",
-                });
+            <a
+              className={pagePath === "/documents" ? "active" : ""}
+              href="/documents"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/documents");
               }}
             >
               Documents
-            </button>
-            <button
-              onClick={() => {
-                setMenu(false);
-                open({
-                  title: "Galerie",
-                  body: "La galerie officielle présentera les images des activités, des centres d’enrôlement et des moments institutionnels de l’ONIP.",
-                });
+            </a>
+            <a
+              className={pagePath === "/galerie" ? "active" : ""}
+              href="/galerie"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/galerie");
               }}
             >
               Galerie
-            </button>
-            <button
-              onClick={() => {
-                setMenu(false);
-                open(services[3]);
+            </a>
+            <a
+              className={pagePath === "/contacts" ? "active" : ""}
+              href="/contacts"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/contacts");
               }}
             >
               Contacts
-            </button>
+            </a>
+            <span className="nav-active-fingerprint" aria-hidden="true" />
           </nav>
           <div className="header-actions">
             <button
@@ -405,6 +529,10 @@ export default function App() {
         </div>
       </header>
       <main id="contenu">
+        {pagePath !== "/" ? (
+          pageViews[pagePath]
+        ) : (
+          <>
         <section
           className={`hero slide-${slide}`}
           aria-label="À la une"
@@ -548,7 +676,7 @@ export default function App() {
                 <br />
                 au service de tous les Congolais.
               </p>
-            </div>ƒ
+            </div>
             <div className="stat">
               <Icon name="people" size={49} />
               <div>
@@ -633,15 +761,12 @@ export default function App() {
             </div>
           </div>
         </section>
+          </>
+        )}
       </main>
       <Footer
         onService={(index) => open(services[index])}
-        onAbout={() =>
-          open({
-            title: "L’ONIP",
-            body: "L’Office National d’Identification de la Population accompagne l’identification des citoyens en République Démocratique du Congo. Une identité fiable, inclusive et accessible à tous.",
-          })
-        }
+        onAbout={() => navigate("/apropos")}
         onAccessibility={() => setAccessible(!accessible)}
         accessible={accessible}
       />
