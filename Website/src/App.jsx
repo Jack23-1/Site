@@ -1,3 +1,5 @@
+import Translation from "./i18n/Translation";
+import { useLanguage } from "./i18n/LanguageContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import AnimatedNumber from "./AnimatedNumber";
@@ -124,11 +126,12 @@ function Fingerprint({ className = "" }) {
 Fingerprint.propTypes = { className: PropTypes.string };
 
 function OnipLoader({ leaving }) {
+  const { t } = useLanguage();
   return (
     <div
       className={`site-loader ${leaving ? "is-leaving" : ""}`}
       role="status"
-      aria-label="Chargement de la plateforme ONIP"
+      aria-label={t("Chargement de la plateforme ONIP")}
     >
       <div className="onip-loader-mark" aria-hidden="true">
         <img className="onip-loader-layer onip-loader-center" src={onipLoaderCenter} alt="" />
@@ -170,10 +173,7 @@ const services = [
     icon: "pin",
     title: "Trouver un centre",
     description: (
-      <>
-        Localisez le centre d’enrôlement <br />
-        le plus proche de vous.
-      </>
+      <><Translation text="Localisez le centre d’enrôlement" /><br /><Translation text="le plus proche de vous." /></>
     ),
     body: "Les centres d’enrôlement vous accompagnent dans votre démarche d’identification. La carte et les adresses des centres seront disponibles après connexion au répertoire officiel.",
   },
@@ -181,10 +181,7 @@ const services = [
     icon: "document",
     title: "Suivre ma demande",
     description: (
-      <>
-        Consultez l’état d’avancement <br />
-        de votre demande.
-      </>
+      <><Translation text="Consultez l’état d’avancement" /><br /><Translation text="de votre demande." /></>
     ),
     body: "Saisissez le numéro figurant sur votre récépissé d’enrôlement.",
   },
@@ -192,10 +189,7 @@ const services = [
     icon: "people",
     title: "Conditions d’enrôlement",
     description: (
-      <>
-        Découvrez les conditions et les <br />
-        pièces à fournir.
-      </>
+      <><Translation text="Découvrez les conditions et les" /><br /><Translation text="pièces à fournir." /></>
     ),
     body: "Préparez les documents attestant votre identité et présentez-vous dans un centre d’enrôlement. La liste officielle des pièces et les conditions d’éligibilité seront publiées ici après validation par l’ONIP.",
   },
@@ -203,10 +197,7 @@ const services = [
     icon: "headset",
     title: "Assistance",
     description: (
-      <>
-        Besoin d’aide ? <br />
-        Nous sommes à votre écoute.
-      </>
+      <><Translation text="Besoin d’aide ?" /><br /><Translation text="Nous sommes à votre écoute." /></>
     ),
     body: "Retrouvez les réponses aux questions fréquentes sur l’identification, les centres et le suivi des demandes. Les coordonnées du service d’assistance seront ajoutées après validation.",
   },
@@ -214,65 +205,37 @@ const services = [
 const slides = [
   {
     title: (
-      <>
-        Une identité sécurisée
-        <br />
-        pour chaque Congolais
-      </>
+      <><Translation text="Une identité sécurisée" /><br /><Translation text="pour chaque Congolais" /></>
     ),
     text: (
-      <>
-        L’ONIP construit une identité fiable, inclusive
-        <br className="desktop-break" /> et accessible à tous.
-      </>
+      <><Translation text="L’ONIP construit une identité fiable, inclusive" /><br className="desktop-break" /><Translation text=" et accessible à tous." /></>
     ),
     image: "hero",
   },
   {
     title: (
-      <>
-        L’identification, plus proche
-        <br />
-        de chez vous
-      </>
+      <><Translation text="L’identification, plus proche" /><br /><Translation text="de chez vous" /></>
     ),
     text: (
-      <>
-        Des services de proximité pour accompagner
-        <br className="desktop-break" /> chaque citoyen dans ses démarches.
-      </>
+      <><Translation text="Des services de proximité pour accompagner" /><br className="desktop-break" /><Translation text=" chaque citoyen dans ses démarches." /></>
     ),
     image: "outreach",
   },
   {
     title: (
-      <>
-        Une identité pour tous,
-        <br />
-        un avenir commun
-      </>
+      <><Translation text="Une identité pour tous," /><br /><Translation text="un avenir commun" /></>
     ),
     text: (
-      <>
-        Découvrez les centres d’enrôlement
-        <br className="desktop-break" /> et préparez votre visite.
-      </>
+      <><Translation text="Découvrez les centres d’enrôlement" /><br className="desktop-break" /><Translation text=" et préparez votre visite." /></>
     ),
     image: "center",
   },
   {
     title: (
-      <>
-        Votre identité,
-        <br />
-        notre engagement
-      </>
+      <><Translation text="Votre identité," /><br /><Translation text="notre engagement" /></>
     ),
     text: (
-      <>
-        Une identification au service de l’inclusion
-        <br className="desktop-break" /> et du développement.
-      </>
+      <><Translation text="Une identification au service de l’inclusion" /><br className="desktop-break" /><Translation text=" et du développement." /></>
     ),
     image: "hero",
   },
@@ -307,6 +270,7 @@ const LOADER_REDUCED_DURATION = 350;
 const LOADER_FADE_DURATION = 480;
 
 export default function App() {
+  const { t, language, setLanguage } = useLanguage();
   useReveal();
   const navigationRef = useRef(null);
   const loaderTimersRef = useRef({ exit: null, remove: null });
@@ -464,7 +428,7 @@ export default function App() {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", updateNavMarker);
     };
-  }, [menu, pagePath]);
+  }, [menu, pagePath, language]);
   const pageViews = {
     "/apropos": <Apropos />,
     "/actualites": <Actualites />,
@@ -476,15 +440,13 @@ export default function App() {
   return (
     <div className={accessible ? "site high-contrast" : "site"}>
       {loaderVisible && <OnipLoader key={loaderCycle} leaving={loaderLeaving} />}
-      <a className="skip-link" href="#contenu">
-        Aller au contenu
-      </a>
+      <a className="skip-link" href="#contenu">{t("Aller au contenu")}</a>
       <header>
         <div className="container header-inner">
           <a
             className="brand"
             href="/"
-            aria-label="ONIP — Accueil"
+            aria-label={t("ONIP — Accueil")}
             onClick={(e) => {
               e.preventDefault();
               navigate("/");
@@ -497,18 +459,12 @@ export default function App() {
               width="2480"
               height="1155"
             />
-            <span className="brand-name">
-              OFFICE NATIONAL
-              <br />
-              D’IDENTIFICATION
-              <br />
-              DE LA POPULATION
-            </span>
+            <span className="brand-name">{t("OFFICE NATIONAL")}<br />{t("D’IDENTIFICATION")}<br />{t("DE LA POPULATION")}</span>
           </a>
           <button
             className="menu-toggle"
             onClick={() => setMenu(!menu)}
-            aria-label="Ouvrir le menu"
+            aria-label={t("Ouvrir le menu")}
             aria-expanded={menu}
           >
             <Icon name="menu" />
@@ -516,7 +472,7 @@ export default function App() {
           <nav
             ref={navigationRef}
             className={menu ? "navigation is-open" : "navigation"}
-            aria-label="Navigation principale"
+            aria-label={t("Navigation principale")}
             style={{
               "--nav-fingerprint-left": `${navMarker.left}px`,
               "--nav-fingerprint-top": `${navMarker.top}px`,
@@ -530,9 +486,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/");
               }}
-            >
-              Accueil
-            </a>
+            >{t("Accueil")}</a>
             <a
               className={pagePath === "/apropos" ? "active" : ""}
               href="/apropos"
@@ -540,9 +494,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/apropos");
               }}
-            >
-              À propos
-            </a>
+            >{t("À propos")}</a>
             <a
               className={pagePath === "/actualites" ? "active" : ""}
               href="/actualites"
@@ -550,9 +502,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/actualites");
               }}
-            >
-              Actualités
-            </a>
+            >{t("Actualités")}</a>
             <a
               className={pagePath === "/services" ? "active" : ""}
               href="/services"
@@ -560,9 +510,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/services");
               }}
-            >
-              Services
-            </a>
+            >{t("Services")}</a>
             <a
               className={pagePath === "/documents" ? "active" : ""}
               href="/documents"
@@ -570,9 +518,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/documents");
               }}
-            >
-              Documents
-            </a>
+            >{t("Documents")}</a>
             <a
               className={pagePath === "/galerie" ? "active" : ""}
               href="/galerie"
@@ -580,9 +526,7 @@ export default function App() {
                 e.preventDefault();
                 navigate("/galerie");
               }}
-            >
-              Galerie
-            </a>
+            >{t("Galerie")}</a>
             <a
               className={pagePath === "/contacts" ? "active" : ""}
               href="/contacts"
@@ -590,12 +534,14 @@ export default function App() {
                 e.preventDefault();
                 navigate("/contacts");
               }}
-            >
-              Contacts
-            </a>
+            >{t("Contacts")}</a>
             <span className="nav-active-fingerprint" aria-hidden="true" />
           </nav>
           <div className="header-actions">
+            <div className="language-switch" data-language={language} role="group" aria-label={language === 'fr' ? 'Langue du site' : 'Site language'}>
+              <button type="button" lang="fr" aria-label="Français" aria-pressed={language === 'fr'} onClick={() => setLanguage('fr')}>FR</button>
+              <button type="button" lang="en" aria-label="English" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
+            </div>
             <button
               className="agent-button"
               onClick={() =>
@@ -605,9 +551,7 @@ export default function App() {
                 })
               }
             >
-              <Icon name="user" size={21} />
-              Pré-Enregistrement
-            </button>
+              <Icon name="user" size={21} />{t("Pré-Enregistrement")}</button>
           </div>
         </div>
       </header>
@@ -618,7 +562,7 @@ export default function App() {
           <>
         <section
           className={`hero slide-${slide}`}
-          aria-label="À la une"
+          aria-label={t("À la une")}
           onMouseEnter={() => setHeroPaused(true)}
           onMouseLeave={() => setHeroPaused(false)}
           onFocus={() => setHeroPaused(true)}
@@ -649,11 +593,7 @@ export default function App() {
               <h1>{slides[slide].title}</h1>
               <div className="tricolor hero-line" />
               <p>{slides[slide].text}</p>
-              <div className="motto">
-                IDENTIFIER AUJOURD’HUI
-                <br />
-                POUR UN MEILLEUR DEMAIN
-              </div>
+              <div className="motto">{t("IDENTIFIER AUJOURD’HUI")}<br />{t("POUR UN MEILLEUR DEMAIN")}</div>
             </div>
           </div>
           <div className="carousel-dots">
@@ -662,7 +602,7 @@ export default function App() {
                 key={i}
                 className={i === slide ? "selected" : ""}
                 onClick={() => goToSlide(i)}
-                aria-label={`Afficher la diapositive ${i + 1}`}
+                aria-label={`${t("Afficher la diapositive")} ${i + 1}`}
                 aria-pressed={i === slide}
               />
             ))}
@@ -671,15 +611,14 @@ export default function App() {
         <section id="actualites" className="container news">
           <div className="section-heading">
             <div>
-              <h2>Dernières actualités</h2>
+              <h2>{t("Dernières actualités")}</h2>
               <div className="tricolor" />
             </div>
             <button
               onClick={() =>
                 open({ title: "Toutes les actualités", articles: true })
               }
-            >
-              Voir toutes les actualités <span>→</span>
+            >{t("Voir toutes les actualités")}<span>→</span>
             </button>
           </div>
           <div className="news-grid">
@@ -693,21 +632,20 @@ export default function App() {
                   src={`/images/${article.image}.png`}
                   alt={
                     article.image === "outreach"
-                      ? "Équipe d’enrôlement auprès des habitants"
+                      ? t("Équipe d’enrôlement auprès des habitants")
                       : article.image === "center"
-                        ? "Centre d’enrôlement"
-                        : "Illustration d’une carte d’identité"
+                        ? t("Centre d’enrôlement")
+                        : t("Illustration d’une carte d’identité")
                   }
                   loading="lazy"
                 />
                 <div className="news-copy">
                   <div className="news-meta">
-                    <span>{article.category}</span>
-                    <time>{article.date}</time>
+                    <span>{t(article.category)}</span>
+                    <time>{t(article.date)}</time>
                   </div>
-                  <h3>{article.title}</h3>
-                  <span className="read-more">
-                    Lire l’article <span>→</span>
+                  <h3>{t(article.title)}</h3>
+                  <span className="read-more">{t("Lire l’article")}<span>→</span>
                   </span>
                 </div>
               </button>
@@ -717,11 +655,11 @@ export default function App() {
         <section
           id="how-to-identify"
           className="container how-to-identify"
-          aria-label="Comment se faire identifier"
+          aria-label={t("Comment se faire identifier")}
         >
           <div className="section-heading">
             <div>
-              <h2>Comment se faire identifier</h2>
+              <h2>{t("Comment se faire identifier")}</h2>
               <div className="tricolor" />
             </div>
           </div>
@@ -730,7 +668,7 @@ export default function App() {
         <section
           id="services"
           className="container services"
-          aria-label="Vos démarches"
+          aria-label={t("Vos démarches")}
         >
           {services.map((service) => (
             <button
@@ -742,7 +680,7 @@ export default function App() {
                 <Icon name={service.icon} size={37} />
               </span>
               <span className="service-copy">
-                <strong>{service.title}</strong>
+                <strong>{t(service.title)}</strong>
                 <span>{service.description}</span>
               </span>
               <Icon name="arrow" className="service-arrow" size={22} />
@@ -752,48 +690,36 @@ export default function App() {
         <section className="statistics">
           <div className="container statistics-inner">
             <div className="statistics-intro">
-              <h2>Nos chiffres clés</h2>
+              <h2>{t("Nos chiffres clés")}</h2>
               <div className="tricolor" />
-              <p>
-                Des avancées concrètes pour une identité
-                <br />
-                au service de tous les Congolais.
-              </p>
+              <p>{t("Des avancées concrètes pour une identité")}<br />{t("au service de tous les Congolais.")}</p>
             </div>
             <div className="stat">
               <Icon name="people" size={49} />
               <div>
-                <AnimatedNumber value={34.2} decimals={1} suffix=" millions" />
-                <span>de personnes enregistrées</span>
+                <AnimatedNumber value={34.2} decimals={1} suffix={t(" millions")} />
+                <span>{t("de personnes enregistrées")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="building" size={47} />
               <div>
                 <AnimatedNumber value={523} delay={120} />
-                <span>
-                  centres d’enrôlement
-                  <br />
-                  sur toute la RDC
-                </span>
+                <span>{t("centres d’enrôlement")}<br />{t("sur toute la RDC")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="card" size={46} />
               <div>
                 <AnimatedNumber value={98} suffix="%" delay={240} />
-                <span>
-                  de demandes traitées
-                  <br />
-                  dans les délais
-                </span>
+                <span>{t("de demandes traitées")}<br />{t("dans les délais")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="chart" size={45} />
               <div>
                 <AnimatedNumber value={26} suffix=" provinces" delay={360} />
-                <span>couvertes</span>
+                <span>{t("couvertes")}</span>
               </div>
             </div>
           </div>
@@ -807,7 +733,7 @@ export default function App() {
                 {leaders.map((leader, index) => (
                   <article
                     className={`leader-card ${leader.primary ? "is-primary" : ""}`}
-                    key={`${leader.role}-${index}`}
+                    key={`${t(leader.role)}-${index}`}
                     style={{ "--leader-delay": `${index * 120}ms` }}
                   >
                     <div
@@ -824,22 +750,18 @@ export default function App() {
                       )}
                     </div>
                     <div className="leader-info">
-                      <span>{leader.role}</span>
+                      <span>{t(leader.role)}</span>
                       <h3>{leader.name}</h3>
                       {leader.scope && <p>{leader.scope}</p>}
                     </div>
                   </article>
                 ))}
               </div>
-              <aside className="director-quote" aria-label="Mot du Directeur Général">
-                <span>Mot du Directeur Général</span>
-                <blockquote>
-                  « Identifier chaque citoyen, c’est lui garantir une existence
-                  administrative, protéger ses droits et ouvrir la voie à des
-                  services publics plus justes, fiables et accessibles. »
-                </blockquote>
+              <aside className="director-quote" aria-label={t("Mot du Directeur Général")}>
+                <span>{t("Mot du Directeur Général")}</span>
+                <blockquote>{t("« Identifier chaque citoyen, c’est lui garantir une existence administrative, protéger ses droits et ouvrir la voie à des services publics plus justes, fiables et accessibles. »")}</blockquote>
                 <p>MUKOLO BASENGEZI Marcellin</p>
-                <small>Directeur Général de l’ONIP</small>
+                <small>{t("Directeur Général de l’ONIP")}</small>
               </aside>
             </div>
           </div>
@@ -863,7 +785,7 @@ export default function App() {
           <div className="dialog-content">
             <button
               className="close-modal"
-              aria-label="Fermer"
+              aria-label={t("Fermer")}
               onClick={() => setModal(null)}
               autoFocus
             >
@@ -876,9 +798,9 @@ export default function App() {
                 alt=""
               />
             )}
-            <h2>{modal.title}</h2>
+            <h2>{t(modal.title)}</h2>
             <div className="tricolor" />
-            <p>{modal.body}</p>
+            <p>{t(modal.body)}</p>
             {modal.title === "Suivre ma demande" && (
               <form
                 className="tracking"
@@ -889,21 +811,21 @@ export default function App() {
                   );
                 }}
               >
-                <label htmlFor="reference">Numéro de récépissé</label>
+                <label htmlFor="reference">{t("Numéro de récépissé")}</label>
                 <input
                   id="reference"
                   required
-                  placeholder="Votre numéro de demande"
+                  placeholder={t("Votre numéro de demande")}
                 />
-                <button className="agent-button">Consulter ma demande</button>
-                <p role="status">{notice}</p>
+                <button className="agent-button">{t("Consulter ma demande")}</button>
+                <p role="status">{t(notice)}</p>
               </form>
             )}
             {modal.articles && (
               <div className="result-list">
                 {articles.map((article) => (
                   <button key={article.title} onClick={() => open(article)}>
-                    {article.title}
+                    {t(article.title)}
                     <Icon name="arrow" size={18} />
                   </button>
                 ))}

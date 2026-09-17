@@ -1,3 +1,4 @@
+import { useLanguage } from "./i18n/LanguageContext";
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import onipLogo from "./assets/logoonip.png";
@@ -7,8 +8,9 @@ import versoCard from "./assets/verso.png";
 import "./IdentityCard.css";
 
 function CongoFlag() {
+  const { t } = useLanguage();
   return (
-    <svg className="identity-flag" viewBox="0 0 120 90" role="img" aria-label="Drapeau de la République démocratique du Congo">
+    <svg className="identity-flag" viewBox="0 0 120 90" role="img" aria-label={t("Drapeau de la République démocratique du Congo")}>
       <path fill="#0085ca" d="M0 0h120v90H0z" />
       <path fill="#f9d534" d="M0 72 101 0h19v18L19 90H0Z" />
       <path fill="#ce233b" d="M0 79 110 0h10v11L10 90H0Z" />
@@ -58,26 +60,28 @@ const layerArrowPaths = {
 };
 
 function LayerArtwork({ kind }) {
+  const { t } = useLanguage();
   return (
     <>
       <HeritagePattern />
-      <span className="identity-material-heading"><img src={onipLogo} alt="" /><span>ONIP · SPÉCIMEN</span></span>
+      <span className="identity-material-heading"><img src={onipLogo} alt="" /><span>{t("ONIP · SPÉCIMEN")}</span></span>
       <span className="identity-material-detail">
         {kind === "portrait" ? <img className="identity-material-portrait" src={specimenPortrait} alt="" /> :
           kind === "national" ? <CongoFlag /> :
           kind === "foil" ? <span className="identity-material-foil">CD</span> :
           kind === "data" ? <span className="identity-material-data">BAKOLE<br />BAKOLE<br />Jacques</span> :
-          kind === "reverse" ? <span className="identity-material-mrz">DÉMO<br />««««<br />««««</span> :
+          kind === "reverse" ? <span className="identity-material-mrz">{t("DÉMO")}<br />««««<br />««««</span> :
           kind === "core" ? <svg className="identity-material-circuit" viewBox="0 0 100 160" fill="none" aria-hidden="true"><g stroke="currentColor" strokeWidth="3"><rect x="9" y="9" width="82" height="142" rx="16" /><rect x="17" y="17" width="66" height="126" rx="12" /><rect x="25" y="25" width="50" height="110" rx="8" /><path d="M25 75h24m-24 10h24M49 65h26M49 95h26" /><rect x="36" y="61" width="28" height="38" rx="4" /></g></svg> :
           <span className={`identity-material-pattern pattern-${kind}`} />}
       </span>
-      <span className="identity-material-footer">SPÉCIMEN — NON VALABLE</span>
+      <span className="identity-material-footer">{t("SPÉCIMEN — NON VALABLE")}</span>
     </>
   );
 }
 LayerArtwork.propTypes = { kind: PropTypes.string.isRequired };
 
 function LayerAnnotations({ visible }) {
+  const { t } = useLanguage();
   return (
     <span className="identity-layer-annotations" aria-hidden={!visible}>
       <svg className="identity-layer-arrows" viewBox="0 0 1000 520" preserveAspectRatio="none">
@@ -101,8 +105,8 @@ function LayerAnnotations({ visible }) {
       </svg>
       {layerNotes.map((note, index) => (
         <span key={note.id} className={`identity-layer-note note-${note.id}`} style={{ "--note-delay": `${610 + index * 50}ms` }}>
-          <b>{note.title}</b>
-          <small>{note.text}</small>
+          <b>{t(note.title)}</b>
+          <small>{t(note.text)}</small>
         </span>
       ))}
     </span>
@@ -111,6 +115,7 @@ function LayerAnnotations({ visible }) {
 LayerAnnotations.propTypes = { visible: PropTypes.bool.isRequired };
 
 export default function IdentityCard() {
+  const { t } = useLanguage();
   const [flipped, setFlipped] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const preview = useRef(null);
@@ -148,7 +153,7 @@ export default function IdentityCard() {
     clickTimer.current = window.setTimeout(() => setFlipped(value => !value), 500);
   };
   return (
-    <section className="identity-showcase" aria-label="Carte d’identité de démonstration">
+    <section className="identity-showcase" aria-label={t("Carte d’identité de démonstration")}>
       <div className="container identity-layout">
         <div ref={preview} className={`identity-preview${expanded ? " is-expanded" : ""}`} style={{ "--layer-count": layers.length }}>
           <button type="button" className={`identity-card-button${flipped ? " is-flipped" : ""}`} onClick={handleClick} onDoubleClick={toggleLayers}
@@ -156,15 +161,15 @@ export default function IdentityCard() {
               if (event.key === "Enter" && event.shiftKey) { event.preventDefault(); toggleLayers(); }
               if (event.key === "Escape") { window.clearTimeout(clickTimer.current); setExpanded(false); }
             }}
-            aria-label={expanded ? "Vue pédagogique en 10 couches. Double-cliquer ou appuyer sur Entrée pour refermer." : "Carte spécimen. Cliquer pour retourner. Double-cliquer ou Majuscule + Entrée pour découvrir les 10 couches illustratives."}
+            aria-label={expanded ? t("Vue pédagogique en 10 couches. Double-cliquer ou appuyer sur Entrée pour refermer.") : t("Carte spécimen. Cliquer pour retourner. Double-cliquer ou Majuscule + Entrée pour découvrir les 10 couches illustratives.")}
             aria-expanded={expanded}>
             <span className="identity-normal-view">
             <span className="identity-card-rotor">
               <span className="identity-face identity-front identity-card-image-face" aria-hidden={flipped}>
-                <img className="identity-real-card-image" src={rectoCard} alt="Recto de la carte nationale d'identité" draggable="false" />
+                <img className="identity-real-card-image" src={rectoCard} alt={t("Recto de la carte nationale d'identité")} draggable="false" />
               </span>
               <span className="identity-face identity-back identity-card-image-face" aria-hidden={!flipped}>
-                <img className="identity-real-card-image" src={versoCard} alt="Verso de la carte nationale d'identité" draggable="false" />
+                <img className="identity-real-card-image" src={versoCard} alt={t("Verso de la carte nationale d'identité")} draggable="false" />
               </span>
             </span>
             </span>

@@ -1,3 +1,4 @@
+import { useLanguage } from "./i18n/LanguageContext";
 import PropTypes from 'prop-types'
 import './Footer.css'
 import logofooter from './assets/logofooter.png'
@@ -21,64 +22,59 @@ const socialLinks = [
 ]
 
 export default function Footer({ onService, onAbout, onAccessibility, accessible }) {
+  const { t } = useLanguage();
   return (
     <footer className="site-footer">
       <div className="container footer-container">
         <div className="footer-main">
           <section className="footer-brand-block" aria-label="ONIP">
-            <a href="#" className="footer-brand" aria-label="ONIP — Retour à l’accueil">
+            <a href="#" className="footer-brand" aria-label={t("ONIP — Retour à l’accueil")}>
               <img className="footer-official-logo" src={logofooter} alt="ONIP" width="2480" height="1155" />
             </a>
             
            
           </section>
 
-          <nav className="footer-column" aria-label="L’Etablissement ">
+          <nav className="footer-column" aria-label={t("L’Etablissement ")}>
            
-            <button onClick={onAbout}>À propos de l’ONIP</button>
-            <a href="#actualites">Nos actualités</a>
-            <a href="#couverture">Nos Bureaux en RDC</a>
-            <a href="#contenu">Accueil</a>
+            <button onClick={onAbout}>{t("À propos de l’ONIP")}</button>
+            <a href="#actualites">{t("Nos actualités")}</a>
+            <a href="#couverture">{t("Nos Bureaux en RDC")}</a>
+            <a href="#contenu">{t("Accueil")}</a>
           </nav>
 
-          <nav className="footer-column" aria-label="Vos démarches">
-            <h3>Vos démarches</h3>
-            <button onClick={() => onService(0)}>Trouver un centre</button>
+          <nav className="footer-column" aria-label={t("Vos démarches")}>
+            <h3>{t("Vos démarches")}</h3>
+            <button onClick={() => onService(0)}>{t("Trouver un centre")}</button>
             
-            <button onClick={() => onService(2)}>Conditions d’identification</button>
-            <a href="#services">Tous nos services</a>
+            <button onClick={() => onService(2)}>{t("Conditions d’identification")}</button>
+            <a href="#services">{t("Tous nos services")}</a>
           </nav>
 
-          <section className="footer-connect" aria-label="Assistance et réseaux sociaux">
-            <h3>Contact & assistance</h3>
-            <p>Besoin d’une information ou d’un accompagnement dans vos démarches ?</p>
-            <button className="footer-assistance" onClick={() => onService(3)}>
-              Besoin d’aide ?
-              <span aria-hidden="true">↗</span>
+          <section className="footer-connect" aria-label={t("Assistance et réseaux sociaux")}>
+            <h3>{t("Contact & assistance")}</h3>
+            <p>{t("Besoin d’une information ou d’un accompagnement dans vos démarches ?")}</p>
+            <button className="footer-assistance" onClick={() => onService(3)}>{t("Besoin d’aide ?")}<span aria-hidden="true">↗</span>
             </button>
-            <div className="footer-social-links" aria-label="Réseaux sociaux">
+            <div className="footer-social-links" aria-label={t("Réseaux sociaux")}>
               {socialLinks.map(link => (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+                <a key={t(link.label)} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={t(link.label)}>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d={link.path} />
                   </svg>
                 </a>
               ))}
             </div>
-            <small>Suivez les canaux officiels de l’ONIP</small>
+            <small>{t("Suivez les canaux officiels de l’ONIP")}</small>
           </section>
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} ONIP. Tous droits réservés.</p>
+          <p>© {new Date().getFullYear()}{t(" ONIP. Tous droits réservés.")}</p>
           <div>
-            <button onClick={onAccessibility} aria-pressed={accessible}>
-              Accessibilité
-              <span aria-hidden="true">◉</span>
+            <button onClick={onAccessibility} aria-pressed={accessible}>{t("Accessibilité")}<span aria-hidden="true">◉</span>
             </button>
-            <a className="back-to-top" href="#">
-              Retour en haut
-              <span aria-hidden="true">↑</span>
+            <a className="back-to-top" href="#">{t("Retour en haut")}<span aria-hidden="true">↑</span>
             </a>
           </div>
         </div>

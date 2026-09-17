@@ -1,7 +1,9 @@
+import { useLanguage } from "./i18n/LanguageContext";
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 export default function AnimatedNumber({ value, decimals = 0, suffix = "", delay = 0 }) {
+  const { locale, t } = useLanguage();
   const element = useRef(null);
   const [number, setNumber] = useState(0);
 
@@ -43,10 +45,10 @@ export default function AnimatedNumber({ value, decimals = 0, suffix = "", delay
     };
   }, [value, decimals, delay]);
 
-  const format = amount => amount.toLocaleString("fr-FR", {
+  const format = amount => amount.toLocaleString(locale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
-  }) + suffix;
+  }) + t(suffix);
 
   return (
     <strong ref={element} className="animated-number" aria-label={format(value)}>

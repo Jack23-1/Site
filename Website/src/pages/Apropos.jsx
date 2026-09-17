@@ -1,3 +1,5 @@
+import { useLanguage } from "../i18n/LanguageContext";
 export default function Apropos() {
-  return <section className="empty-page apropos-page" aria-label="À propos" />;
+  const { t } = useLanguage();
+  return <section className="empty-page apropos-page" aria-label={t("À propos")} />;
 }

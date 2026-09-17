@@ -1829,3 +1829,16 @@ header::after {
     border-radius: 20px;
   }
 }
+
+/* Keep the language switch and registration action comfortable at narrow widths. */
+.header-actions { gap: 10px; }
+@media (min-width: 901px) and (max-width: 1250px) {
+  .header-inner { gap: 14px; }
+  .navigation { gap: 12px; }
+  .brand-name { display: none; }
+}
+@media (max-width: 600px) {
+  .header-inner { flex-wrap: wrap; height: auto; min-height: 88px; padding-block: 10px; }
+  .header-actions { gap: 8px; }
+  .brand-name { display: none; }
+}

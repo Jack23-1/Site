@@ -43,3 +43,7 @@ Le footer compact comprend X, YouTube et Facebook. Les liens pointent provisoire
 Le bandeau supérieur a été retiré. Les animations d’apparition au défilement et les transitions de survol respectent `prefers-reduced-motion`. Le contenu reste visible si les animations ne peuvent pas être exécutées.
 
 La recherche a été retirée de l’en-tête. La séparation verticale entre le logo et le nom complet reprend les couleurs bleu, jaune et rouge.
+
+## Administration (interface préparée)
+
+L’interface `/admin` contient la connexion et la gestion des actualités, documents et galerie en français et anglais. Le serveur n’est pas encore implémenté : les opérations ne fonctionnent pas sans API. Le [contrat d’API et le travail restant](docs/administration.md) décrivent le raccordement à réaliser après le choix de la technologie backend.
