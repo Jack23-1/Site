@@ -68,6 +68,158 @@ header {
   transform-origin: left;
   animation: line-arrive 0.75s 0.12s both;
 }
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(7px) saturate(1.04);
+  -webkit-backdrop-filter: blur(7px) saturate(1.04);
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+.site-loader.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.48s;
+}
+.onip-loader-mark {
+  position: relative;
+  width: clamp(190px, 18vw, 292px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 26px 46px rgba(8, 41, 95, 0.22));
+  animation: onip-loader-mark-arrive 3.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.onip-loader-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+.onip-loader-center {
+  opacity: 0;
+  transform: scale(0.96);
+  animation: onip-loader-center-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.onip-loader-red,
+.onip-loader-yellow,
+.onip-loader-blue {
+  --onip-loader-progress: 0%;
+  opacity: 0;
+  transform: scale(0.985);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.onip-loader-red,
+.onip-loader-blue {
+  clip-path: inset(0 100% 0 0);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0 var(--onip-loader-progress),
+    rgba(0, 0, 0, 0.62) calc(var(--onip-loader-progress) + 4%),
+    transparent calc(var(--onip-loader-progress) + 12%)
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0 var(--onip-loader-progress),
+    rgba(0, 0, 0, 0.62) calc(var(--onip-loader-progress) + 4%),
+    transparent calc(var(--onip-loader-progress) + 12%)
+  );
+  animation: onip-loader-progress-x 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.onip-loader-yellow {
+  clip-path: inset(0 0 100% 0);
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0 var(--onip-loader-progress),
+    rgba(0, 0, 0, 0.62) calc(var(--onip-loader-progress) + 4%),
+    transparent calc(var(--onip-loader-progress) + 12%)
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0 var(--onip-loader-progress),
+    rgba(0, 0, 0, 0.62) calc(var(--onip-loader-progress) + 4%),
+    transparent calc(var(--onip-loader-progress) + 12%)
+  );
+  animation: onip-loader-progress-y 1.05s 1.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.onip-loader-red {
+  animation-delay: 0.28s;
+}
+.onip-loader-blue {
+  animation-delay: 2.08s;
+}
+@keyframes onip-loader-center-in {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@property --onip-loader-progress {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@keyframes onip-loader-progress-x {
+  0% {
+    --onip-loader-progress: 0%;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: scale(0.985);
+  }
+  14% {
+    opacity: 1;
+  }
+  100% {
+    --onip-loader-progress: 100%;
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+}
+@keyframes onip-loader-progress-y {
+  0% {
+    --onip-loader-progress: 0%;
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: scale(0.985);
+  }
+  14% {
+    opacity: 1;
+  }
+  100% {
+    --onip-loader-progress: 100%;
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+}
+@keyframes onip-loader-mark-arrive {
+  0% {
+    transform: translateY(6px) scale(0.98);
+  }
+  52% {
+    transform: translateY(-3px) scale(1.025);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
 .service-card {
   border-radius: 12px;
   border-color: #dfe8f2;
@@ -318,6 +470,20 @@ dialog::backdrop {
     opacity: 1;
     translate: none;
   }
+  .site-loader,
+  .site-loader.is-leaving {
+    transition: none;
+  }
+  .onip-loader-center,
+  .onip-loader-red,
+  .onip-loader-yellow,
+  .onip-loader-blue {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    -webkit-mask-image: none;
+    mask-image: none;
+    transform: none;
+  }
 }
 
 .brand-name::before {
@@ -543,7 +709,7 @@ header::after {
   line-height: 1.1;
 }
 .navigation .active {
-  color: #004f9d;
+  color: #d81d25;
   font-weight: 900;
 }
 .navigation .active .nav-link-icon {

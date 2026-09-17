@@ -105,7 +105,7 @@ header {
 }
 .navigation .active {
   font-weight: 700;
-  color: #0057ae;
+  color: #d81d25;
 }
 .navigation .active:after {
   content: "";
@@ -115,7 +115,7 @@ header {
   right: 0;
   height: 3px;
   border-radius: 5px;
-  background: #063b80;
+  background: #d81d25;
 }
 .header-actions {
   display: flex;

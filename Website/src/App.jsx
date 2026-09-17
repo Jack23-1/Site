@@ -14,6 +14,10 @@ import Footer from "./Footer";
 import "./responsive.css";
 import "./polish.css";
 import onipLogo from "./assets/logoonip.png";
+import onipLoaderCenter from "./assets/onip-loader-center.png";
+import onipLoaderRed from "./assets/onip-loader-red.png";
+import onipLoaderYellow from "./assets/onip-loader-yellow.png";
+import onipLoaderBlue from "./assets/onip-loader-blue.png";
 import dgPhoto from "./assets/DG.png";
 import IdentificationScenes from "./IdentificationScenes";
 import useReveal from "./useReveal";
@@ -118,6 +122,26 @@ function Fingerprint({ className = "" }) {
   );
 }
 Fingerprint.propTypes = { className: PropTypes.string };
+
+function OnipLoader({ leaving }) {
+  return (
+    <div
+      className={`site-loader ${leaving ? "is-leaving" : ""}`}
+      role="status"
+      aria-label="Chargement de la plateforme ONIP"
+    >
+      <div className="onip-loader-mark" aria-hidden="true">
+        <img className="onip-loader-layer onip-loader-center" src={onipLoaderCenter} alt="" />
+        <img className="onip-loader-layer onip-loader-red" src={onipLoaderRed} alt="" />
+        <img className="onip-loader-layer onip-loader-yellow" src={onipLoaderYellow} alt="" />
+        <img className="onip-loader-layer onip-loader-blue" src={onipLoaderBlue} alt="" />
+      </div>
+    </div>
+  );
+}
+OnipLoader.propTypes = { leaving: PropTypes.bool.isRequired };
+
+
 const articles = [
   {
     image: "outreach",
@@ -278,9 +302,14 @@ const getPagePath = () => {
   return pageRoutes.has(window.location.pathname) ? window.location.pathname : "/";
 };
 
+const LOADER_ANIMATION_DURATION = 3130;
+const LOADER_REDUCED_DURATION = 350;
+const LOADER_FADE_DURATION = 480;
+
 export default function App() {
   useReveal();
   const navigationRef = useRef(null);
+  const loaderTimersRef = useRef({ exit: null, remove: null });
   const [slide, setSlide] = useState(0);
   const [leavingSlide, setLeavingSlide] = useState(null);
   const [heroPaused, setHeroPaused] = useState(false);
@@ -288,18 +317,49 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [notice, setNotice] = useState("");
   const [accessible, setAccessible] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(true);
+  const [loaderLeaving, setLoaderLeaving] = useState(false);
+  const [loaderCycle, setLoaderCycle] = useState(0);
   const [pagePath, setPagePath] = useState(getPagePath);
   const [navMarker, setNavMarker] = useState({
     left: 0,
     top: 0,
     visible: false,
   });
-  const navigate = useCallback((path = "/", hash = "") => {
+  const clearLoaderTimers = useCallback(() => {
+    window.clearTimeout(loaderTimersRef.current.exit);
+    window.clearTimeout(loaderTimersRef.current.remove);
+  }, []);
+  const finishLoader = useCallback((afterAnimation, { restart = true } = {}) => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const loaderDuration = reducedMotion
+      ? LOADER_REDUCED_DURATION
+      : LOADER_ANIMATION_DURATION;
+
+    clearLoaderTimers();
+    if (restart) {
+      setLoaderCycle((cycle) => cycle + 1);
+    }
+    setLoaderVisible(true);
+    setLoaderLeaving(false);
+
+    loaderTimersRef.current.exit = window.setTimeout(() => {
+      afterAnimation?.();
+      setLoaderLeaving(true);
+      loaderTimersRef.current.remove = window.setTimeout(
+        () => setLoaderVisible(false),
+        reducedMotion ? 0 : LOADER_FADE_DURATION,
+      );
+    }, loaderDuration);
+  }, [clearLoaderTimers]);
+  const commitNavigation = useCallback((path = "/", hash = "", updateHistory = true) => {
     const nextUrl = `${path}${hash ? `#${hash}` : ""}`;
     setPagePath(path);
     setMenu(false);
     setModal(null);
-    window.history.pushState({}, "", nextUrl);
+    if (updateHistory) {
+      window.history.pushState({}, "", nextUrl);
+    }
     window.setTimeout(() => {
       if (hash) {
         document.getElementById(hash)?.scrollIntoView({ block: "start" });
@@ -308,6 +368,20 @@ export default function App() {
       }
     }, 0);
   }, []);
+  const navigate = useCallback((path = "/", hash = "") => {
+    const nextPath = pageRoutes.has(path) ? path : "/";
+    const currentPath = getPagePath();
+    const currentHash = window.location.hash.replace(/^#/, "");
+
+    if (nextPath === currentPath && hash === currentHash) {
+      commitNavigation(nextPath, hash, false);
+      return;
+    }
+
+    setMenu(false);
+    setModal(null);
+    finishLoader(() => commitNavigation(nextPath, hash));
+  }, [commitNavigation, finishLoader]);
   const open = (content) => {
     setNotice("");
     setModal(content);
@@ -322,10 +396,18 @@ export default function App() {
     [slide],
   );
   useEffect(() => {
-    const onPopState = () => setPagePath(getPagePath());
+    finishLoader(undefined, { restart: false });
+    return clearLoaderTimers;
+  }, [clearLoaderTimers, finishLoader]);
+  useEffect(() => {
+    const onPopState = () => {
+      const nextPath = getPagePath();
+      const nextHash = window.location.hash.replace(/^#/, "");
+      finishLoader(() => commitNavigation(nextPath, nextHash, false));
+    };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
-  }, []);
+  }, [commitNavigation, finishLoader]);
   useEffect(() => {
     if (!modal) return;
     const previous = document.activeElement;
@@ -393,6 +475,7 @@ export default function App() {
   };
   return (
     <div className={accessible ? "site high-contrast" : "site"}>
+      {loaderVisible && <OnipLoader key={loaderCycle} leaving={loaderLeaving} />}
       <a className="skip-link" href="#contenu">
         Aller au contenu
       </a>
