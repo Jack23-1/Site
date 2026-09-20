@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContentType {
+  news
+  documents
+  gallery
+  carousel
+}
+
+enum ContentStatus {
+  draft
+  published
+}
+
+model AdminUser {
+  id           String    @id @default(uuid()) @db.Uuid
+  email        String    @unique @db.VarChar(254)
+  name         String    @db.VarChar(100)
+  passwordHash String
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+}
+
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  tokenHash String    @unique @db.Char(64)
+  csrfToken String    @db.VarChar(64)
+  userId    String    @db.Uuid
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+
+  @@index([expiresAt])
+  @@index([userId])
+}
+
+model Content {
+  id          String        @id @default(uuid()) @db.Uuid
+  type        ContentType
+  status      ContentStatus @default(draft)
+  titleFr     String        @db.VarChar(180)
+  titleEn     String        @db.VarChar(180)
+  bodyFr      String        @default("")
+  bodyEn      String        @default("")
+  resourceUrl String        @default("") @db.VarChar(2048)
+  position    Int           @default(1)
+  mediaId     String?       @db.Uuid
+  media       Media?        @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+  version     Int           @default(1)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  publishedAt DateTime?
+
+  @@index([type, status, publishedAt])
+}
+
+
+model Media {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String    @db.VarChar(180)
+  kind      String    @db.VarChar(16)
+  mimeType  String    @db.VarChar(64)
+  size      Int
+  createdAt DateTime  @default(now())
+  contents  Content[]
+}
+
+model SiteContact {
+  id          String   @id @default("main")
+  email       String   @default("") @db.VarChar(254)
+  phone       String   @default("") @db.VarChar(40)
+  addressFr   String   @default("") @db.VarChar(1000)
+  addressEn   String   @default("") @db.VarChar(1000)
+  hoursFr     String   @default("") @db.VarChar(500)
+  hoursEn     String   @default("") @db.VarChar(500)
+  facebookUrl String   @default("") @db.VarChar(2048)
+  xUrl        String   @default("") @db.VarChar(2048)
+  youtubeUrl  String   @default("") @db.VarChar(2048)
+  version     Int      @default(1)
+  updatedAt   DateTime @updatedAt
+}

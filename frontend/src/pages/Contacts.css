@@ -1,0 +1,16 @@
+.public-contacts { min-height: 55vh; padding-block: 58px 80px; }
+.public-contact-eyebrow { color: #6b8198; font-size: 11px; letter-spacing: 2px; }
+.public-contacts h1 { font-size: clamp(32px, 4vw, 48px); margin: 15px 0 20px; }
+.public-contact-intro { max-width: 640px; color: #5d748c; line-height: 1.8; margin: 24px 0 36px; }
+.public-contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.public-contact-grid article { padding: 30px; border: 1px solid #dfe8f1; border-radius: 14px; background: #fafcfe; min-width: 0; }
+.public-contact-symbol { display: grid; place-items: center; width: 42px; height: 42px; background: #eaf3fc; color: #0966ae; border-radius: 10px; font-size: 21px; }
+.public-contact-grid h2 { font-size: 21px; margin-block: 18px 12px; }
+.public-contact-grid a { color: #0564b1; overflow-wrap: anywhere; }
+.public-contact-grid p { white-space: pre-line; overflow-wrap: anywhere; color: #5d748c; line-height: 1.8; }
+.public-contact-socials { margin-top: 32px; }
+.public-contact-socials h2 { font-size: 20px; margin-bottom: 18px; }
+.public-contact-socials a { display: inline-block; padding: 10px 18px; margin: 0 12px 12px 0; color: #0966ae; background: #edf5fc; border-radius: 8px; }
+.footer-contact-details { display: grid; gap: 7px; margin: 14px 0; font-style: normal; }
+.footer-contact-details a, .footer-contact-details span { font-size: 12px; color: #dae9f6; overflow-wrap: anywhere; white-space: pre-line; line-height: 1.6; }
+@media (max-width: 600px) { .public-contact-grid { grid-template-columns: 1fr; } .public-contacts { padding-block: 32px 50px; } }

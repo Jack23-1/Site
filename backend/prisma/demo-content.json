@@ -1,0 +1,32 @@
+[
+  {
+    "id": "8a52c890-8ad6-4df1-90fe-000000000001",
+    "type": "news",
+    "status": "draft",
+    "titleFr": "L’ONIP rapproche ses services des populations de l’intérieur",
+    "titleEn": "ONIP brings its services closer to communities across the country",
+    "bodyFr": "L’identification se rapproche des citoyens grâce au déploiement des équipes d’enrôlement dans les territoires. Cette démarche vise à rendre les services accessibles à toutes les populations.",
+    "bodyEn": "Registration teams are being deployed across the territories to bring identification closer to citizens and make services accessible to every community.",
+    "resourceUrl": ""
+  },
+  {
+    "id": "8a52c890-8ad6-4df1-90fe-000000000002",
+    "type": "news",
+    "status": "draft",
+    "titleFr": "Inauguration d’un nouveau centre d’enrôlement à Mbuji-Mayi",
+    "titleEn": "New registration centre opens in Mbuji-Mayi",
+    "bodyFr": "Un nouveau centre d’enrôlement accueille les citoyens à Mbuji-Mayi. Il accompagne les habitants dans les différentes étapes de leur identification.",
+    "bodyEn": "A new registration centre welcomes citizens in Mbuji-Mayi and guides residents through each stage of the identification process.",
+    "resourceUrl": ""
+  },
+  {
+    "id": "8a52c890-8ad6-4df1-90fe-000000000003",
+    "type": "news",
+    "status": "draft",
+    "titleFr": "Tout savoir sur la nouvelle carte d’identité nationale",
+    "titleEn": "Everything you need to know about the new national identity card",
+    "bodyFr": "La carte d’identité nationale permet d’attester votre identité. Découvrez les étapes de l’enrôlement et les informations utiles pour préparer votre démarche.",
+    "bodyEn": "The national identity card provides proof of your identity. Learn about the registration process and how to prepare your application.",
+    "resourceUrl": ""
+  }
+]

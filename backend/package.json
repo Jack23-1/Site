@@ -1,0 +1,37 @@
+{
+  "name": "@onip/backend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:local": "node scripts/local-db.mjs",
+    "db:stop": "node scripts/local-db.mjs stop",
+    "admin:create": "node server/admin-user.mjs",
+    "test:api": "node --test tests/api.test.mjs",
+    "db:seed": "node server/seed-content.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "db:initialize": "node server/initialize-site.mjs",
+    "dev": "node --watch server/index.mjs",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "sharp": "^0.34.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "@playwright/test": "^1.63.0",
+    "prisma": "^6.19.3",
+    "supertest": "^7.2.2"
+  }
+}

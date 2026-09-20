@@ -1,0 +1,31 @@
+{
+  "name": "onip",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace frontend --",
+    "dev:api": "npm run dev --workspace backend --",
+    "build": "npm run build --workspace frontend --",
+    "lint": "npm run lint --workspaces",
+    "start": "npm run start --workspace backend --",
+    "test:language": "npm run test:language --workspace frontend --",
+    "db:generate": "npm run db:generate --workspace backend --",
+    "db:migrate": "npm run db:migrate --workspace backend --",
+    "db:local": "npm run db:local --workspace backend --",
+    "db:stop": "npm run db:stop --workspace backend --",
+    "admin:create": "npm run admin:create --workspace backend --",
+    "test:api": "npm run test:api --workspace backend --",
+    "db:seed": "npm run db:seed --workspace backend --",
+    "test:browser": "npm run test:browser --workspace backend --",
+    "db:initialize": "npm run db:initialize --workspace backend --"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "deepmerge-ts": "^8.0.0"
+    }
+  }
+}
