@@ -1034,6 +1034,8 @@ header::after {
 }
 /* Hero carousel: photos leave and enter through a fingerprint-shaped photo layer. */
 .hero-media {
+  z-index: 0;
+  pointer-events: none;
   position: absolute;
   inset: 0;
   overflow: hidden;

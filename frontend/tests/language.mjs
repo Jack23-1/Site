@@ -18,9 +18,8 @@ try {
   }
   const fr = render('fr')
   assert.match(fr, /Dernières actualités/)
-  assert.match(fr, /pour chaque Congolais/)
   const en = render('en')
-  for (const text of ['Latest news', 'for every Congolese citizen', 'Registration requirements', 'Simulated data', 'Protective layer', 'Main navigation', 'Pre-registration']) assert.ok(en.includes(text), text)
+  for (const text of ['Latest news', 'Registration requirements', 'Simulated data', 'Protective layer', 'Main navigation', 'Pre-registration']) assert.ok(en.includes(text), text)
   assert.ok(!en.includes('Dernières actualités'))
   assert.equal(context.t(' millions'), ' million')
   assert.equal(context.t('Suivre ma demande'), 'Track my application')

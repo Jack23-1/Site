@@ -116,3 +116,9 @@ Prisma et son client sont alignés sur 6.19.3, compatibles avec Node 20.18 insta
 `frontend/` contient React, Vite et les ressources publiques. `backend/` contient l’API Express, Prisma, les scripts de base de données et les tests API/navigateur. Les dépendances sont installées depuis la racine avec npm workspaces et un fichier de verrouillage commun. Les commandes npm exécutent chaque outil dans le dossier approprié.
 
 Les tests navigateur lancent Vite depuis `frontend/` et l’API depuis `backend/`. En production, garder les deux dossiers côte à côte : le backend sert la compilation `frontend/dist/`.
+
+## Carrousel en direct
+
+Dans Administration → Carrousel, ouvrir une diapositive, importer une nouvelle photo (ou choisir dans la médiathèque), puis saisir le texte et cliquer sur Enregistrer. Le formulaire du carrousel contient uniquement la photo et un texte sans traductions à saisir. L’enregistrement publie directement ; une nouvelle diapositive est ajoutée à la suite. Supprimer retire la diapositive du site. Le texte saisi est affiché dans les deux langues du site. Les pages déjà ouvertes reçoivent les changements via `/api/content/events` (Server-Sent Events), sans actualisation manuelle. Aucun visuel codé en dur ne remplace les diapositives supprimées ; un carrousel vide est masqué.
+
+La diffusion des événements est locale au processus API. Le déploiement actuel utilise une instance ; plusieurs instances nécessiteraient une diffusion partagée. Le reverse proxy doit laisser passer les événements sans mise en tampon.

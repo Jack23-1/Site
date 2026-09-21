@@ -359,3 +359,9 @@
   .admin-contact-fields { grid-template-columns: 1fr; gap: 0; }
   .admin-sidebar { padding-inline: 12px; }
 }
+
+.admin-carousel-thumbnail { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+
+.admin-carousel-editor { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.admin-carousel-editor > * { min-width: 0; }
+@media (max-width: 900px) { .admin-carousel-editor { grid-template-columns: minmax(0, 1fr); } }

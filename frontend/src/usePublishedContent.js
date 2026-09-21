@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export default function usePublishedContent(type, limit = 24) {
+export default function usePublishedContent(type, limit = 24, live = false) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -9,12 +9,13 @@ export default function usePublishedContent(type, limit = 24) {
   const inFlight = useRef(false)
   const controller = useRef(null)
 
-  const load = useCallback(async (nextCursor = null) => {
+  const load = useCallback(async (nextCursor = null, silent = false) => {
     controller.current?.abort()
     const current = new AbortController()
     controller.current = current
     inFlight.current = true
-    setLoading(true); setError(false)
+    if (!silent) setLoading(true)
+    setError(false)
     try {
       const query = new URLSearchParams({ type, limit: String(limit), ...(nextCursor ? { cursor: nextCursor } : {}) })
       const response = await fetch(`/api/content?${query}`, { signal: current.signal, headers: { Accept: 'application/json' } })
@@ -29,6 +30,20 @@ export default function usePublishedContent(type, limit = 24) {
     finally { if (!current.signal.aborted) { setLoading(false); inFlight.current = false } }
   }, [type, limit])
   useEffect(() => { setItems([]); setCursor(null); load(); return () => controller.current?.abort() }, [load, revision])
+  useEffect(() => {
+    if (!live) return
+    const events = new EventSource('/api/content/events')
+    const refresh = () => load(null, true)
+    const onVisible = () => { if (!document.hidden) refresh() }
+    events.addEventListener('content', refresh)
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      events.close()
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [live, load])
   return { items, loading, error, hasMore: Boolean(cursor),
     reload: () => setRevision(value => value + 1),
     loadMore: () => { if (cursor && !inFlight.current) load(cursor) },

@@ -181,44 +181,6 @@ const services = [
     body: "Retrouvez les réponses aux questions fréquentes sur l’identification, les centres et le suivi des demandes. Les coordonnées du service d’assistance seront ajoutées après validation.",
   },
 ];
-const defaultSlides = [
-  {
-    title: (
-      <><Translation text="Une identité sécurisée" /><br /><Translation text="pour chaque Congolais" /></>
-    ),
-    text: (
-      <><Translation text="L’ONIP construit une identité fiable, inclusive" /><br className="desktop-break" /><Translation text=" et accessible à tous." /></>
-    ),
-    image: "hero",
-  },
-  {
-    title: (
-      <><Translation text="L’identification, plus proche" /><br /><Translation text="de chez vous" /></>
-    ),
-    text: (
-      <><Translation text="Des services de proximité pour accompagner" /><br className="desktop-break" /><Translation text=" chaque citoyen dans ses démarches." /></>
-    ),
-    image: "outreach",
-  },
-  {
-    title: (
-      <><Translation text="Une identité pour tous," /><br /><Translation text="un avenir commun" /></>
-    ),
-    text: (
-      <><Translation text="Découvrez les centres d’enrôlement" /><br className="desktop-break" /><Translation text=" et préparez votre visite." /></>
-    ),
-    image: "center",
-  },
-  {
-    title: (
-      <><Translation text="Votre identité," /><br /><Translation text="notre engagement" /></>
-    ),
-    text: (
-      <><Translation text="Une identification au service de l’inclusion" /><br className="desktop-break" /><Translation text=" et du développement." /></>
-    ),
-    image: "hero",
-  },
-];
 const leaders = [
   {
     role: "Directeur Général",
@@ -251,10 +213,8 @@ const LOADER_FADE_DURATION = 480;
 export default function App() {
   const { t, language, locale, setLanguage } = useLanguage();
   const publicContacts = usePublicContacts();
-  const publishedCarousel = usePublishedContent('carousel', 100);
-  const slides = publishedCarousel.loading || publishedCarousel.error
-    ? defaultSlides.map(item => ({ ...item, imageUrl: `/images/${item.image}.png` }))
-    : publishedCarousel.items.map(item => ({ title: item.title[language], text: item.body[language], imageUrl: item.resourceUrl }));
+  const publishedCarousel = usePublishedContent('carousel', 100, true);
+  const slides = publishedCarousel.items.map(item => ({ title: item.title[language], text: item.body[language], imageUrl: item.resourceUrl }));
   const publishedNews = usePublishedContent('news', 3);
   const articles = publishedNews.items.map(item => ({
     id: item.id,
@@ -558,10 +518,13 @@ export default function App() {
         {slides.length > 0 && <section
           className={`hero slide-${activeSlide}`}
           aria-label={t("À la une")}
-          onMouseEnter={() => setHeroPaused(true)}
-          onMouseLeave={() => setHeroPaused(false)}
-          onFocus={() => setHeroPaused(true)}
-          onBlur={() => setHeroPaused(false)}
+          onPointerDown={() => setHeroPaused(false)}
+          onFocus={(event) => {
+            if (event.target.matches(':focus-visible')) setHeroPaused(true);
+          }}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setHeroPaused(false);
+          }}
         >
           <div className="hero-media" aria-hidden="true">
             {slides.map(({ imageUrl }, index) => (

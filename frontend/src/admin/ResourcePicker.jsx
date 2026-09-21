@@ -1,7 +1,7 @@
 import { useId, useState } from 'react'
 import PropTypes from 'prop-types'
 
-export default function ResourcePicker({ kind, value, onChange, request, disabled, onBusyChange }) {
+export default function ResourcePicker({ kind, value, onChange, request, disabled, onBusyChange, simple = false }) {
   const inputId = useId()
   const [library, setLibrary] = useState(null)
   const [cursor, setCursor] = useState(null)
@@ -48,7 +48,7 @@ export default function ResourcePicker({ kind, value, onChange, request, disable
       </button>)}</div>
       {cursor && <button type="button" disabled={disabled || working} onClick={() => browse(cursor)}>Afficher plus de fichiers</button>}
     </div>}
-    <label>{isImage ? 'Lien de l’image (HTTPS)' : 'Lien du document (HTTPS)'}<input type="text" inputMode="url" value={value} disabled={disabled || working} placeholder="Ou collez un lien https://…" onChange={event => { onChange(event.target.value); setFileName('') }} /></label>
+    {!simple && <label>{isImage ? 'Lien de l’image (HTTPS)' : 'Lien du document (HTTPS)'}<input type="text" inputMode="url" value={value} disabled={disabled || working} placeholder="Ou collez un lien https://…" onChange={event => { onChange(event.target.value); setFileName('') }} /></label>}
   </div>
 }
-ResourcePicker.propTypes = { kind: PropTypes.oneOf(['image', 'document']).isRequired, value: PropTypes.string.isRequired, onChange: PropTypes.func.isRequired, request: PropTypes.func.isRequired, disabled: PropTypes.bool, onBusyChange: PropTypes.func.isRequired }
+ResourcePicker.propTypes = { kind: PropTypes.oneOf(['image', 'document']).isRequired, value: PropTypes.string.isRequired, onChange: PropTypes.func.isRequired, request: PropTypes.func.isRequired, disabled: PropTypes.bool, simple: PropTypes.bool, onBusyChange: PropTypes.func.isRequired }

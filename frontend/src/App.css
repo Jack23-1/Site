@@ -260,6 +260,7 @@ header {
   right: 32px;
 }
 .carousel-dots {
+  z-index: 1;
   display: flex;
   position: absolute;
   bottom: 14px;

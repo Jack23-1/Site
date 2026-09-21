@@ -16,6 +16,11 @@ const userView = user => ({ id: user.id, email: user.email, name: user.name })
 
 export async function createApp({ db, origin, production = false, trustProxyHops = 0, mediaDirectory }) {
   const app = express()
+  const contentSubscribers = new Set()
+  const notifyContent = () => {
+    for (const response of contentSubscribers) response.write('event: content\ndata: {}\n\n')
+  }
+
   const cookieName = production ? '__Host-onip_session' : 'onip_session'
   const cookieOptions = { httpOnly: true, sameSite: 'strict', secure: production, path: '/' }
   const dummyHash = await hashPassword(randomBytes(32).toString('hex'))
@@ -118,6 +123,7 @@ export async function createApp({ db, origin, production = false, trustProxyHops
     const item = contentInput.parse(req.body)
     const mediaId = await resolveMedia(db, item)
     const row = await db.content.create({ data: { ...toData(item), mediaId, publishedAt: item.status === 'published' ? new Date() : null } })
+    notifyContent()
     res.status(201).json({ item: toItem(row) })
   })
   app.put('/api/admin/content/:id', async (req, res) => {
@@ -139,6 +145,7 @@ export async function createApp({ db, origin, production = false, trustProxyHops
     if (!row) return res.status(404).json({ message: 'Contenu introuvable.' })
     if (row === 'type') return res.status(400).json({ message: 'Le type du contenu ne peut pas être modifié.' })
     if (row === 'conflict') return res.status(409).json({ message: 'Ce contenu a été modifié dans une autre session. Rechargez la liste avant de réessayer.' })
+    notifyContent()
     res.json({ item: toItem(row) })
   })
   app.delete('/api/admin/content/:id', async (req, res) => {
@@ -146,7 +153,17 @@ export async function createApp({ db, origin, production = false, trustProxyHops
     const version = versionInput.parse(req.body?.version)
     const deleted = await db.content.deleteMany({ where: { id, version } })
     if (!deleted.count) return res.status(409).json({ message: 'Ce contenu a été modifié ou supprimé. Rechargez la liste.' })
+    notifyContent()
     res.json({ ok: true })
+  })
+  app.get('/api/content/events', (req, res) => {
+    res.set({ 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' })
+    res.flushHeaders()
+    contentSubscribers.add(res)
+    res.write('event: content\ndata: {}\n\n')
+    const heartbeat = setInterval(() => res.write(': keepalive\n\n'), 20000)
+    heartbeat.unref()
+    res.on('close', () => { clearInterval(heartbeat); contentSubscribers.delete(res) })
   })
   app.get('/api/content', async (req, res) => {
     const { type, cursor, limit } = publicQuery.parse(req.query)
