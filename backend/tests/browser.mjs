@@ -142,6 +142,7 @@ try {
   const firstPhoto = await page.getByAltText('Aperçu de la photo sélectionnée').getAttribute('src')
   await page.getByRole('button', { name: 'Enregistrer', exact: true }).click()
   await expect(home.locator('.hero-slide-bg')).toHaveAttribute('src', firstPhoto)
+  await expect.poll(() => home.locator('.hero-slide-bg').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true)
   await expect(home.locator('.hero h1')).toHaveText('Photo carrousel en direct')
   await expect(home.locator('.hero-copy p')).toHaveText('Texte accompagnant la photo.')
   await page.getByRole('button', { name: /Photo carrousel en direct/ }).click()

@@ -24,7 +24,8 @@ const password = 'A-strong-test-password-42!'
 const email = 'test-admin@example.org'
 const db = createDatabase(databaseUrl)
 let app, passwordHash
-const mediaDirectory = await mkdtemp(path.join(tmpdir(), 'onip-api-media-'))
+const mediaRoot = await mkdtemp(path.join(tmpdir(), 'onip-api-media-'))
+const mediaDirectory = path.join(mediaRoot, '.local-media')
 const draft = (type = 'news') => ({ type, status: 'draft', title: { fr: 'Titre français', en: 'English title' }, body: { fr: 'Texte français', en: 'English text' }, resourceUrl: type === 'news' ? '' : 'https://example.org/file.pdf' })
 const login = async (client = request(app)) => {
   const response = await client.post('/api/admin/login').set('Origin', origin).send({ email, password }).expect(200)
@@ -51,7 +52,7 @@ after(async () => {
   // Only the random schema created by this test process is removed.
   if (/^test_[a-f0-9]{20}$/.test(schema)) await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
   await db.$disconnect()
-  await rm(mediaDirectory, { recursive: true, force: true })
+  await rm(mediaRoot, { recursive: true, force: true })
 })
 
 test('admin routes deny anonymous requests', async () => {

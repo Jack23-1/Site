@@ -74,7 +74,8 @@ export function registerMediaRoutes(app, { db, directory = defaultMediaDirectory
     res.set('Content-Type', media.mimeType)
     res.set('Content-Security-Policy', "sandbox; default-src 'none'")
     if (media.kind === 'document') res.attachment(media.name.toLowerCase().endsWith('.pdf') ? media.name : `${media.name}.pdf`)
-    res.sendFile(fileFor(directory, media), error => {
+    // Resolve only the validated filename inside the private media root.
+    res.sendFile(path.basename(fileFor(directory, media)), { root: directory }, error => {
       if (error && !res.headersSent) res.status(404).json({ message: 'Fichier indisponible.' })
     })
   })
