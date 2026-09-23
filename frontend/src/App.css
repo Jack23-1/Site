@@ -52,6 +52,10 @@
   margin-left: 15px;
   letter-spacing: 2px;
 }
+.language,
+.language-switch {
+  display: none !important;
+}
 header {
   background: white;
   border-bottom: 1px solid #e6ebf2;
