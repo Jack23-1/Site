@@ -347,6 +347,19 @@
 .admin-contact-socials { margin-top: 12px; padding-top: 14px; border-top: 1px solid #e1e8f1; }
 .admin-contact-socials h3 { font-size: 15px; }
 .admin-editor-settings small { font-size: 10px; color: #6b8097; font-weight: 400; }
+.admin-gallery-events { margin: -4px 0 22px; padding: 16px; border: 1px solid #dfe8f1; border-radius: 12px; background: #fafcfe; }
+.admin-gallery-events > div:first-child { margin-bottom: 14px; }
+.admin-gallery-events > div:first-child strong { display: block; font-size: 12px; color: var(--admin-ink); }
+.admin-gallery-events > div:first-child p,
+.admin-gallery-empty-event { margin: 5px 0 0; color: #7d8b9d; font-size: 11px; line-height: 1.7; }
+.admin-gallery-event-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.admin-editor .admin-gallery-event-grid > button:not(.admin-primary) { display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; padding: 10px; text-align: left; }
+.admin-editor .admin-gallery-event-grid > button[aria-pressed="true"] { border-color: #1475c6; background: #edf5fd; color: #0c5d9f; box-shadow: 0 0 0 3px #1475c60d; }
+.admin-gallery-event-stack { position: relative; width: 44px; height: 44px; flex: none; }
+.admin-gallery-event-stack img { position: absolute; inset: 0; width: 44px; height: 44px; object-fit: cover; border: 1px solid #d7e3ee; border-radius: 7px; background: #eef4fa; box-shadow: 0 5px 10px #082b5f14; transform: translate(calc(var(--stack-index) * 3px), calc(var(--stack-index) * -2px)) rotate(calc((var(--stack-index) - 1) * 3deg)); }
+.admin-gallery-event-grid > button > span:last-child { min-width: 0; display: grid; gap: 3px; }
+.admin-gallery-event-grid > button strong { overflow-wrap: anywhere; font-size: 11px; color: inherit; }
+.admin-gallery-event-grid > button small { color: #8292a6; font-size: 9px; text-transform: uppercase; }
 @media (max-width: 800px) {
   .admin-sidebar nav { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .admin-sidebar nav button { flex-direction: column; gap: 6px; padding: 9px 3px; font-size: 10px; }
@@ -358,6 +371,7 @@
   .admin-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .admin-contact-fields { grid-template-columns: 1fr; gap: 0; }
   .admin-sidebar { padding-inline: 12px; }
+  .admin-gallery-event-grid { grid-template-columns: 1fr; }
 }
 
 .admin-carousel-thumbnail { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }

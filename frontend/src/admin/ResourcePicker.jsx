@@ -33,6 +33,7 @@ export default function ResourcePicker({ kind, value, onChange, request, disable
   }
   return <div className="admin-resource-picker">
     <div className="admin-resource-heading"><strong>{isImage ? 'Photo du contenu' : 'Document à publier'}</strong><span>{isImage ? 'JPEG, PNG ou WebP' : 'PDF'} · 12 Mo maximum</span></div>
+    {simple && <p className="admin-resource-help">Photo horizontale conseillée : 1920 × 800 pixels. Formats JPG, PNG ou WebP, 12 Mo maximum. La photo est recadrée selon l’écran.</p>}
     <div className="admin-upload-actions">
       <input id={inputId} className="admin-file-input" type="file" accept={isImage ? 'image/jpeg,image/png,image/webp' : 'application/pdf'} disabled={disabled || working} onChange={upload} />
       <label className="admin-upload-label" htmlFor={inputId}>{working ? 'Chargement…' : isImage ? '↑ Importer une photo' : '↑ Importer un PDF'}</label>

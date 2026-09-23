@@ -216,15 +216,18 @@ export default function App() {
   const publishedCarousel = usePublishedContent('carousel', 100, true);
   const slides = publishedCarousel.items.map(item => ({ title: item.title[language], text: item.body[language], imageUrl: item.resourceUrl }));
   const publishedNews = usePublishedContent('news', 3);
-  const articles = publishedNews.items.map(item => ({
-    id: item.id,
-    imageUrl: item.resourceUrl,
-    category: language === 'fr' ? 'ACTUALITÉ' : 'NEWS',
-    date: new Date(item.publishedAt).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
-    title: item.title[language],
-    body: item.body[language],
-    translations: item,
-  }));
+  const articles = [...publishedNews.items]
+    .sort((left, right) => new Date(right.publishedAt) - new Date(left.publishedAt))
+    .slice(0, 3)
+    .map(item => ({
+      id: item.id,
+      imageUrl: item.resourceUrl,
+      category: language === 'fr' ? 'ACTUALITÉ' : 'NEWS',
+      date: new Date(item.publishedAt).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
+      title: item.title[language],
+      body: item.body[language],
+      translations: item,
+    }));
   useReveal();
   const navigationRef = useRef(null);
   const loaderTimersRef = useRef({ exit: null, remove: null });
