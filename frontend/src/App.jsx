@@ -211,7 +211,7 @@ const LOADER_REDUCED_DURATION = 350;
 const LOADER_FADE_DURATION = 480;
 
 export default function App() {
-  const { t, language, locale, setLanguage } = useLanguage();
+  const { t, language, locale } = useLanguage();
   const publicContacts = usePublicContacts();
   const publishedCarousel = usePublishedContent('carousel', 100, true);
   const slides = publishedCarousel.items.map(item => ({ title: item.title[language], text: item.body[language], imageUrl: item.resourceUrl }));
@@ -496,10 +496,6 @@ export default function App() {
             <span className="nav-active-fingerprint" aria-hidden="true" />
           </nav>
           <div className="header-actions">
-            <div className="language-switch" data-language={language} role="group" aria-label={language === 'fr' ? 'Langue du site' : 'Site language'}>
-              <button type="button" lang="fr" aria-label="Français" aria-pressed={language === 'fr'} onClick={() => setLanguage('fr')}>FR</button>
-              <button type="button" lang="en" aria-label="English" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
-            </div>
             <button
               className="agent-button"
               onClick={() =>
