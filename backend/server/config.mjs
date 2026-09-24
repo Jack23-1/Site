@@ -1,5 +1,12 @@
-import 'dotenv/config'
+import dotenv from 'dotenv'
+import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+
+const loaded = dotenv.config({ path: fileURLToPath(new URL('../.env', import.meta.url)), quiet: true })
+// In local development, use the project's database rather than a stale shell export.
+if ((process.env.NODE_ENV || 'development') === 'development' && loaded.parsed?.DATABASE_URL) {
+  process.env.DATABASE_URL = loaded.parsed.DATABASE_URL
+}
 
 export function readConfig(env = process.env) {
   const schema = z.object({
