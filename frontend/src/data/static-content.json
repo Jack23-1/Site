@@ -1,0 +1,95 @@
+{
+  "carousel": [
+    {
+      "id": "static-carousel-1",
+      "title": {
+        "fr": "Une identité sécurisée\npour chaque Congolais",
+        "en": "A secure identity\nfor every Congolese citizen"
+      },
+      "body": {
+        "fr": "L’ONIP construit une identité fiable, inclusive\net accessible à tous.",
+        "en": "ONIP is building a reliable, inclusive identity system\nthat is accessible to everyone."
+      },
+      "resourceUrl": "/images/hero.png"
+    },
+    {
+      "id": "static-carousel-2",
+      "title": {
+        "fr": "L’identification, plus proche\nde chez vous",
+        "en": "Identification services\ncloser to home"
+      },
+      "body": {
+        "fr": "Des services de proximité pour accompagner\nchaque citoyen dans ses démarches.",
+        "en": "Local services to support\nevery citizen through the process."
+      },
+      "resourceUrl": "/images/outreach.png"
+    },
+    {
+      "id": "static-carousel-3",
+      "title": {
+        "fr": "Une identité pour tous,\nun avenir commun",
+        "en": "An identity for everyone,\na shared future"
+      },
+      "body": {
+        "fr": "Découvrez les centres d’enrôlement\net préparez votre visite.",
+        "en": "Discover registration centres\nand prepare for your visit."
+      },
+      "resourceUrl": "/images/center.png"
+    },
+    {
+      "id": "static-carousel-4",
+      "title": {
+        "fr": "Votre identité,\nnotre engagement",
+        "en": "Your identity,\nour commitment"
+      },
+      "body": {
+        "fr": "Une identification au service de l’inclusion\net du développement.",
+        "en": "Identification that supports inclusion\nand development."
+      },
+      "resourceUrl": "/images/hero.png"
+    }
+  ],
+  "news": [
+    {
+      "id": "8a52c890-8ad6-4df1-90fe-000000000001",
+      "title": {
+        "fr": "L’ONIP rapproche ses services des populations de l’intérieur",
+        "en": "ONIP brings its services closer to communities across the country"
+      },
+      "body": {
+        "fr": "L’identification se rapproche des citoyens grâce au déploiement des équipes d’enrôlement dans les territoires. Cette démarche vise à rendre les services accessibles à toutes les populations.",
+        "en": "Registration teams are being deployed across the territories to bring identification closer to citizens and make services accessible to every community."
+      },
+      "resourceUrl": "/images/outreach.png",
+      "publishedAt": null
+    },
+    {
+      "id": "8a52c890-8ad6-4df1-90fe-000000000002",
+      "title": {
+        "fr": "Inauguration d’un nouveau centre d’enrôlement à Mbuji-Mayi",
+        "en": "New registration centre opens in Mbuji-Mayi"
+      },
+      "body": {
+        "fr": "Un nouveau centre d’enrôlement accueille les citoyens à Mbuji-Mayi. Il accompagne les habitants dans les différentes étapes de leur identification.",
+        "en": "A new registration centre welcomes citizens in Mbuji-Mayi and guides residents through each stage of the identification process."
+      },
+      "resourceUrl": "/images/center.png",
+      "publishedAt": null
+    },
+    {
+      "id": "8a52c890-8ad6-4df1-90fe-000000000003",
+      "title": {
+        "fr": "Tout savoir sur la nouvelle carte d’identité nationale",
+        "en": "Everything you need to know about the new national identity card"
+      },
+      "body": {
+        "fr": "La carte d’identité nationale permet d’attester votre identité. Découvrez les étapes de l’enrôlement et les informations utiles pour préparer votre démarche.",
+        "en": "The national identity card provides proof of your identity. Learn about the registration process and how to prepare your application."
+      },
+      "resourceUrl": "/images/identity.png",
+      "publishedAt": null
+    }
+  ],
+  "gallery": [],
+  "documents": []
+}

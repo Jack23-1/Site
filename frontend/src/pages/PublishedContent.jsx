@@ -43,7 +43,7 @@ export default function PublishedContent({ type }) {
         {newsItems.map(item => <article className="published-news-card" key={item.id}>
           {item.resourceUrl && <img src={item.resourceUrl} alt="" loading="lazy" />}
           <div className="published-news-card-body">
-            <time dateTime={item.publishedAt}>{dateFormatter.format(new Date(item.publishedAt))}</time>
+            {item.publishedAt && <time dateTime={item.publishedAt}>{dateFormatter.format(new Date(item.publishedAt))}</time>}
             <h2>{getTitle(item)}</h2>
             {getExcerpt(item) && <p>{getExcerpt(item)}</p>}
             <details>

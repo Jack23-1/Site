@@ -223,7 +223,7 @@ export default function App() {
       id: item.id,
       imageUrl: item.resourceUrl,
       category: language === 'fr' ? 'ACTUALITÉ' : 'NEWS',
-      date: new Date(item.publishedAt).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
+      date: item.publishedAt ? new Date(item.publishedAt).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) : '',
       title: item.title[language],
       body: item.body[language],
       translations: item,

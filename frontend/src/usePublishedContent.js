@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { staticContentMode } from './contentMode'
+import staticContent from './data/static-content.json'
 
 export default function usePublishedContent(type, limit = 24, live = false) {
   const [items, setItems] = useState([])
@@ -8,6 +10,7 @@ export default function usePublishedContent(type, limit = 24, live = false) {
   const [revision, setRevision] = useState(0)
   const inFlight = useRef(false)
   const controller = useRef(null)
+  const [staticLimit, setStaticLimit] = useState(limit)
 
   const load = useCallback(async (nextCursor = null, silent = false) => {
     controller.current?.abort()
@@ -29,9 +32,12 @@ export default function usePublishedContent(type, limit = 24, live = false) {
     } catch (err) { if (err.name !== 'AbortError') setError(true) }
     finally { if (!current.signal.aborted) { setLoading(false); inFlight.current = false } }
   }, [type, limit])
-  useEffect(() => { setItems([]); setCursor(null); load(); return () => controller.current?.abort() }, [load, revision])
   useEffect(() => {
-    if (!live) return
+    if (staticContentMode) { setStaticLimit(limit); return }
+    setItems([]); setCursor(null); load(); return () => controller.current?.abort()
+  }, [load, revision, limit])
+  useEffect(() => {
+    if (staticContentMode || !live) return
     const events = new EventSource('/api/content/events')
     const refresh = () => load(null, true)
     const onVisible = () => { if (!document.hidden) refresh() }
@@ -44,6 +50,14 @@ export default function usePublishedContent(type, limit = 24, live = false) {
       document.removeEventListener('visibilitychange', onVisible)
     }
   }, [live, load])
+  if (staticContentMode) {
+    const content = staticContent[type] || []
+    return { items: content.slice(0, staticLimit), loading: false, error: false,
+      hasMore: staticLimit < content.length,
+      reload: () => setStaticLimit(limit),
+      loadMore: () => setStaticLimit(value => value + limit),
+    }
+  }
   return { items, loading, error, hasMore: Boolean(cursor),
     reload: () => setRevision(value => value + 1),
     loadMore: () => { if (cursor && !inFlight.current) load(cursor) },

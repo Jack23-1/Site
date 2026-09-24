@@ -16,7 +16,11 @@ npm run lint
 npm run build
 ```
 
-Les actualités, documents et photos publiés proviennent désormais du backend PostgreSQL/Prisma. Le suivi des demandes et le pré-enregistrement restent à connecter. Les coordonnées et contenus officiels restent à renseigner.
+Le site fonctionne par défaut sans backend. Les quatre diapositives et les trois actualités de démonstration existantes sont intégrées dans `src/data/static-content.json`, avec leurs images locales. Les actualités n’ont pas de date de publication inventée. Modifier ce fichier puis reconstruire le site pour mettre à jour les contenus. La galerie et les documents affichent leur message d’attente tant que leurs listes sont vides. Les liens sociaux existants sont conservés ; les coordonnées restent à renseigner.
+
+Exécuter `npm run build` depuis la racine et publier le contenu de `frontend/dist`. Configurer l’hébergeur pour servir `index.html` sur les routes du site (`/actualites`, `/galerie`, etc.), afin de permettre leur ouverture directe. Aucune API ni connexion temps réel n’est utilisée par les pages publiques en mode statique et l’administration est désactivée.
+
+Pour réactiver le backend ultérieurement, définir `VITE_CONTENT_MODE=api` dans `frontend/.env.local`, reconstruire et remettre l’API à disposition sous `/api`. Le suivi des demandes et le pré-enregistrement restent à connecter.
 
 Les photographies générées se trouvent dans `public/images/` ; les prompts exacts figurent dans `IMAGE-PROMPTS.md`. Le logo original fourni dans `src/assets/logoonip.png` est utilisé dans l’en-tête et le footer. La police Chakra Petch (400, 500, 600 et 700) est hébergée localement dans `public/fonts/`, avec Arial en secours. Sa licence OFL est incluse.
 
@@ -46,6 +50,6 @@ La recherche a été retirée de l’en-tête. La séparation verticale entre le
 
 ## Administration — PostgreSQL et Prisma
 
-L’administration `/admin` permet de gérer les actualités, documents et galerie en français et anglais, avec connexion, brouillons et publication. L’API Express utilise Prisma et une base PostgreSQL persistante. Les pages publiques affichent les contenus publiés.
+L’administration `/admin` permet de gérer les actualités, documents et galerie en français et anglais, avec connexion, brouillons et publication. L’API Express utilise Prisma et une base PostgreSQL persistante. Les pages publiques affichent les contenus publiés uniquement en mode API (`VITE_CONTENT_MODE=api`).
 
 Consultez le [guide de démarrage, le contrat d’API et les tests](../backend/docs/administration.md). Depuis la racine du dépôt, pour le développement local, démarrer la base avec `npm run db:local`, puis l’API avec `npm run dev:api` et le site avec `npm run dev` dans deux terminaux.
