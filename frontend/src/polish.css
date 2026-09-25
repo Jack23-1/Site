@@ -1199,18 +1199,21 @@ header::after {
   left: 20%;
   bottom: 12px;
   gap: 2px;
+  opacity: 0;
+  pointer-events: none;
 }
 .carousel-dots button {
   width: 40px;
   height: 40px;
   border: 13px solid transparent;
-  background: #b3c3d8;
+  background: transparent;
   background-clip: padding-box;
+  box-shadow: none;
 }
 .carousel-dots .selected {
   width: 40px;
   border: 13px solid transparent;
-  background: #008fea;
+  background: transparent;
   background-clip: padding-box;
 }
 @media (max-width: 800px) {

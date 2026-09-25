@@ -70,45 +70,109 @@ export default function PublishedContent({ type }) {
       }
       return groups
     }, new Map()).values())
+    const [stackExpanded, setStackExpanded] = useState(false)
 
     return <section className="container published-content published-gallery">
-      <div className="published-gallery-heading">
-        <div>
-          <h1>{titles[type][language]}</h1>
-          <div className="tricolor" />
-        </div>
-        <p>{text('Images officielles des activités, centres et moments marquants de l’ONIP.', 'Official images from ONIP activities, centres and key moments.')}</p>
-      </div>
       {error && <p role="alert">{text('Impossible de charger les contenus.', 'Unable to load content.')} <button onClick={reload}>{text('Réessayer', 'Try again')}</button></p>}
       {!loading && !error && !items.length && <p className="published-empty">{text('Les photos seront disponibles prochainement.', 'Photos will be available soon.')}</p>}
-      <div className="published-gallery-events">
+      {galleryGroups.length === 1 ? (() => {
+        const group = galleryGroups[0]
+        const cover = group.items[0]
+        const intro = getBody(cover) || text('Album officiel de la visite.', 'Official album of the visit.')
+
+        return <div className="published-gallery-single">
+          <button
+            type="button"
+            className={`published-gallery-stack ${stackExpanded ? 'is-expanded' : ''}`}
+            onClick={() => setStackExpanded(value => !value)}
+            aria-expanded={stackExpanded}
+            aria-label={stackExpanded ? text('Réduire l’album', 'Collapse album') : text('Déplier l’album', 'Expand album')}
+          >
+            <div className="published-gallery-stack-cards">
+              {group.items.slice(0, 4).map((item, index) => (
+                <img
+                  key={item.id}
+                  className={`published-gallery-stack-photo stack-index-${index}`}
+                  src={item.resourceUrl}
+                  alt={getBody(item) || group.title}
+                  loading="lazy"
+                  style={{ '--stack-index': index }}
+                />
+              ))}
+            </div>
+            <div className="published-gallery-stack-meta">
+              <span>{text('Album', 'Album')}</span>
+              <strong>{group.title}</strong>
+              <small>{group.items.length} photo{group.items.length > 1 ? 's' : ''}</small>
+            </div>
+          </button>
+
+          {stackExpanded && (
+            <div className="published-gallery-expanded">
+              <div className="published-gallery-expanded-header">
+                <p>{intro}</p>
+                <button type="button" className="published-gallery-open-cover" onClick={() => setSelectedGalleryItem(cover)}>
+                  {text('Ouvrir la couverture', 'Open cover')}
+                </button>
+              </div>
+              <div className="published-gallery-expanded-grid">
+                {group.items.map((item, index) => (
+                  <button
+                    key={item.id}
+                    className="published-gallery-expanded-item"
+                    type="button"
+                    onClick={() => setSelectedGalleryItem(item)}
+                    aria-label={`${text('Ouvrir la photo', 'Open photo')} ${index + 1}`}
+                  >
+                    <img src={item.resourceUrl} alt={getBody(item) || group.title} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      })() : <div className="published-gallery-albums">
         {galleryGroups.map((group, groupIndex) => {
-          const expanded = expandedGalleryGroup === group.key
           const cover = group.items[0]
-          return <article className={expanded ? 'published-gallery-event is-expanded' : 'published-gallery-event'} key={group.key} style={{ '--event-index': groupIndex }}>
-            <button className="published-gallery-stack" type="button" aria-expanded={expanded} onClick={() => setExpandedGalleryGroup(expanded ? null : group.key)}>
-              <span className="published-gallery-stack-images" aria-hidden="true">
-                {group.items.slice(0, 3).map((item, index) => <img key={item.id} src={item.resourceUrl} alt="" loading="lazy" style={{ '--stack-index': index }} />)}
-              </span>
-              <span className="published-gallery-stack-copy">
+          const previewItems = group.items.slice(1, 5)
+          if (!cover) return null
+
+          return <article className="published-gallery-album" key={group.key} style={{ '--album-index': groupIndex }}>
+            <button className="published-gallery-cover" type="button" onClick={() => setSelectedGalleryItem(cover)}>
+              <img src={cover.resourceUrl} alt={group.title} loading="lazy" />
+              <span className="published-gallery-cover-overlay">
+                <small>{text('Album', 'Album')}</small>
                 <strong>{group.title}</strong>
-                <small>{group.items.length} photo{group.items.length > 1 ? 's' : ''}</small>
+                <em>{group.items.length} photo{group.items.length > 1 ? 's' : ''}</em>
               </span>
             </button>
-            {expanded && <div className="published-gallery-grid">
-              {group.items.map((item, index) => <button className="published-gallery-item" key={item.id} type="button" onClick={() => setSelectedGalleryItem(item)} style={{ '--photo-index': index }}>
-                <img src={item.resourceUrl} alt={getBody(item) || group.title} loading="lazy" />
-                <span>
-                  <strong>{getBody(item) || group.title}</strong>
-                </span>
-              </button>)}
-            </div>}
-            {!expanded && cover && <button className="published-gallery-cover-open" type="button" onClick={() => setSelectedGalleryItem(cover)}>
-              {text('Aperçu', 'Preview')}
-            </button>}
+            <div className="published-gallery-thumb-row">
+              {previewItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  className="published-gallery-thumb"
+                  type="button"
+                  onClick={() => setSelectedGalleryItem(item)}
+                  style={{ '--thumb-index': index }}
+                  aria-label={`${text('Ouvrir la photo', 'Open photo')} ${index + 1}`}
+                >
+                  <img src={item.resourceUrl} alt={getBody(item) || group.title} loading="lazy" />
+                </button>
+              ))}
+              {group.items.length > 5 && (
+                <button
+                  className="published-gallery-more"
+                  type="button"
+                  onClick={() => setSelectedGalleryItem(group.items[5])}
+                  aria-label={text('Voir plus de photos', 'View more photos')}
+                >
+                  <span>+{group.items.length - 5}</span>
+                </button>
+              )}
+            </div>
           </article>
         })}
-      </div>
+      </div>}
       {loading && <p role="status">{text('Chargement…', 'Loading…')}</p>}
       {hasMore && !error && <button className="published-more" disabled={loading} onClick={loadMore}>{text('Voir plus', 'Load more')}</button>}
       {selectedGalleryItem && <div className="published-gallery-lightbox" role="dialog" aria-modal="true" aria-label={getTitle(selectedGalleryItem)} onClick={() => setSelectedGalleryItem(null)}>

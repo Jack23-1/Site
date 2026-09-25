@@ -90,6 +90,91 @@
       "publishedAt": null
     }
   ],
-  "gallery": [],
+  "gallery": [
+    {
+      "id": "static-gallery-lualaba-1",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Visite officielle du Directeur Général à Lualaba.",
+        "en": "Official visit of the Director General to Lualaba."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-40.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-2",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Échanges et moments de visite dans la province de Lualaba.",
+        "en": "Discussions and moments from the visit in Lualaba province."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-40-2.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-3",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Rencontre avec les équipes sur le terrain à Lualaba.",
+        "en": "Meeting with field teams during the Lualaba visit."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-41.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-4",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Moment de visite des activités et des agents de terrain.",
+        "en": "Visit moment highlighting activities and field staff."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-41-2.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-5",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Cérémonie et échanges avec les autorités et les équipes locales.",
+        "en": "Ceremony and exchange with local authorities and teams."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-41-3.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-6",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Visite de chantier et accueil dans la province de Lualaba.",
+        "en": "Site visit and reception during the Lualaba trip."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-42.jpg"
+    },
+    {
+      "id": "static-gallery-lualaba-7",
+      "title": {
+        "fr": "Visite du DG de l’ONIP dans la province de Lualaba",
+        "en": "Visit of the ONIP Director General in Lualaba province"
+      },
+      "body": {
+        "fr": "Dernier moment de la visite officielle du DG à Lualaba.",
+        "en": "Closing moment of the official DG visit to Lualaba."
+      },
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-42-2.jpg"
+    }
+  ],
   "documents": []
 }
