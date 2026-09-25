@@ -321,6 +321,93 @@
   padding: 24px;
   box-shadow: 0 12px 36px #15396706;
 }
+.province-identity-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+  border-color: #b9cddd;
+  background: repeating-linear-gradient(125deg, transparent 0 15px, #1878ac06 16px 17px), linear-gradient(120deg, #f8fcff, #e5eff7 65%, #fff8db);
+  box-shadow: 0 16px 36px #15396718, inset 0 0 0 4px #ffffff80;
+  animation: province-card-present 480ms cubic-bezier(.2,.75,.25,1) both;
+}
+.province-identity-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, #008fea 0 55%, #ffd524 55% 78%, #df2836 78%);
+}
+.province-identity-card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -26px;
+  bottom: 8px;
+  width: 180px;
+  height: 220px;
+  background: url('/images/fingerprint-mask.svg') center / contain no-repeat;
+  opacity: .06;
+  pointer-events: none;
+}
+.province-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #bacfe0;
+}
+.province-card-header > div { display: grid; gap: 3px; min-width: 0; }
+.province-card-header strong { font-size: 18px; letter-spacing: 3px; }
+.province-card-header > div > span { font-size: 9px; color: #536d87; }
+.province-card-country { margin-left: auto; font-size: 11px; letter-spacing: 2px; color: #536d87; }
+.province-card-chip {
+  flex: none;
+  width: 36px;
+  height: 28px;
+  border: 1px solid #b89a56;
+  border-radius: 6px;
+  background: linear-gradient(90deg, transparent 31%, #b89a56 32% 34%, transparent 35% 65%, #b89a56 66% 68%, transparent 69%), linear-gradient(0deg, #e8cf8f 30%, #b89a56 31% 34%, #f8e6b4 35% 65%, #b89a56 66% 69%, #e8cf8f 70%);
+}
+.province-identity-card .province-detail-heading { margin-bottom: 14px; }
+.province-identity-card .province-metric { padding: 10px 12px; gap: 4px; background: #ffffff85; }
+.province-identity-card .enrolled-metric { background: #075fb5; }
+.province-identity-card .metric-symbol { display: none; }
+.province-identity-card .province-progress { margin-top: 14px; }
+.province-identity-card .simulation-note { margin-top: 10px; padding-top: 8px; color: #536d87; }
+.province-identity-card .province-card-header,
+.province-identity-card .province-detail-heading,
+.province-identity-card .province-metric,
+.province-identity-card .province-progress,
+.province-identity-card .simulation-note {
+  animation: province-card-text 360ms ease-out both;
+  animation-delay: 100ms;
+}
+.province-identity-card .province-detail-heading { animation-delay: 160ms; }
+.province-identity-card .province-metric:nth-child(1) { animation-delay: 220ms; }
+.province-identity-card .province-metric:nth-child(2) { animation-delay: 280ms; }
+.province-identity-card .province-metric:nth-child(3) { animation-delay: 340ms; }
+.province-identity-card .province-metric:nth-child(4) { animation-delay: 400ms; }
+.province-identity-card .province-progress { animation-delay: 460ms; }
+.province-identity-card .simulation-note { animation-delay: 500ms; }
+@keyframes province-card-present {
+  from { opacity: .4; transform: perspective(1000px) rotateY(-7deg) translateY(8px) scale(.98); }
+  to { opacity: 1; transform: perspective(1000px) rotateY(0) translateY(0) scale(1); }
+}
+@keyframes province-card-text {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .province-identity-card,
+  .province-identity-card .province-card-header,
+  .province-identity-card .province-detail-heading,
+  .province-identity-card .province-metric,
+  .province-identity-card .province-progress,
+  .province-identity-card .simulation-note { animation: none; }
+}
 .province-detail-heading {
   display: flex;
   align-items: center;
@@ -625,7 +712,7 @@
   }
 }
 /* Province-by-province map assembly */
-.coverage-map-panel .province-piece {
+.coverage-map-panel.scroll-reveal .province-piece {
   opacity: 0;
   fill-opacity: 0;
   transform-box: fill-box;
@@ -643,7 +730,7 @@
     province-assemble 1.15s cubic-bezier(0.16, 0.86, 0.24, 1)
       calc(var(--reveal-delay, 0ms) + var(--piece-delay, 0ms) + 0.18s) both;
 }
-.coverage-map-panel .map-label-layer {
+.coverage-map-panel.scroll-reveal .map-label-layer {
   opacity: 0;
 }
 .coverage-map-panel.is-revealed .map-label-layer {
@@ -722,8 +809,12 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .coverage-map-panel .province-piece,
-  .coverage-map-panel .map-label-layer {
+  .coverage-map-panel.scroll-reveal .province-piece,
+  .coverage-map-panel .map-label-layer,
+  .coverage-map-panel.scroll-reveal .map-label-layer {
     opacity: 1;
+    fill-opacity: 1;
+    stroke-dashoffset: 0;
     transform: none;
     filter: none;
   }

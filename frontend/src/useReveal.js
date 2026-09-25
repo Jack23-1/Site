@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
 
-export default function useReveal() {
+export default function useReveal(pagePath) {
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const elements = [...document.querySelectorAll('#actualites .section-heading, #actualites .news-card, .coverage-copy, .coverage-map-panel, .management-heading, .leader-card, .footer-main')]
-    if (!('IntersectionObserver' in window)) return
+    if (!('IntersectionObserver' in window) || preference.matches) {
+      elements.forEach(element => element.classList.add('is-revealed'))
+      return () => elements.forEach(element => element.classList.remove('is-revealed'))
+    }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(({ target, isIntersecting }) => {
         if (isIntersecting) {
@@ -31,5 +34,5 @@ export default function useReveal() {
       preference.removeEventListener('change', showAll)
       elements.forEach(element => element.classList.remove('scroll-reveal', 'puzzle-reveal', 'is-revealed'))
     }
-  }, [])
+  }, [pagePath])
 }

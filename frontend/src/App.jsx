@@ -228,7 +228,6 @@ export default function App() {
       body: item.body[language],
       translations: item,
     }));
-  useReveal();
   const navigationRef = useRef(null);
   const loaderTimersRef = useRef({ exit: null, remove: null });
   const [slide, setSlide] = useState(0);
@@ -243,6 +242,7 @@ export default function App() {
   const [loaderLeaving, setLoaderLeaving] = useState(false);
   const [loaderCycle, setLoaderCycle] = useState(0);
   const [pagePath, setPagePath] = useState(getPagePath);
+  useReveal(pagePath);
   const [navMarker, setNavMarker] = useState({
     left: 0,
     top: 0,
@@ -350,7 +350,7 @@ export default function App() {
   }, [goToSlide, heroPaused, modal, menu, pagePath, activeSlide, slides.length]);
   useEffect(() => {
     if (leavingSlide === null) return;
-    const timer = window.setTimeout(() => setLeavingSlide(null), 2700);
+    const timer = window.setTimeout(() => setLeavingSlide(null), 450);
     return () => window.clearTimeout(timer);
   }, [leavingSlide]);
   useEffect(() => {
@@ -534,17 +534,7 @@ export default function App() {
                 alt=""
               />
             ))}
-            {slides.map(({ imageUrl }, index) => (
-              <img
-                key={`print-${imageUrl}-${index}`}
-                className={`hero-print-bg ${index === activeSlide ? "is-entering" : ""} ${index === leavingSlide ? "is-exiting" : ""}`}
-                src={imageUrl}
-                alt=""
-              />
-            ))}
           </div>
-          <div className="hero-shade" />
-          <Fingerprint className="hero-fingerprint" />
           <div className="container hero-inner">
             <div className="hero-copy" key={activeSlide}>
               <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
@@ -647,28 +637,28 @@ export default function App() {
             <div className="stat">
               <Icon name="people" size={49} />
               <div>
-                <AnimatedNumber value={34.2} decimals={1} suffix={t(" millions")} />
+                <AnimatedNumber value={0} animationValue={34.2} decimals={1} suffix={t(" millions")} />
                 <span>{t("de personnes enregistrées")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="building" size={47} />
               <div>
-                <AnimatedNumber value={523} delay={120} />
+                <AnimatedNumber value={0} animationValue={523} delay={120} />
                 <span>{t("centres d’enrôlement")}<br />{t("sur toute la RDC")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="card" size={46} />
               <div>
-                <AnimatedNumber value={98} suffix="%" delay={240} />
+                <AnimatedNumber value={0} animationValue={98} suffix="%" delay={240} />
                 <span>{t("de demandes traitées")}<br />{t("dans les délais")}</span>
               </div>
             </div>
             <div className="stat">
               <Icon name="chart" size={45} />
               <div>
-                <AnimatedNumber value={26} suffix=" provinces" delay={360} />
+                <AnimatedNumber value={0} animationValue={26} suffix=" provinces" delay={360} />
                 <span>{t("couvertes")}</span>
               </div>
             </div>

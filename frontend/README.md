@@ -40,7 +40,7 @@ Vérifications Chrome : chargement effectif de Chakra Petch, 15 largeurs sans d�
 
 ## Fiches provinciales et footer compact
 
-Les 26 noms sont affichés sur le SVG. Le clic, Entrée/Espace ou le sélecteur mobile mettent à jour la fiche de gauche (superficie, population, personnes enrôlées, centres et taux de couverture). Tous les chiffres de cette fiche sont des simulations demandées par l’utilisateur, signalées dans l’interface. Le taux est calculé à partir des effectifs simulés. Sur petit écran, la carte est défilable horizontalement pour conserver les noms lisibles.
+Les 26 noms sont affichés sur le SVG. Le clic, Entrée/Espace ou le sélecteur mobile mettent à jour la fiche de gauche (superficie, population, personnes enrôlées, centres et taux de couverture). Toutes les statistiques provinciales affichent provisoirement `00000`, y compris le taux de couverture, en attendant les données officielles. La barre de progression reste vide. Sur petit écran, la carte est défilable horizontalement pour conserver les noms lisibles.
 
 Le footer compact comprend X, YouTube et Facebook. Les liens pointent provisoirement vers les plateformes ; les comptes officiels restent à renseigner.
 
