@@ -534,7 +534,17 @@ export default function App() {
                 alt=""
               />
             ))}
+            {slides.map(({ imageUrl }, index) => (
+              <img
+                key={`print-${imageUrl}-${index}`}
+                className={`hero-print-bg ${index === activeSlide ? "is-entering" : ""} ${index === leavingSlide ? "is-exiting" : ""}`}
+                src={imageUrl}
+                alt=""
+              />
+            ))}
           </div>
+          <div className="hero-shade" />
+          <Fingerprint className="hero-fingerprint" />
           <div className="container hero-inner">
             <div className="hero-copy" key={activeSlide}>
               <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
