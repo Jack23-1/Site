@@ -543,8 +543,6 @@ export default function App() {
               />
             ))}
           </div>
-          <div className="hero-shade" />
-          <Fingerprint className="hero-fingerprint" />
           <div className="container hero-inner">
             <div className="hero-copy" key={activeSlide}>
               <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
