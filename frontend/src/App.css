@@ -188,13 +188,14 @@ header {
 }
 .hero-fingerprint {
   position: absolute;
-  left: -104px;
-  top: -60px;
-  width: 335px;
-  height: 450px;
+  left: -120px;
+  top: -70px;
+  width: 420px;
+  height: 560px;
   color: #006cc4;
-  opacity: 0.035;
-  transform: rotate(12deg);
+  opacity: 0.14;
+  transform: rotate(10deg);
+  filter: drop-shadow(0 14px 32px rgba(0,108,196,0.18)) saturate(1.08);
 }
 .hero-inner {
   position: relative;

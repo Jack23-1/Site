@@ -350,7 +350,7 @@ export default function App() {
   }, [goToSlide, heroPaused, modal, menu, pagePath, activeSlide, slides.length]);
   useEffect(() => {
     if (leavingSlide === null) return;
-    const timer = window.setTimeout(() => setLeavingSlide(null), 450);
+    const timer = window.setTimeout(() => setLeavingSlide(null), 2700);
     return () => window.clearTimeout(timer);
   }, [leavingSlide]);
   useEffect(() => {
@@ -552,17 +552,6 @@ export default function App() {
               <p style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].text}</p>
               <div className="motto">{t("IDENTIFIER AUJOURD’HUI")}<br />{t("POUR UN MEILLEUR DEMAIN")}</div>
             </div>
-          </div>
-          <div className="carousel-dots">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                className={i === activeSlide ? "selected" : ""}
-                onClick={() => goToSlide(i)}
-                aria-label={`${t("Afficher la diapositive")} ${i + 1}`}
-                aria-pressed={i === activeSlide}
-              />
-            ))}
           </div>
         </section>}
         <section id="actualites" className="container news">

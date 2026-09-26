@@ -11,21 +11,30 @@ export default function AnimatedNumber({ value, animationValue = value, decimals
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame;
     let observer;
+    let visible = false;
     const finish = () => {
       cancelAnimationFrame(frame);
       setNumber(value);
-      observer?.disconnect();
     };
     const onPreference = () => { if (preference.matches) finish(); };
 
-    if (preference.matches || !("IntersectionObserver" in window)) {
+    if (!("IntersectionObserver" in window)) {
       finish();
       return;
     }
 
     observer = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.isIntersecting)) return;
-      observer.disconnect();
+      const entry = entries[entries.length - 1];
+      if (!entry.isIntersecting) {
+        visible = false;
+        finish();
+        return;
+      }
+      if (visible || entry.intersectionRatio < 0.6) return;
+      visible = true;
+      if (preference.matches) { finish(); return; }
+      cancelAnimationFrame(frame);
+      setNumber(0);
       const start = performance.now() + delay;
       const tick = now => {
         const progress = Math.min(1, Math.max(0, (now - start) / 2200));
@@ -35,7 +44,7 @@ export default function AnimatedNumber({ value, animationValue = value, decimals
         if (progress < 1) frame = requestAnimationFrame(tick);
       };
       frame = requestAnimationFrame(tick);
-    }, { threshold: 0.6 });
+    }, { threshold: [0, 0.6] });
     observer.observe(element.current);
     preference.addEventListener("change", onPreference);
     return () => {
