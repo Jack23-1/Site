@@ -368,7 +368,7 @@ export default function App() {
 
       const navigationRect = navigation.getBoundingClientRect();
       const activeRect = activeItem.getBoundingClientRect();
-      const markerHeight = 25;
+      const markerHeight = 18;
       const markerBottom = 7;
       const markerCenter =
         activeRect.left - navigationRect.left + activeRect.width / 2;

@@ -725,8 +725,8 @@ header::after {
   left: var(--nav-fingerprint-left, 0);
   top: var(--nav-fingerprint-top, 0);
   z-index: 0;
-  width: 48px;
-  height: 56px;
+  width: 16px;
+  height: 18px;
   transform: translateX(-50%);
   background: #dc161c;
   opacity: calc(var(--nav-fingerprint-opacity, 0) * 1.25);
@@ -1032,19 +1032,28 @@ header::after {
     clip-path: none;
   }
 }
-/* Separate copy and animated photography so they never overlap. */
+/* Overlay readable copy above the independent animated photo layers. */
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  grid-template-columns: minmax(0, 1fr);
   height: auto;
-  min-height: 400px;
+  min-height: 460px;
   background: #f0f6fc;
   overflow: hidden;
+  isolation: isolate;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, #f0f6fcf5 0%, #f0f6fce6 26%, #f0f6fc9e 46%, #f0f6fc00 72%);
 }
 .hero-media {
   position: relative;
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
   min-width: 0;
   overflow: hidden;
@@ -1180,7 +1189,7 @@ header::after {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 36px clamp(24px, 3vw, 64px);
+  padding: 48px clamp(24px, 7vw, 120px);
 }
 .hero-copy {
   position: relative;
@@ -1188,7 +1197,7 @@ header::after {
   margin: 0;
   transform: none;
   padding: 0;
-  max-width: 100%;
+  max-width: min(540px, 52%);
   overflow-wrap: anywhere;
 }
 .hero h1 {
@@ -1228,18 +1237,21 @@ header::after {
 @media (max-width: 800px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
+    min-height: 540px;
     height: auto;
   }
   .hero-media {
     grid-column: 1;
     grid-row: 1;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: auto;
+  }
+  .hero::after {
+    background: linear-gradient(0deg, #f0f6fcfa 0%, #f0f6fce8 32%, #f0f6fc85 57%, #f0f6fc00 85%);
   }
   .hero-inner {
-    grid-row: 2;
-    padding: 24px;
-    align-items: center;
+    grid-row: 1;
+    padding: 200px 24px 28px;
+    align-items: flex-end;
   }
   .hero-copy { margin: 0; max-width: 100%; }
   .hero h1 { font-size: clamp(26px, 4.5vw, 34px); }

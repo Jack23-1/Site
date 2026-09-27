@@ -47,7 +47,10 @@ export default function PublishedContent({ type }) {
             <h2>{getTitle(item)}</h2>
             {getExcerpt(item) && <p>{getExcerpt(item)}</p>}
             <details>
-              <summary>{text('Lire l’article', 'Read article')}</summary>
+              <summary>
+                <span className="news-read-more">{text('Lire la suite', 'Read more')}</span>
+                <span className="news-read-less">{text('Réduire l’article', 'Collapse article')}</span>
+              </summary>
               <p>{getBody(item)}</p>
             </details>
           </div>
