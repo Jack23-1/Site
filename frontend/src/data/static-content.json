@@ -163,5 +163,54 @@
       "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-42-2.jpg"
     }
   ],
-  "documents": []
+  "documents": [
+    {
+      "id": "example-guide-identification",
+      "title": {
+        "fr": "Guide de l’identification",
+        "en": "Identification guide"
+      },
+      "body": {
+        "fr": "Un exemple de guide pour présenter les étapes et les informations utiles aux citoyens.",
+        "en": "A sample guide presenting steps and useful information for citizens."
+      },
+      "resourceUrl": "/documents/examples/guide-identification.pdf",
+      "previewUrl": "/documents/examples/guide-identification.svg",
+      "isExample": true,
+      "pageCount": 1,
+      "sizeBytes": 2439
+    },
+    {
+      "id": "example-fiche-renseignements",
+      "title": {
+        "fr": "Fiche de renseignements",
+        "en": "Information sheet"
+      },
+      "body": {
+        "fr": "Un modèle de fiche pour illustrer la présentation des informations à renseigner.",
+        "en": "A sample sheet illustrating how information fields can be presented."
+      },
+      "resourceUrl": "/documents/examples/fiche-renseignements.pdf",
+      "previewUrl": "/documents/examples/fiche-renseignements.svg",
+      "isExample": true,
+      "pageCount": 1,
+      "sizeBytes": 2433
+    },
+    {
+      "id": "example-presentation-services",
+      "title": {
+        "fr": "Présentation des services",
+        "en": "Services overview"
+      },
+      "body": {
+        "fr": "Une brochure de démonstration pour découvrir la présentation des services de l’ONIP.",
+        "en": "A demonstration brochure introducing the presentation of ONIP services."
+      },
+      "resourceUrl": "/documents/examples/presentation-services.pdf",
+      "previewUrl": "/documents/examples/presentation-services.svg",
+      "isExample": true,
+      "pageCount": 1,
+      "sizeBytes": 2450
+    }
+  ]
 }

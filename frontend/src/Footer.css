@@ -281,6 +281,17 @@
 }
 
 @media (max-width: 680px) {
+  .site-footer .footer-brand {
+    display: flex;
+  }
+
+  .site-footer .footer-official-logo {
+    width: 148px;
+    height: auto;
+    /* Compensate for the transparent margins while keeping the image in flow. */
+    margin-block: -40px;
+  }
+
   .footer-container {
     padding-top: 38px;
   }

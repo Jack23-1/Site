@@ -6,6 +6,7 @@ import specimenPortrait from "./assets/portrait-specimen.png";
 import rectoCard from "./assets/recto.png";
 import versoCard from "./assets/verso.png";
 import "./IdentityCard.css";
+import VideoCard from "./VideoCard";
 
 function CongoFlag() {
   const { t } = useLanguage();
@@ -154,7 +155,7 @@ export default function IdentityCard() {
   };
   return (
     <section className="identity-showcase" aria-label={t("Carte d’identité de démonstration")}>
-      <div className="container identity-layout">
+      <div className={`container identity-layout${expanded ? " has-expanded-card" : ""}`}>
         <div ref={preview} className={`identity-preview${expanded ? " is-expanded" : ""}`} style={{ "--layer-count": layers.length }}>
           <button type="button" className={`identity-card-button${flipped ? " is-flipped" : ""}`} onClick={handleClick} onDoubleClick={toggleLayers}
             onKeyDown={event => {
@@ -186,6 +187,7 @@ export default function IdentityCard() {
             <LayerAnnotations visible={expanded} />
           </button>
         </div>
+        <VideoCard />
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import usePublicContacts from './usePublicContacts';
 import usePublishedContent from "./usePublishedContent";
 import Translation from "./i18n/Translation";
 import { useLanguage } from "./i18n/LanguageContext";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import AnimatedNumber from "./AnimatedNumber";
 import IdentityCard from "./IdentityCard";
@@ -242,6 +242,18 @@ export default function App() {
   const [loaderLeaving, setLoaderLeaving] = useState(false);
   const [loaderCycle, setLoaderCycle] = useState(0);
   const [pagePath, setPagePath] = useState(getPagePath);
+  const [navigationScroll, setNavigationScroll] = useState(null);
+  useLayoutEffect(() => {
+    if (!navigationScroll) return;
+    const target = navigationScroll.hash
+      ? document.getElementById(navigationScroll.hash)
+      : null;
+    if (target) {
+      target.scrollIntoView({ block: "start", behavior: "instant" });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [navigationScroll]);
   useReveal(pagePath);
   const [navMarker, setNavMarker] = useState({
     left: 0,
@@ -282,13 +294,7 @@ export default function App() {
     if (updateHistory) {
       window.history.pushState({}, "", nextUrl);
     }
-    window.setTimeout(() => {
-      if (hash) {
-        document.getElementById(hash)?.scrollIntoView({ block: "start" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }, 0);
+    setNavigationScroll({ hash });
   }, []);
   const navigate = useCallback((path = "/", hash = "") => {
     const nextPath = pageRoutes.has(path) ? path : "/";
@@ -322,13 +328,18 @@ export default function App() {
     return clearLoaderTimers;
   }, [clearLoaderTimers, finishLoader]);
   useEffect(() => {
+    const previousRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
     const onPopState = () => {
       const nextPath = getPagePath();
       const nextHash = window.location.hash.replace(/^#/, "");
       finishLoader(() => commitNavigation(nextPath, nextHash, false));
     };
     window.addEventListener("popstate", onPopState);
-    return () => window.removeEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      window.history.scrollRestoration = previousRestoration;
+    };
   }, [commitNavigation, finishLoader]);
   useEffect(() => {
     if (!modal) return;
@@ -337,7 +348,7 @@ export default function App() {
     dialog.showModal();
     return () => {
       dialog.close();
-      previous?.focus();
+      previous?.focus({ preventScroll: true });
     };
   }, [modal]);
   useEffect(() => {
@@ -738,7 +749,7 @@ export default function App() {
             )}
             <h2>{modal.translations ? modal.translations.title[language] : t(modal.title)}</h2>
             <div className="tricolor" />
-            <p style={{ whiteSpace: "pre-wrap" }}>{modal.translations ? modal.translations.body[language] : t(modal.body)}</p>
+            <p className={modal.translations ? "article-body" : undefined} style={{ whiteSpace: "pre-wrap" }}>{modal.translations ? modal.translations.body[language] : t(modal.body)}</p>
             {modal.title === "Suivre ma demande" && (
               <form
                 className="tracking"

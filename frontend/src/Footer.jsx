@@ -29,7 +29,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
         <div className="footer-main">
           <section className="footer-brand-block" aria-label="ONIP">
             <a href="#" className="footer-brand" aria-label={t("ONIP — Retour à l’accueil")}>
-              <img className="footer-official-logo" src={logofooter} alt="ONIP" width="2480" height="1155" />
+              <img className="footer-official-logo" src={logofooter} alt="ONIP" width="2480" height="2480" />
             </a>
             
            
