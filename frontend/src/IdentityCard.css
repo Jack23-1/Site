@@ -786,3 +786,26 @@
   .identity-layout { grid-template-columns: minmax(0, 380px); gap: 4px; }
   .identity-layout.has-expanded-card { grid-template-columns: minmax(0, 1fr); }
 }
+.identity-video-ended {
+  position: absolute;
+  inset: 0 0 42px;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: linear-gradient(#061b30b3, #061b30e6);
+}
+.identity-video-ended a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid #ffffff66;
+  border-radius: 10px;
+  background: #fff;
+  color: #0b355b;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 8px 28px #0003;
+}
+.identity-video-ended a:hover { background: #eaf5ff; }

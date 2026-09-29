@@ -27,26 +27,14 @@
     {
       "id": "static-carousel-3",
       "title": {
-        "fr": "Une identité pour tous,\nun avenir commun",
-        "en": "An identity for everyone,\na shared future"
+        "fr": "Le Directeur général\nen visite au Lualaba",
+        "en": "The Director General\nvisits Lualaba"
       },
       "body": {
-        "fr": "Découvrez les centres d’enrôlement\net préparez votre visite.",
-        "en": "Discover registration centres\nand prepare for your visit."
+        "fr": "Marcellin Mukolo Basengezi échange avec les autorités provinciales sur le démarrage des opérations d’identification.",
+        "en": "Marcellin Mukolo Basengezi meets provincial authorities to discuss the launch of population identification operations."
       },
-      "resourceUrl": "/images/center.png"
-    },
-    {
-      "id": "static-carousel-4",
-      "title": {
-        "fr": "Votre identité,\nnotre engagement",
-        "en": "Your identity,\nour commitment"
-      },
-      "body": {
-        "fr": "Une identification au service de l’inclusion\net du développement.",
-        "en": "Identification that supports inclusion\nand development."
-      },
-      "resourceUrl": "/images/hero.png"
+      "resourceUrl": "/images/visite%20du%20DG%20a%20lualaba/PHOTO-2026-09-25-09-15-41.jpg"
     }
   ],
   "news": [

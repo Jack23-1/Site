@@ -6,6 +6,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import PropTypes from "prop-types";
 import AnimatedNumber from "./AnimatedNumber";
 import IdentityCard from "./IdentityCard";
+import directorMessage from "../infos onip?raw";
 import Apropos from "./pages/Apropos";
 import Actualites from "./pages/Actualites";
 import Services from "./pages/Services";
@@ -707,8 +708,10 @@ export default function App() {
               </div>
               <aside className="director-quote" aria-label={t("Mot du Directeur Général")}>
                 <span>{t("Mot du Directeur Général")}</span>
-                <blockquote>{t("« Identifier chaque citoyen, c’est lui garantir une existence administrative, protéger ses droits et ouvrir la voie à des services publics plus justes, fiables et accessibles. »")}</blockquote>
-                <p>MUKOLO BASENGEZI Marcellin</p>
+                <blockquote lang={language}>
+                  {directorMessage.trim().split(/\r?\n/).map(line => line.trim()).filter(Boolean).slice(0, -2).map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
+                </blockquote>
+                <p>Marcellin Mukolo Basengezi</p>
                 <small>{t("Directeur Général de l’ONIP")}</small>
               </aside>
             </div>

@@ -187,7 +187,7 @@ export default function IdentityCard() {
             <LayerAnnotations visible={expanded} />
           </button>
         </div>
-        <VideoCard />
+        <VideoCard src="/videos/onip-identification-30s.mp4" poster="/videos/onip-identification-poster.jpg" continuationUrl="https://x.com/onip_rdc/status/2104433491500745165?s=46" />
       </div>
     </section>
   );

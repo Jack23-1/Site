@@ -1251,10 +1251,27 @@ header::after {
   background: #fff;
   border: 5px solid #008fea;
 }
+@media (min-width: 801px) {
+  .hero-slide-bg,
+  .hero-print-bg {
+    inset: 12px;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    object-fit: contain;
+    object-position: right center;
+  }
+  .hero::after {
+    background: linear-gradient(90deg, #f0f6fcf5 0%, #f0f6fce6 20%, #f0f6fc70 34%, transparent 47%);
+  }
+  .hero-inner { padding: 28px clamp(24px, 3vw, 56px); }
+  .hero-copy { max-width: min(380px, 32%); }
+  .hero h1 { font-size: clamp(26px, 2.3vw, 38px); }
+  .hero p { font-size: clamp(16px, 1.25vw, 20px); }
+}
 @media (max-width: 800px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
-    min-height: 540px;
+    min-height: 0;
     height: auto;
   }
   .hero-media {
@@ -1262,14 +1279,21 @@ header::after {
     grid-row: 1;
     aspect-ratio: auto;
   }
+  .hero-slide-bg,
+  .hero-print-bg {
+    object-fit: contain;
+    object-position: center top;
+  }
   .hero::after {
     background: linear-gradient(0deg, #f0f6fcfa 0%, #f0f6fce8 32%, #f0f6fc85 57%, #f0f6fc00 85%);
   }
   .hero-inner {
     grid-row: 1;
-    padding: 200px 24px 28px;
+    height: auto;
+    padding: 200px 24px 0;
     align-items: flex-end;
   }
+  .hero + .news { padding-top: 8px; }
   .hero-copy { margin: 0; max-width: 100%; }
   .hero h1 { font-size: clamp(26px, 4.5vw, 34px); }
   .hero p { font-size: 18px; max-width: none; }
@@ -1476,7 +1500,7 @@ header::after {
   line-height: 1.28;
   letter-spacing: -0.025em;
 }
-.director-quote p {
+.director-quote > p {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -1486,6 +1510,20 @@ header::after {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+.director-quote blockquote p {
+  margin: 0 0 16px;
+  color: #392b1a;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.8;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: justify;
+  hyphens: auto;
+}
+.director-quote blockquote p:first-child { font-weight: 600; text-align: start; }
 .director-quote small {
   position: relative;
   z-index: 1;
