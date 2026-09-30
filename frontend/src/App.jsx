@@ -134,7 +134,7 @@ function OnipLoader({ leaving, welcome }) {
     <div
       className={`site-loader ${welcome ? "has-welcome" : ""} ${leaving ? "is-leaving" : ""}`}
       role="status"
-      aria-label={welcome ? t("Bienvenue sur le site de l’Office National d’Identification de la Population") : t("Chargement de la plateforme ONIP")}
+      aria-label={welcome ? t("Bienvenue sur le site officiel de l’Office National d’Identification de la Population") : t("Chargement de la plateforme ONIP")}
     >
       <div className="onip-loader-mark" aria-hidden="true">
         <img className="onip-loader-layer onip-loader-center" src={onipLoaderCenter} alt="" />
@@ -144,7 +144,8 @@ function OnipLoader({ leaving, welcome }) {
       </div>
       {welcome && (
         <p className="onip-loader-welcome">
-          <span>{t("Bienvenue sur le site de l’Office National d’Identification de la Population")}</span>
+          <span>{t("Bienvenue")}</span>
+          <span>{t("sur le site officiel de l’Office National d’Identification de la Population")}</span>
           <i aria-hidden="true" />
         </p>
       )}
@@ -159,9 +160,9 @@ const services = [
     icon: "pin",
     title: "Trouver un centre",
     description: (
-      <><Translation text="Localisez le centre d’enrôlement" /><br /><Translation text="le plus proche de vous." /></>
+      <><Translation text="Localisez le centre d’identification" /><br /><Translation text="le plus proche de vous." /></>
     ),
-    body: "Les centres d’enrôlement vous accompagnent dans votre démarche d’identification. La carte et les adresses des centres seront disponibles après connexion au répertoire officiel.",
+    body: "Les centres d’identification vous accompagnent dans votre démarche d’identification. La carte et les adresses des centres seront disponibles après connexion au répertoire officiel.",
   },
   {
     icon: "document",
@@ -169,15 +170,15 @@ const services = [
     description: (
       <><Translation text="Consultez l’état d’avancement" /><br /><Translation text="de votre demande." /></>
     ),
-    body: "Saisissez le numéro figurant sur votre récépissé d’enrôlement.",
+    body: "Saisissez le numéro figurant sur votre récépissé d’identification.",
   },
   {
     icon: "people",
-    title: "Conditions d’enrôlement",
+    title: "Conditions d’identification",
     description: (
       <><Translation text="Découvrez les conditions et les" /><br /><Translation text="pièces à fournir." /></>
     ),
-    body: "Préparez les documents attestant votre identité et présentez-vous dans un centre d’enrôlement. La liste officielle des pièces et les conditions d’éligibilité seront publiées ici après validation par l’ONIP.",
+    body: "Préparez les documents attestant votre identité et présentez-vous dans un centre d’identification. La liste officielle des pièces et les conditions d’éligibilité seront publiées ici après validation par l’ONIP.",
   },
   {
     icon: "headset",
@@ -660,7 +661,7 @@ export default function App() {
               <Icon name="building" size={47} />
               <div>
                 <AnimatedNumber value={0} animationValue={523} delay={120} />
-                <span>{t("centres d’enrôlement")}<br />{t("sur toute la RDC")}</span>
+                <span>{t("centres d’identification")}<br />{t("sur toute la RDC")}</span>
               </div>
             </div>
             <div className="stat">

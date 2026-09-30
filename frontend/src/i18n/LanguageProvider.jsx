@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { LanguageContext } from './LanguageContext'
 
 const descriptions = {
-  fr: 'Office National d’Identification de la Population — Une identité sécurisée pour chaque Congolais. Centres d’enrôlement, démarches et actualités.',
+  fr: 'Office National d’Identification de la Population — Une identité sécurisée pour chaque Congolais. Centres d’identification, démarches et actualités.',
 }
 
 export default function LanguageProvider({ children }) {

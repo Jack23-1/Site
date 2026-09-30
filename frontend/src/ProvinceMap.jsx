@@ -25,7 +25,7 @@ export default function ProvinceMap() {
         <span className="coverage-eyebrow">{t("L’ONIP à travers la RDC")}</span>
         <h2 id="coverage-title">{t("26 provinces.")}<br/>{t("Un même engagement.")}</h2>
         <div className="tricolor"/>
-        <p className="coverage-description">{t("Cliquez sur une province pour découvrir ses chiffres clés et le suivi de l’enrôlement.")}</p>
+        <p className="coverage-description">{t("Cliquez sur une province pour découvrir ses chiffres clés et le suivi de l’identification.")}</p>
         <div aria-live="polite" aria-atomic="true">
         <div className="province-detail province-identity-card" key={selectionRevision}>
           <div className="province-card-header"><span className="province-card-chip" aria-hidden="true"/><div><strong>ONIP</strong><span>{t("République Démocratique du Congo")}</span></div><span className="province-card-country" aria-hidden="true">RDC</span></div>
@@ -34,7 +34,7 @@ export default function ProvinceMap() {
             <div className="province-metric"><span className="metric-symbol" aria-hidden="true">⌗</span><span>{t("Superficie")}</span><strong>{pendingValue} <small>km²</small></strong></div>
             <div className="province-metric"><span className="metric-symbol" aria-hidden="true">♙</span><span>{t("Population")}</span><strong>{pendingValue}</strong><small>{t("habitants")}</small></div>
             <div className="province-metric enrolled-metric"><span className="metric-symbol" aria-hidden="true">✓</span><span>{t("Personnes enrôlées")}</span><strong>{pendingValue}</strong><small>{t("inscriptions")}</small></div>
-            <div className="province-metric"><span className="metric-symbol" aria-hidden="true">⌖</span><span>{t("Centres d’enrôlement")}</span><strong>{pendingValue} <small>{t("centres")}</small></strong></div>
+            <div className="province-metric"><span className="metric-symbol" aria-hidden="true">⌖</span><span>{t("Centres d’identification")}</span><strong>{pendingValue} <small>{t("centres")}</small></strong></div>
           </div>
           <div className="province-progress"><div><span>{t("Taux de couverture")}</span><strong>{pendingValue}<small> %</small></strong></div><div className="coverage-progress-track" role="progressbar" aria-label={t("Taux de couverture")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={0} aria-valuetext={t("Données en attente")}><span style={{ width: '0%' }}/></div><p>{t("Part de la population enrôlée")}</p></div>
           <p className="simulation-note">{t("En attente des données officielles.")}</p>
