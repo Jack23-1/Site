@@ -39,6 +39,19 @@
   ],
   "news": [
     {
+      "id": "static-news-journee-identite-16-septembre",
+      "title": {
+        "fr": "16 SEPTEMBRE,  JOURNÉE INTERNATIONALE DE L'IDENTITÉ : LE DG DE L'ONIP MARCELLIN BASENGEZI S'ENGAGE POUR UNE IDENTITÉ BASÉE SUR LA CONFIANCE",
+        "en": "16 September, International Identity Day: ONIP Director General Marcellin Basengezi commits to an identity based on trust"
+      },
+      "body": {
+        "fr": "Placée sous le thème \"Mon Identité, mon ombre\", la célébration de la Journée Internationale de l'Identité ce 16 septembre 2026 a été marquée d’un discours fort du Directeur Général de l’Office National d’Identification de la Population. Dans son message, Marcellin Mukolo Basengezi a rappelé que tout comme l'ombre accompagne l'homme toute sa vie, l'identité juridique doit suivre chaque Congolais dès la naissance pour lui permettre d'exercer pleinement ses droits.\n\nPar la même occasion , le patron de l’Onip a annoncé la finalisation des préparatifs du lancement du Système National d'Identification de la Population, dont les opérations de collecte des données démarreront dès décembre prochain pour la constitution du Fichier Général de la Population et l'édification d'un système moderne, fiable et sécurisé. Il a saisi l'occasion pour remercier le Président de la République, Son Excellence Félix-Antoine Tshisekedi Tshilombo, pour son soutien à la modernisation de l'État.\n\nCette célébration de la journée internationale dédiée à l’identité est  intervenue au moment où  le Gouvernement  réaffirme la nécessité d'une synergie entre l'ONIP et les partenaires , faisant de l'identification. Et lors du dépôt du budget 2027 au Parlement, la Première Ministre Judith Suminwa a souligné que la question de l'identification de la population figure bel et bien parmi les 7 priorités de son Gouvernement.",
+        "en": "Held under the theme “My Identity, My Shadow”, the celebration of International Identity Day on 16 September 2026 was marked by a strong address from the Director General of the National Office for Population Identification. In his message, Marcellin Mukolo Basengezi recalled that, just as a shadow accompanies a person throughout life, legal identity must follow every Congolese citizen from birth so they can fully exercise their rights.\n\nThe head of ONIP also announced that preparations for the launch of the National Population Identification System were being finalised. Data collection operations will begin in December to establish the General Population Register and build a modern, reliable and secure system. He took the opportunity to thank the President of the Republic, His Excellency Félix-Antoine Tshisekedi Tshilombo, for his support for the modernisation of the State.\n\nThis celebration of International Identity Day came as the Government reaffirmed the need for cooperation between ONIP and its partners involved in identification. When submitting the 2027 budget to Parliament, Prime Minister Judith Suminwa stressed that population identification is indeed among her Government’s seven priorities."
+      },
+      "resourceUrl": "/images/16septempbre.jpg",
+      "publishedAt": "2026-09-16T12:00:00Z"
+    },
+    {
       "id": "static-news-dg-lualaba",
       "title": {
         "fr": "LUALABA-ONIP: Le DG Marcellin Basengezi a annoncé à l'Exécutif provincial le début des opérations pour Décembre",

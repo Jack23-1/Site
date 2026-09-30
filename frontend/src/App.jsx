@@ -6,7 +6,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import PropTypes from "prop-types";
 import AnimatedNumber from "./AnimatedNumber";
 import IdentityCard from "./IdentityCard";
-import directorMessage from "../infos onip?raw";
+import directorMessage from "./data/director-message.txt?raw";
 import Apropos from "./pages/Apropos";
 import Actualites from "./pages/Actualites";
 import Services from "./pages/Services";
