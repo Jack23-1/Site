@@ -134,7 +134,7 @@ function OnipLoader({ leaving, welcome }) {
     <div
       className={`site-loader ${welcome ? "has-welcome" : ""} ${leaving ? "is-leaving" : ""}`}
       role="status"
-      aria-label={welcome ? t("Bienvenue sur le site officiel de l’ONIP") : t("Chargement de la plateforme ONIP")}
+      aria-label={welcome ? t("Bienvenue sur le site de l’Office National d’Identification de la Population") : t("Chargement de la plateforme ONIP")}
     >
       <div className="onip-loader-mark" aria-hidden="true">
         <img className="onip-loader-layer onip-loader-center" src={onipLoaderCenter} alt="" />
@@ -144,8 +144,7 @@ function OnipLoader({ leaving, welcome }) {
       </div>
       {welcome && (
         <p className="onip-loader-welcome">
-          <span>{t("Bienvenue")}</span>
-          <strong>{t("sur le site officiel de l’ONIP")}</strong>
+          <span>{t("Bienvenue sur le site de l’Office National d’Identification de la Population")}</span>
           <i aria-hidden="true" />
         </p>
       )}

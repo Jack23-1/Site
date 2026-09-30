@@ -91,24 +91,18 @@ header {
 }
 .onip-loader-welcome {
   margin: 0;
+  max-width: 960px;
   text-align: center;
   color: #092e60;
   animation: onip-welcome-arrive 0.8s 0.2s both;
 }
 .onip-loader-welcome > span {
   display: block;
-  font-size: clamp(36px, 6vw, 72px);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-}
-.onip-loader-welcome > strong {
-  display: block;
-  margin-top: 12px;
-  font-size: clamp(15px, 2vw, 23px);
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0.025em;
+  font-size: clamp(24px, 3.5vw, 44px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 .onip-loader-welcome > i {
   display: block;
