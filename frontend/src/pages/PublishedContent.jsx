@@ -1,10 +1,22 @@
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import usePublishedContent from '../usePublishedContent'
 import './PublishedContent.css'
 
 const titles = { news: { fr: 'Actualités', en: 'News' }, documents: { fr: 'Documents', en: 'Documents' }, gallery: { fr: 'Galerie', en: 'Gallery' } }
+function FingerprintNavigation() {
+  return <svg viewBox="0 0 56 68" fill="none" aria-hidden="true" focusable="false">
+    <g className="gallery-fingerprint-ridges" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+      <path d="M7 29C7 15 16 5 28 5s21 10 21 24v10" />
+      <path d="M3 39v-8M12 46V29c0-11 6-19 16-19s16 8 16 19v17" />
+      <path d="M8 51c-1-4-1-7-1-11M17 37v-8c0-8 4-14 11-14s11 6 11 14v9M48 46c-1 8-4 14-8 18" />
+      <path d="M22 31v-2c0-5 2-9 6-9s6 4 6 9v3M13 52c1 5 3 9 6 12M43 51c-1 5-3 9-6 12" />
+      <path d="M18 49c0 5 2 10 5 14M23 49c0 5 2 9 4 12M28 49c0 5 2 8 4 10M33 48c1 3 1 5 3 7M38 47v4M28 26v5" />
+    </g>
+    <path className="gallery-fingerprint-chevron" d="m25 34 6 6-6 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+}
 export default function PublishedContent({ type }) {
   const { language, locale } = useLanguage()
   const { items, loading, error, hasMore, reload, loadMore } = usePublishedContent(type, type === 'news' ? 100 : 24)
@@ -12,7 +24,16 @@ export default function PublishedContent({ type }) {
   const dateFormatter = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' })
   const newsItems = type === 'news' ? items : []
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null)
-  const [expandedGalleryGroup, setExpandedGalleryGroup] = useState(null)
+  const [stackExpanded, setStackExpanded] = useState(false)
+  const moveGalleryPhoto = useCallback(direction => {
+    const photos = items.filter(item => item.resourceUrl)
+    if (photos.length < 2) return
+    setSelectedGalleryItem(current => {
+      if (!current) return current
+      const index = photos.findIndex(item => item.id === current.id)
+      return photos[(index + direction + photos.length) % photos.length]
+    })
+  }, [items])
   const getBody = item => item.body[language] || item.body.fr || item.body.en || ''
   const getTitle = item => item.title[language] || item.title.fr || item.title.en || ''
   const getExcerpt = (item, max = 150) => {
@@ -23,10 +44,14 @@ export default function PublishedContent({ type }) {
     if (!selectedGalleryItem) return undefined
     const onKeyDown = event => {
       if (event.key === 'Escape') setSelectedGalleryItem(null)
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault()
+        moveGalleryPhoto(event.key === 'ArrowLeft' ? -1 : 1)
+      }
     }
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [selectedGalleryItem])
+  }, [selectedGalleryItem, moveGalleryPhoto])
 
   if (type === 'news') {
     return <section className="container published-content published-news">
@@ -73,7 +98,6 @@ export default function PublishedContent({ type }) {
       }
       return groups
     }, new Map()).values())
-    const [stackExpanded, setStackExpanded] = useState(false)
 
     return <section className="container published-content published-gallery">
       {error && <p role="alert">{text('Impossible de charger les contenus.', 'Unable to load content.')} <button onClick={reload}>{text('Réessayer', 'Try again')}</button></p>}
@@ -180,6 +204,10 @@ export default function PublishedContent({ type }) {
       {hasMore && !error && <button className="published-more" disabled={loading} onClick={loadMore}>{text('Voir plus', 'Load more')}</button>}
       {selectedGalleryItem && <div className="published-gallery-lightbox" role="dialog" aria-modal="true" aria-label={getTitle(selectedGalleryItem)} onClick={() => setSelectedGalleryItem(null)}>
         <button className="published-gallery-close" type="button" onClick={() => setSelectedGalleryItem(null)} aria-label={text('Fermer l’aperçu', 'Close preview')}>×</button>
+        {items.filter(item => item.resourceUrl).length > 1 && <>
+          <button className="published-gallery-arrow is-previous" type="button" onClick={event => { event.stopPropagation(); moveGalleryPhoto(-1) }} aria-label={text('Photo précédente', 'Previous photo')}><FingerprintNavigation /></button>
+          <button className="published-gallery-arrow is-next" type="button" onClick={event => { event.stopPropagation(); moveGalleryPhoto(1) }} aria-label={text('Photo suivante', 'Next photo')}><FingerprintNavigation /></button>
+        </>}
         <figure onClick={event => event.stopPropagation()}>
           <img src={selectedGalleryItem.resourceUrl} alt={getTitle(selectedGalleryItem)} />
           <figcaption>
