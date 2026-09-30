@@ -83,6 +83,45 @@ header {
     opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
     visibility 0s linear 0s;
 }
+.site-loader.has-welcome {
+  align-content: center;
+  gap: clamp(20px, 4vh, 40px);
+  padding: 24px;
+  background: rgba(245, 249, 255, 0.88);
+}
+.onip-loader-welcome {
+  margin: 0;
+  text-align: center;
+  color: #092e60;
+  animation: onip-welcome-arrive 0.8s 0.2s both;
+}
+.onip-loader-welcome > span {
+  display: block;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.onip-loader-welcome > strong {
+  display: block;
+  margin-top: 12px;
+  font-size: clamp(15px, 2vw, 23px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+}
+.onip-loader-welcome > i {
+  display: block;
+  width: 88px;
+  height: 4px;
+  margin: 24px auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #009fe3 0 33%, #f7d417 33% 66%, #e51b2b 66%);
+}
+@keyframes onip-welcome-arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .site-loader.is-leaving {
   opacity: 0;
   visibility: hidden;
@@ -1379,10 +1418,10 @@ header::after {
 }
 .management-showcase {
   display: grid;
-  grid-template-columns: minmax(0, 420px) minmax(0, 480px);
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 2fr);
   align-items: center;
   justify-content: start;
-  gap: clamp(28px, 5vw, 70px);
+  gap: clamp(24px, 3vw, 44px);
 }
 .leaders-grid {
   display: grid;
@@ -1395,7 +1434,7 @@ header::after {
 .management-showcase .leaders-grid {
   padding-top: 0;
   justify-content: start;
-  transform: translateX(clamp(-64px, -4vw, -28px));
+  transform: none;
 }
 .director-quote {
   position: relative;

@@ -128,13 +128,13 @@ function Fingerprint({ className = "" }) {
 }
 Fingerprint.propTypes = { className: PropTypes.string };
 
-function OnipLoader({ leaving }) {
+function OnipLoader({ leaving, welcome }) {
   const { t } = useLanguage();
   return (
     <div
-      className={`site-loader ${leaving ? "is-leaving" : ""}`}
+      className={`site-loader ${welcome ? "has-welcome" : ""} ${leaving ? "is-leaving" : ""}`}
       role="status"
-      aria-label={t("Chargement de la plateforme ONIP")}
+      aria-label={welcome ? t("Bienvenue sur le site officiel de l’ONIP") : t("Chargement de la plateforme ONIP")}
     >
       <div className="onip-loader-mark" aria-hidden="true">
         <img className="onip-loader-layer onip-loader-center" src={onipLoaderCenter} alt="" />
@@ -142,10 +142,17 @@ function OnipLoader({ leaving }) {
         <img className="onip-loader-layer onip-loader-yellow" src={onipLoaderYellow} alt="" />
         <img className="onip-loader-layer onip-loader-blue" src={onipLoaderBlue} alt="" />
       </div>
+      {welcome && (
+        <p className="onip-loader-welcome">
+          <span>{t("Bienvenue")}</span>
+          <strong>{t("sur le site officiel de l’ONIP")}</strong>
+          <i aria-hidden="true" />
+        </p>
+      )}
     </div>
   );
 }
-OnipLoader.propTypes = { leaving: PropTypes.bool.isRequired };
+OnipLoader.propTypes = { leaving: PropTypes.bool.isRequired, welcome: PropTypes.bool.isRequired };
 
 
 const services = [
@@ -409,7 +416,7 @@ export default function App() {
   };
   return (
     <div className={accessible ? "site high-contrast" : "site"}>
-      {loaderVisible && <OnipLoader key={loaderCycle} leaving={loaderLeaving} />}
+      {loaderVisible && <OnipLoader key={loaderCycle} leaving={loaderLeaving} welcome={loaderCycle === 0} />}
       <a className="skip-link" href="#contenu">{t("Aller au contenu")}</a>
       <header>
         <div className="container header-inner">
