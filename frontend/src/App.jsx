@@ -158,9 +158,9 @@ OnipLoader.propTypes = { leaving: PropTypes.bool.isRequired, welcome: PropTypes.
 const services = [
   {
     icon: "pin",
-    title: "Trouver un centre",
+    title: "Trouver un Bureau d’identification",
     description: (
-      <><Translation text="Localisez le centre d’identification" /><br /><Translation text="le plus proche de vous." /></>
+      <><Translation text="Localisez le bureau d’identification" /><br /><Translation text="le plus proche de vous." /></>
     ),
     body: "Les centres d’identification vous accompagnent dans votre démarche d’identification. La carte et les adresses des centres seront disponibles après connexion au répertoire officiel.",
   },

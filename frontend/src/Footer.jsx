@@ -45,7 +45,7 @@ export default function Footer({ onService, onAbout, onAccessibility, accessible
 
           <nav className="footer-column" aria-label={t("Vos démarches")}>
             <h3>{t("Vos démarches")}</h3>
-            <button onClick={() => onService(0)}>{t("Trouver un centre")}</button>
+            <button onClick={() => onService(0)}>{t("Trouver un Bureau d’identification")}</button>
             
             <button onClick={() => onService(2)}>{t("Conditions d’identification")}</button>
             <a href="#services">{t("Tous nos services")}</a>
