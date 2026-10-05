@@ -39,6 +39,19 @@
   ],
   "news": [
     {
+      "id": "static-news-ptn-banque-mondiale-afd",
+      "title": {
+        "fr": "Suivi du Projet de Transformation numérique (PTN) : au cœur d’un échange entre l’ONIP et ses partenaires - Banque mondiale, AFD et UGP-TN",
+        "en": "Digital Transformation Project (PTN): ONIP meets with its partners — the World Bank, AFD and UGP-TN"
+      },
+      "body": {
+        "fr": "Le Directeur général de l’Office national d’identification de la population (ONIP), Marcellin Mukolo Basengezi, a échangé ce mercredi 30 septembre 2026 avec une délégation composée de représentants de la Banque mondiale, de l’Agence française de développement (AFD) et de l’Unité de gestion du Projet de transformation numérique (UGPTN). Cette rencontre s’inscrit dans le cadre de la mission de supervision du PTN, dont l’ONIP est partie prenante.\n\nLes échanges ont porté sur la feuille de route de l’ONIP, les préparatifs du démarrage des opérations d’identification, prévu pour la mi-décembre 2026, et l’articulation de ces activités avec le PTN. L’ONIP, par son Directeur Général Marcellin Mukolo Basengezi a rappelé la nécessité de l’identité légale dans la transformation numérique et l’importance de coordonner les interventions des partenaires autour de ses missions.\n\nÀ l’issue de la rencontre, Noël Litanga, coordonnateur de l’UGPTN, a indiqué que la délégation était venue prendre connaissance de la feuille de route de l’ONIP et des besoins liés à sa mise en œuvre. M. Tata, spécialiste du numérique à la Banque mondiale, a réaffirmé l’intérêt de son institution pour une approche intégrée de l’identification en RDC.\n\nLe représentant de l’AFD Joguet Vincent a salué la dynamique engagée par la Direction générale de l’ONIP et exprimé sa disponibilité à poursuivre les échanges sur les possibilités d’appui technique et financier.",
+        "en": "The Director General of the National Office for Population Identification (ONIP), Marcellin Mukolo Basengezi, met on Wednesday, 30 September 2026 with a delegation of representatives from the World Bank, the French Development Agency (AFD) and the Digital Transformation Project Management Unit (UGPTN). The meeting took place as part of the supervision mission for the Digital Transformation Project (PTN), in which ONIP is a stakeholder.\n\nDiscussions focused on ONIP’s roadmap, preparations for the launch of identification operations planned for mid-December 2026, and how these activities align with the PTN. Director General Marcellin Mukolo Basengezi stressed the need for legal identity in digital transformation and the importance of coordinating partners’ contributions around ONIP’s missions.\n\nFollowing the meeting, Noël Litanga, UGPTN coordinator, said the delegation had come to learn about ONIP’s roadmap and the needs associated with its implementation. Mr Tata, a digital specialist at the World Bank, reaffirmed his institution’s interest in an integrated approach to identification in the DRC.\n\nAFD representative Joguet Vincent welcomed the momentum initiated by ONIP’s management and expressed his willingness to continue discussions on opportunities for technical and financial support."
+      },
+      "resourceUrl": "/images/BM.jpg",
+      "publishedAt": "2026-09-30T12:00:00Z"
+    },
+    {
       "id": "static-news-journee-identite-16-septembre",
       "title": {
         "fr": "16 SEPTEMBRE,  JOURNÉE INTERNATIONALE DE L'IDENTITÉ : LE DG DE L'ONIP MARCELLIN BASENGEZI S'ENGAGE POUR UNE IDENTITÉ BASÉE SUR LA CONFIANCE",
