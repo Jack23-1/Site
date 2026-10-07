@@ -179,17 +179,17 @@
   ],
   "documents": [
     {
-      "id": "onip-document-1",
+      "id": "onip-ordonnance-2026-06-02",
       "title": {
-        "fr": "ARRETE CIN ET NIN",
-        "en": "Order on the National Identity Card and National Identification Number"
+        "fr": "Ordonnance n° 26/047 du 02 juin 2026 portant nomination des membres du Conseil d’administration et de la Direction générale de l’Office National d’Identification de la Population",
+        "en": "Ordinance No. 26/047 of 2 June 2026 appointing members of the Board of Directors and General Management of the National Office for Population Identification"
       },
       "body": {
         "fr": "Texte à consulter et à télécharger au format PDF.",
         "en": "Document available to view and download in PDF format."
       },
-      "assetFile": "ARRETE CIN ET NIN.pdf",
-      "sizeBytes": 6355487
+      "assetFile": "ORDONNANCE N° 26 047 DU 02 JUIN 2026 PORTANT NOMINATION DES MEMBRESDU CONSEIL D'ADMINISTRATION ET DE LA DIRECTION GENERALED'UN ETABLISSEMENT PUBLIC DENOMME OFFICE NATIONAL D'IDENTIFICATION DE LA POPULATION.pdf",
+      "sizeBytes": 9344986
     },
     {
       "id": "onip-document-2",

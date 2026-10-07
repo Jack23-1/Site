@@ -19,7 +19,8 @@ export default function Documents() {
   const localized = value => value?.[language] || value?.fr || value?.en || ''
   const documentKind = item => /^décret/i.test(item.title?.fr || '')
     ? text('Décret', 'Decree') : /^arrêté/i.test(item.title?.fr || '')
-      ? text('Arrêté', 'Order') : text('Document', 'Document')
+      ? text('Arrêté', 'Order') : /^ordonnance/i.test(item.title?.fr || '')
+        ? text('Ordonnance', 'Ordinance') : text('Document', 'Document')
   const fileSize = bytes => new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(bytes / (bytes >= 1048576 ? 1048576 : 1024)) + ' ' + (bytes >= 1048576 ? text('Mo', 'MB') : text('Ko', 'KB'))
 
   useEffect(() => {
