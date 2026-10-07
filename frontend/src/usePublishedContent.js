@@ -2,6 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { staticContentMode } from './contentMode'
 import staticContent from './data/static-content.json'
 
+const documentAssets = import.meta.glob('./assets/Documents/*.pdf', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+const staticDocuments = staticContent.documents.map(({ assetFile, ...item }) => ({
+  ...item,
+  resourceUrl: documentAssets[`./assets/Documents/${assetFile}`],
+}))
+
 export default function usePublishedContent(type, limit = 24, live = false) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -51,7 +61,7 @@ export default function usePublishedContent(type, limit = 24, live = false) {
     }
   }, [live, load])
   if (staticContentMode) {
-    const content = staticContent[type] || []
+    const content = type === 'documents' ? staticDocuments : staticContent[type] || []
     return { items: content.slice(0, staticLimit), loading: false, error: false,
       hasMore: staticLimit < content.length,
       reload: () => setStaticLimit(limit),

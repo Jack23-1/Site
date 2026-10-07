@@ -179,52 +179,95 @@
   ],
   "documents": [
     {
-      "id": "example-guide-identification",
+      "id": "onip-document-1",
       "title": {
-        "fr": "Guide de l’identification",
-        "en": "Identification guide"
+        "fr": "ARRETE CIN ET NIN",
+        "en": "Order on the National Identity Card and National Identification Number"
       },
       "body": {
-        "fr": "Un exemple de guide pour présenter les étapes et les informations utiles aux citoyens.",
-        "en": "A sample guide presenting steps and useful information for citizens."
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
       },
-      "resourceUrl": "/documents/examples/guide-identification.pdf",
-      "previewUrl": "/documents/examples/guide-identification.svg",
-      "isExample": true,
-      "pageCount": 1,
-      "sizeBytes": 2439
+      "assetFile": "ARRETE CIN ET NIN.pdf",
+      "sizeBytes": 6355487
     },
     {
-      "id": "example-fiche-renseignements",
+      "id": "onip-document-2",
       "title": {
-        "fr": "Fiche de renseignements",
-        "en": "Information sheet"
+        "fr": "Arrêté du 15 novembre 2023 portant mesure d'exécution du décret relatif à la CIN",
+        "en": "Order of 15 November 2023 implementing the decree on the National Identity Card"
       },
       "body": {
-        "fr": "Un modèle de fiche pour illustrer la présentation des informations à renseigner.",
-        "en": "A sample sheet illustrating how information fields can be presented."
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
       },
-      "resourceUrl": "/documents/examples/fiche-renseignements.pdf",
-      "previewUrl": "/documents/examples/fiche-renseignements.svg",
-      "isExample": true,
-      "pageCount": 1,
-      "sizeBytes": 2433
+      "assetFile": "Arrêté  du 15 novembre 2023 portant mesure d'exécution du décret relatif à la CIN.pdf",
+      "sizeBytes": 6364892
     },
     {
-      "id": "example-presentation-services",
+      "id": "onip-document-3",
       "title": {
-        "fr": "Présentation des services",
-        "en": "Services overview"
+        "fr": "Arrêté du 18 novembre 2023 portant fixation du NIN",
+        "en": "Order of 18 November 2023 establishing the National Identification Number"
       },
       "body": {
-        "fr": "Une brochure de démonstration pour découvrir la présentation des services de l’ONIP.",
-        "en": "A demonstration brochure introducing the presentation of ONIP services."
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
       },
-      "resourceUrl": "/documents/examples/presentation-services.pdf",
-      "previewUrl": "/documents/examples/presentation-services.svg",
-      "isExample": true,
-      "pageCount": 1,
-      "sizeBytes": 2450
+      "assetFile": "Arrêté du 18 novembre 2023 portant fixation du NIN.pdf",
+      "sizeBytes": 6364794
+    },
+    {
+      "id": "onip-document-4",
+      "title": {
+        "fr": "Décret du 02 mars 2022 portant création de la Carte d'Identité Nationale (CIN)",
+        "en": "Decree of 2 March 2022 establishing the National Identity Card"
+      },
+      "body": {
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
+      },
+      "assetFile": "Décret du 02 mars 2022 portant création de la Carte d'Identité Nationale (CIN).pdf",
+      "sizeBytes": 2653345
+    },
+    {
+      "id": "onip-document-5",
+      "title": {
+        "fr": "Décret du 02 mars 2022 portant création du Fichier Général de la Population (FGP)",
+        "en": "Decree of 2 March 2022 establishing the General Population Register"
+      },
+      "body": {
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
+      },
+      "assetFile": "Décret du 02 mars 2022 portant création du Fichier Général de la Population (FGP).pdf",
+      "sizeBytes": 2587372
+    },
+    {
+      "id": "onip-document-6",
+      "title": {
+        "fr": "Décret du 02 mars 2022 portant mutualisation entre l'ONIP, la CENI et l'INS",
+        "en": "Decree of 2 March 2022 on cooperation between ONIP, CENI and INS"
+      },
+      "body": {
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
+      },
+      "assetFile": "Décret du 02 mars 2022 portant mutualisation entre l'ONIP, la CENI et l'INS.pdf",
+      "sizeBytes": 3583867
+    },
+    {
+      "id": "onip-document-7",
+      "title": {
+        "fr": "Décret du 31 décembre 2011 portant création et fixation des statuts de l'ONIP",
+        "en": "Decree of 31 December 2011 establishing ONIP and its statutes"
+      },
+      "body": {
+        "fr": "Texte à consulter et à télécharger au format PDF.",
+        "en": "Document available to view and download in PDF format."
+      },
+      "assetFile": "Décret du 31 décembre 2011 portant création et fixation des statuts de l'ONIP.pdf",
+      "sizeBytes": 3058194
     }
   ]
 }

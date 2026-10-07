@@ -291,20 +291,12 @@ header {
   box-shadow: 0 10px 28px #0c396414;
 }
 .news-card > img {
-  object-fit: contain;
+  object-fit: cover;
   background: #eef4fa;
   transition: filter 0.3s;
 }
 .news-card:hover > img {
   filter: brightness(1.07) saturate(1.08);
-}
-@media (max-width: 600px) {
-  .news-card > img,
-  .published-news-card > img,
-  .published-news-card:has(details[open]) > img {
-    object-fit: cover;
-    object-position: center;
-  }
 }
 .read-more > span {
   transition: translate 0.2s;
