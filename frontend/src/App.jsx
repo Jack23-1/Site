@@ -217,6 +217,7 @@ const getPagePath = () => {
 const LOADER_ANIMATION_DURATION = 3130;
 const LOADER_REDUCED_DURATION = 350;
 const LOADER_FADE_DURATION = 480;
+const LOADER_WELCOME_EXTRA_DURATION = 2000;
 
 export default function App() {
   const { t, language, locale } = useLanguage();
@@ -274,9 +275,10 @@ export default function App() {
   }, []);
   const finishLoader = useCallback((afterAnimation, { restart = true } = {}) => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const loaderDuration = reducedMotion
+    const animationDuration = reducedMotion
       ? LOADER_REDUCED_DURATION
       : LOADER_ANIMATION_DURATION;
+    const loaderDuration = animationDuration + (restart ? 0 : LOADER_WELCOME_EXTRA_DURATION);
 
     clearLoaderTimers();
     if (restart) {
