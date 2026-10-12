@@ -193,7 +193,7 @@ const leaders = [
   {
     role: "Directeur Général",
     shortRole: "DG",
-    name: "MUKOLO BASENGEZI Marcellin",
+    name: "Marcellin MUKOLO BASENGEZI",
     photo: dgPhoto,
     scope: "",
     primary: true,
@@ -720,7 +720,7 @@ export default function App() {
                 <blockquote lang={language}>
                   {directorMessage.trim().split(/\r?\n/).map(line => line.trim()).filter(Boolean).slice(0, -2).map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
                 </blockquote>
-                <p>Marcellin Mukolo Basengezi</p>
+                <p>Marcellin MUKOLO BASENGEZI</p>
                 <small>{t("Directeur Général de l’ONIP")}</small>
               </aside>
             </div>
