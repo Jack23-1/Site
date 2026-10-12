@@ -566,8 +566,10 @@ export default function App() {
           </div>
           <div className="container hero-inner">
             <div className="hero-copy" key={activeSlide}>
-              <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
-              <div className="tricolor hero-line" />
+              <div className="hero-title-group">
+                <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
+                <div className="tricolor hero-line" />
+              </div>
               <p style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].text}</p>
             </div>
           </div>

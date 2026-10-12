@@ -230,6 +230,13 @@ header {
   height: 6px;
   margin: 18px 0 14px;
 }
+.hero-title-group {
+  width: fit-content;
+  max-width: 100%;
+}
+.hero-title-group .hero-line {
+  width: 100%;
+}
 .hero p {
   font-size: 26px;
   line-height: 1.12;
