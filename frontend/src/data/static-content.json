@@ -3,8 +3,8 @@
     {
       "id": "static-carousel-1",
       "title": {
-        "fr": "Une identité sécurisée\npour chaque Congolais",
-        "en": "A secure identity\nfor every Congolese citizen"
+        "fr": "Identité Légale pour Tous",
+        "en": "Legal Identity for All"
       },
       "body": {
         "fr": "L’ONIP construit une identité fiable, inclusive\net accessible à tous.",
@@ -15,12 +15,12 @@
     {
       "id": "static-carousel-2",
       "title": {
-        "fr": "L’identification, plus proche\nde chez vous",
-        "en": "Identification services\ncloser to home"
+        "fr": "Chaque Congolais compte",
+        "en": "Every Congolese citizen counts"
       },
       "body": {
-        "fr": "Des services de proximité pour accompagner\nchaque citoyen dans ses démarches.",
-        "en": "Local services to support\nevery citizen through the process."
+        "fr": "",
+        "en": ""
       },
       "resourceUrl": "/images/outreach.png"
     },

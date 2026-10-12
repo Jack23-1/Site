@@ -569,7 +569,6 @@ export default function App() {
               <h1 style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].title}</h1>
               <div className="tricolor hero-line" />
               <p style={{ whiteSpace: "pre-line" }}>{slides[activeSlide].text}</p>
-              <div className="motto">{t("IDENTIFIER AUJOURD’HUI")}<br />{t("POUR UN MEILLEUR DEMAIN")}</div>
             </div>
           </div>
         </section>}
